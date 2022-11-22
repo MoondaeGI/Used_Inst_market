@@ -1,0 +1,16 @@
+package com.example.Used_Inst_market;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class UsedInstMarketApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(UsedInstMarketApplication.class, args);
+
+		System.out.println("------------------------");
+		System.out.println("중고 악기 판매 거래 사이트");
+	}
+
+}
