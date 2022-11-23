@@ -40,9 +40,10 @@ public class User extends BaseTimeStamp {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.role = Role.GUEST;
     }
 
-    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "user")
+    @OneToOne(mappedBy = "user")
     private Address address;
 
     @OneToMany(mappedBy = "user")

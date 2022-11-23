@@ -23,4 +23,7 @@ public class Local {
     public Local(String name) {
         this.name = name;
     }
+
+    @Builder
+    public void update(String name) { this.name = name; }
 }
