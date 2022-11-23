@@ -1,11 +1,16 @@
 package com.example.Used_Inst_market.domain.post;
 
-import com.example.Used_Inst_market.domain.BaseTimeStamp;
+import com.example.Used_Inst_market.domain.product.Product;
+import com.example.Used_Inst_market.domain.select.local.LocalSelect;
+import com.example.Used_Inst_market.domain.user.User;
+import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -15,6 +20,10 @@ public class Post extends BaseTimeStamp {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "POST_NO")
     private Long postNo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_NO", nullable = false)
+    private User user;
 
     @Column(name = "TITLE", nullable = false)
     private String title;
@@ -27,9 +36,16 @@ public class Post extends BaseTimeStamp {
     private SoldYN soldYN;
 
     @Builder
-    public Post(String title, String content) {
+    public Post(User user, String title, String content) {
+        this.user = user;
         this.title = title;
         this.content = content;
         this.soldYN = SoldYN.SALE;  // default값
     }
+
+    @OneToMany(mappedBy = "post")
+    private List<Product> products = new ArrayList<Product>();
+
+    @OneToMany(mappedBy = "post")
+    private List<LocalSelect> localSelects = new ArrayList<LocalSelect>();
 }
