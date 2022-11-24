@@ -1,5 +1,7 @@
 package com.example.Used_Inst_market.domain.util;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -7,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
+@Getter
+@NoArgsConstructor
 @MappedSuperclass
 public class BaseTimeStamp {
     @CreationTimestamp

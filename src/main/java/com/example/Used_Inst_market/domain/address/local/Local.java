@@ -1,5 +1,6 @@
 package com.example.Used_Inst_market.domain.address.local;
 
+import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "TB_LOCAL")
-public class Local {
+public class Local extends BaseTimeStamp{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOCAL_NO")
@@ -20,10 +21,7 @@ public class Local {
     private String name;
 
     @Builder
-    public Local(String name) {
-        this.name = name;
-    }
+    public Local(String name) { this.name = name; }
 
-    @Builder
     public void update(String name) { this.name = name; }
 }
