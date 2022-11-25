@@ -35,4 +35,9 @@ public class City {
 
     @OneToMany(mappedBy = "city")
     private List<Address> addresses = new ArrayList<Address>();
+
+    public void update(String name, Local local) {
+        this.name = name;
+        this.local = local;
+    }
 }

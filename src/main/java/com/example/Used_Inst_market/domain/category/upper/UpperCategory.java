@@ -34,4 +34,6 @@ public class UpperCategory extends BaseTimeStamp {
 
     @OneToMany(mappedBy = "upperCategory")
     private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
+
+    public void update(String name) { this.name = name; }
 }

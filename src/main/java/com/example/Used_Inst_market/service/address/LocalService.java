@@ -1,8 +1,9 @@
-package com.example.Used_Inst_market.service.address.local;
+package com.example.Used_Inst_market.service.address;
 
 import com.example.Used_Inst_market.domain.address.local.Local;
 import com.example.Used_Inst_market.domain.address.local.LocalRepository;
 import com.example.Used_Inst_market.web.dto.address.local.*;
+import com.example.Used_Inst_market.web.vo.address.LocalInfoVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +17,17 @@ public class LocalService {
     private final LocalRepository localRepository;
 
     @Transactional
-    public LocalResponseDTO select(SelectLocalRequestDTO selectLocalRequestDTO) {
+    public LocalInfoVO select(SelectLocalRequestDTO selectLocalRequestDTO) {
         Local local = localRepository.findById(selectLocalRequestDTO.getLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
 
-        return new LocalResponseDTO(local);
+        return new LocalInfoVO(local);
     }
 
     @Transactional
-    public List<LocalResponseDTO> selectAll() {
+    public List<LocalInfoVO> selectAll() {
         return localRepository.findAll().stream()
-                .map(LocalResponseDTO::new)
+                .map(LocalInfoVO::new)
                 .collect(Collectors.toList());
     }
 

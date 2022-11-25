@@ -36,4 +36,9 @@ public class Brand extends BaseTimeStamp {
 
     @OneToMany(mappedBy = "brand")
     private List<Product> products = new ArrayList<Product>();
+
+    public void update(LowerCategory lowerCategory, String name) {
+        this.lowerCategory = lowerCategory;
+        this.name = name;
+    }
 }
