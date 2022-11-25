@@ -13,6 +13,11 @@ public class InsertCityRequestDTO {
     private Local local;
 
     @Builder
+    public InsertCityRequestDTO(String name, Local local) {
+        this.local = local;
+        this.name = name;
+    }
+
     public City toEntity() {
         return City.builder()
                 .name(name)

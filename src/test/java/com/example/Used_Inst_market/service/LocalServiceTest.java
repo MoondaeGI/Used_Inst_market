@@ -15,7 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -96,7 +97,14 @@ public class LocalServiceTest {
 
         Long testLocalNo = testLocal.getLocalNo();
 
-        DeleteLocalRequestDTO deleteLocalRequestDTO = new DeleteLocalRequestDTO(testLocalNo);
-        localService.delete(deleteLocalRequestDTO);
+        localService.delete(DeleteLocalRequestDTO.builder()
+                .localNo(testLocalNo)
+                .build());
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> localService.select(
+                        SelectLocalRequestDTO.builder()
+                                .localNo(testLocalNo)
+                                .build()));
     }
 }
