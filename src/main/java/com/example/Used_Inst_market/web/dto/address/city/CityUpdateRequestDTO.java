@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UpdateCityRequestDTO {
+public class CityUpdateRequestDTO {
     private Long cityNo;
     private String name;
     private Local local;
 
     @Builder
-    public UpdateCityRequestDTO(Long cityNo, String name, Local local) {
+    public CityUpdateRequestDTO(Long cityNo, String name, Local local) {
         this.cityNo = cityNo;
         this.name = name;
         this.local = local;

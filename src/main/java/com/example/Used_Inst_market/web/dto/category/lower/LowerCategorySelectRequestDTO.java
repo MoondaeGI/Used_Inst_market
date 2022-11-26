@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class DeleteLowerCategoryRequestDTO {
+public class LowerCategorySelectRequestDTO {
     private Long lowerCategoryNo;
 
     @Builder
-    public DeleteLowerCategoryRequestDTO(Long lowerCategoryNo) {
+    public LowerCategorySelectRequestDTO(Long lowerCategoryNo) {
         this.lowerCategoryNo = lowerCategoryNo;
     }
 }

@@ -39,8 +39,8 @@ public class LocalServiceTest {
                 .name(testName)
                 .build());
 
-        SelectLocalRequestDTO selectLocalRequestDTO = new SelectLocalRequestDTO(testLocal.getLocalNo());
-        LocalInfoVO selectedLocal = localService.select(selectLocalRequestDTO);
+        LocalSelectRequestDTO localSelectRequestDTO = new LocalSelectRequestDTO(testLocal.getLocalNo());
+        LocalInfoVO selectedLocal = localService.select(localSelectRequestDTO);
 
         List<Local> locals = localRepository.findAll();
 
@@ -64,9 +64,9 @@ public class LocalServiceTest {
     @Test
     public void insert_검증() {
         String testName = "test";
-        InsertLocalRequestDTO insertLocalRequestDTO = new InsertLocalRequestDTO(testName);
+        LocalInsertRequestDTO localInsertRequestDTO = new LocalInsertRequestDTO(testName);
 
-        localService.insert(insertLocalRequestDTO);
+        localService.insert(localInsertRequestDTO);
         List<Local> locals = localRepository.findAll();
 
         assertThat(locals.get(0).getName()).isEqualTo(testName);
@@ -82,9 +82,9 @@ public class LocalServiceTest {
                 .build());
         Local testLocal = localRepository.findAll().get(0);
 
-        UpdateLocalRequestDTO updateLocalRequestDTO
-                = new UpdateLocalRequestDTO(testLocal.getLocalNo(), updateTestName);
-        localService.update(updateLocalRequestDTO);
+        LocalUpdateRequestDTO localUpdateRequestDTO
+                = new LocalUpdateRequestDTO(testLocal.getLocalNo(), updateTestName);
+        localService.update(localUpdateRequestDTO);
 
         assertThat(localRepository.findAll().get(0).getName()).isEqualTo(updateTestName);
     }
@@ -97,13 +97,13 @@ public class LocalServiceTest {
 
         Long testLocalNo = testLocal.getLocalNo();
 
-        localService.delete(DeleteLocalRequestDTO.builder()
+        localService.delete(LocalDeleteRequestDTO.builder()
                 .localNo(testLocalNo)
                 .build());
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> localService.select(
-                        SelectLocalRequestDTO.builder()
+                        LocalSelectRequestDTO.builder()
                                 .localNo(testLocalNo)
                                 .build()));
     }

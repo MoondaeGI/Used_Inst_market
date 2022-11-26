@@ -2,10 +2,10 @@ package com.example.Used_Inst_market.service.category;
 
 import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.domain.category.upper.UpperCategoryRepository;
-import com.example.Used_Inst_market.web.dto.category.upper.DeleteUpperCategoryRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.InsertUpperCategoryRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.SelectUpperCategoryRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpdateUpperCategoryRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategorySelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateRequestDTO;
 import com.example.Used_Inst_market.web.vo.category.UpperCategoryInfoVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,9 @@ public class UpperCategoryService {
     private final UpperCategoryRepository upperCategoryRepository;
 
     @Transactional
-    public UpperCategoryInfoVO select(SelectUpperCategoryRequestDTO selectUpperCategoryRequestDTO) {
+    public UpperCategoryInfoVO select(UpperCategorySelectRequestDTO upperCategorySelectRequestDTO) {
         UpperCategory upperCategory = upperCategoryRepository
-                .findById(selectUpperCategoryRequestDTO.getUpperCategoryNo())
+                .findById(upperCategorySelectRequestDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
         return new UpperCategoryInfoVO(upperCategory);
@@ -36,27 +36,27 @@ public class UpperCategoryService {
     }
 
     @Transactional
-    public Long insert(InsertUpperCategoryRequestDTO insertUpperCategoryRequestDTO) {
+    public Long insert(UpperCategoryInsertRequestDTO upperCategoryInsertRequestDTO) {
         return upperCategoryRepository
-                .save(insertUpperCategoryRequestDTO.toEntity())
+                .save(upperCategoryInsertRequestDTO.toEntity())
                 .getUpperCategoryNo();
     }
 
     @Transactional
-    public Long update(UpdateUpperCategoryRequestDTO updateUpperCategoryRequestDTO) {
+    public Long update(UpperCategoryUpdateRequestDTO upperCategoryUpdateRequestDTO) {
         UpperCategory upperCategory = upperCategoryRepository
-                .findById(updateUpperCategoryRequestDTO.getUpperCategoryNo())
+                .findById(upperCategoryUpdateRequestDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
-        upperCategory.update(updateUpperCategoryRequestDTO.getName());
+        upperCategory.update(upperCategoryUpdateRequestDTO.getName());
 
-        return updateUpperCategoryRequestDTO.getUpperCategoryNo();
+        return upperCategoryUpdateRequestDTO.getUpperCategoryNo();
     }
 
     @Transactional
-    public void delete(DeleteUpperCategoryRequestDTO deleteUpperCategoryRequestDTO) {
+    public void delete(UpperCategoryDeleteRequestDTO upperCategoryDeleteRequestDTO) {
         UpperCategory upperCategory = upperCategoryRepository
-                .findById(deleteUpperCategoryRequestDTO.getUpperCategoryNo())
+                .findById(upperCategoryDeleteRequestDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException());
 
         upperCategoryRepository.delete(upperCategory);

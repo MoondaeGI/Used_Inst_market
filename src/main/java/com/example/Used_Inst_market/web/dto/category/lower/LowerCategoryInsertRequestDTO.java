@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class InsertLowerCategoryRequestDTO {
+public class LowerCategoryInsertRequestDTO {
     private UpperCategory upperCategory;
     private String name;
 
     @Builder
-    public InsertLowerCategoryRequestDTO(UpperCategory upperCategory, String name) {
+    public LowerCategoryInsertRequestDTO(UpperCategory upperCategory, String name) {
         this.upperCategory = upperCategory;
         this.name = name;
     }

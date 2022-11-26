@@ -2,10 +2,10 @@ package com.example.Used_Inst_market.service.address;
 
 import com.example.Used_Inst_market.domain.address.city.City;
 import com.example.Used_Inst_market.domain.address.city.CityRepository;
-import com.example.Used_Inst_market.web.dto.address.city.DeleteCityRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.city.InsertCityRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.city.SelectCityRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.city.UpdateCityRequestDTO;
+import com.example.Used_Inst_market.web.dto.address.city.CityDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.address.city.CityInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.address.city.CitySelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.address.city.CityUpdateRequestDTO;
 import com.example.Used_Inst_market.web.vo.address.CityInfoVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,8 @@ public class CityService {
     private final CityRepository cityRepository;
 
     @Transactional
-    public CityInfoVO select(SelectCityRequestDTO selectCityRequestDTO) {
-        City city = cityRepository.findById(selectCityRequestDTO.getCityNo())
+    public CityInfoVO select(CitySelectRequestDTO citySelectRequestDTO) {
+        City city = cityRepository.findById(citySelectRequestDTO.getCityNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 도시가 없습니다."));
 
         return new CityInfoVO(city);
@@ -35,23 +35,23 @@ public class CityService {
     }
 
     @Transactional
-    public Long insert(InsertCityRequestDTO insertCityRequestDTO) {
-        return cityRepository.save(insertCityRequestDTO.toEntity()).getCityNo();
+    public Long insert(CityInsertRequestDTO cityInsertRequestDTO) {
+        return cityRepository.save(cityInsertRequestDTO.toEntity()).getCityNo();
     }
 
     @Transactional
-    public Long update(UpdateCityRequestDTO updateCityRequestDTO) {
-        City city = cityRepository.findById(updateCityRequestDTO.getCityNo())
+    public Long update(CityUpdateRequestDTO cityUpdateRequestDTO) {
+        City city = cityRepository.findById(cityUpdateRequestDTO.getCityNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 도시가 없습니다."));
 
-        city.update(updateCityRequestDTO.getName(), updateCityRequestDTO.getLocal());
+        city.update(cityUpdateRequestDTO.getName(), cityUpdateRequestDTO.getLocal());
 
-        return updateCityRequestDTO.getCityNo();
+        return cityUpdateRequestDTO.getCityNo();
     }
 
     @Transactional
-    public void delete(DeleteCityRequestDTO deleteCityRequestDTO) {
-        City city = cityRepository.findById(deleteCityRequestDTO.getCityNo())
+    public void delete(CityDeleteRequestDTO cityDeleteRequestDTO) {
+        City city = cityRepository.findById(cityDeleteRequestDTO.getCityNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 도시가 없습니다."));
 
         cityRepository.delete(city);

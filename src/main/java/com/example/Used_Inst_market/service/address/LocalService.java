@@ -17,8 +17,8 @@ public class LocalService {
     private final LocalRepository localRepository;
 
     @Transactional
-    public LocalInfoVO select(SelectLocalRequestDTO selectLocalRequestDTO) {
-        Local local = localRepository.findById(selectLocalRequestDTO.getLocalNo())
+    public LocalInfoVO select(LocalSelectRequestDTO localSelectRequestDTO) {
+        Local local = localRepository.findById(localSelectRequestDTO.getLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
 
         return new LocalInfoVO(local);
@@ -32,23 +32,23 @@ public class LocalService {
     }
 
     @Transactional
-    public Long insert(InsertLocalRequestDTO insertLocalRequestDTO) {
-        return localRepository.save(insertLocalRequestDTO.toEntity()).getLocalNo();
+    public Long insert(LocalInsertRequestDTO localInsertRequestDTO) {
+        return localRepository.save(localInsertRequestDTO.toEntity()).getLocalNo();
     }
 
     @Transactional
-    public Long update(UpdateLocalRequestDTO updateLocalRequestDTO) {
-        Local local = localRepository.findById(updateLocalRequestDTO.getLocalNo())
+    public Long update(LocalUpdateRequestDTO localUpdateRequestDTO) {
+        Local local = localRepository.findById(localUpdateRequestDTO.getLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
 
-        local.update(updateLocalRequestDTO.getName());
+        local.update(localUpdateRequestDTO.getName());
 
-        return updateLocalRequestDTO.getLocalNo();
+        return localUpdateRequestDTO.getLocalNo();
     }
 
     @Transactional
-    public void delete(DeleteLocalRequestDTO deleteLocalRequestDTO) {
-        Local local = localRepository.findById(deleteLocalRequestDTO.getLocalNo())
+    public void delete(LocalDeleteRequestDTO localDeleteRequestDTO) {
+        Local local = localRepository.findById(localDeleteRequestDTO.getLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
 
         localRepository.delete(local);

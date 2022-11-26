@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class DeleteCityRequestDTO {
+public class CityDeleteRequestDTO {
     private Long cityNo;
 
     @Builder
-    public DeleteCityRequestDTO(Long cityNo) {
+    public CityDeleteRequestDTO(Long cityNo) {
         this.cityNo = cityNo;
     }
 }

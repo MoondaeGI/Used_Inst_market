@@ -5,10 +5,10 @@ import com.example.Used_Inst_market.domain.address.city.CityRepository;
 import com.example.Used_Inst_market.domain.address.local.Local;
 import com.example.Used_Inst_market.domain.address.local.LocalRepository;
 import com.example.Used_Inst_market.service.address.CityService;
-import com.example.Used_Inst_market.web.dto.address.city.DeleteCityRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.city.InsertCityRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.city.SelectCityRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.city.UpdateCityRequestDTO;
+import com.example.Used_Inst_market.web.dto.address.city.CityDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.address.city.CityInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.address.city.CitySelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.address.city.CityUpdateRequestDTO;
 import com.example.Used_Inst_market.web.vo.address.CityInfoVO;
 import org.junit.After;
 import org.junit.Before;
@@ -60,7 +60,7 @@ public class CityServiceTest {
                 .build());
 
         CityInfoVO cityInfoVO =
-                cityService.select(new SelectCityRequestDTO(testCity.getCityNo()));
+                cityService.select(new CitySelectRequestDTO(testCity.getCityNo()));
 
         assertThat(cityInfoVO.getCityNo()).isEqualTo(testCity.getCityNo());
         assertThat(cityInfoVO.getName()).isEqualTo(testName);
@@ -96,7 +96,7 @@ public class CityServiceTest {
         String testName = "test";
         Local testLocal = localRepository.findAll().get(0);
 
-        Long testCityNo = cityService.insert(InsertCityRequestDTO.builder()
+        Long testCityNo = cityService.insert(CityInsertRequestDTO.builder()
                 .local(testLocal)
                 .name(testName)
                 .build());
@@ -122,7 +122,7 @@ public class CityServiceTest {
         Local updatedLocal = localRepository
                 .save(Local.builder().name("update").build());
 
-        cityService.update(UpdateCityRequestDTO.builder()
+        cityService.update(CityUpdateRequestDTO.builder()
                 .cityNo(testCity.getCityNo())
                 .name(updatedName)
                 .local(updatedLocal)
@@ -147,13 +147,13 @@ public class CityServiceTest {
         Long testCityNo = cityRepository.findAll().get(0).getCityNo();
 
         cityService.delete(
-                DeleteCityRequestDTO.builder()
+                CityDeleteRequestDTO.builder()
                         .cityNo(testCityNo)
                         .build());
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> cityService.select(
-                        SelectCityRequestDTO.builder()
+                        CitySelectRequestDTO.builder()
                                 .cityNo(testCityNo)
                                 .build()));
     }

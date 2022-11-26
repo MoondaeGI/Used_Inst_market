@@ -2,10 +2,10 @@ package com.example.Used_Inst_market.service.category;
 
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategoryRepository;
-import com.example.Used_Inst_market.web.dto.category.lower.DeleteLowerCategoryRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.InsertLowerCategoryRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.SelectLowerCategoryRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.UpdateLowerCategoryRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.lower.LowerCategorySelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryUpdateRequestDTO;
 import com.example.Used_Inst_market.web.vo.category.LowerCategoryInfoVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,9 @@ public class LowerCategoryService {
     private final LowerCategoryRepository lowerCategoryRepository;
 
     @Transactional
-    public LowerCategoryInfoVO select(SelectLowerCategoryRequestDTO selectLowerCategoryRequestDTO) {
+    public LowerCategoryInfoVO select(LowerCategorySelectRequestDTO lowerCategorySelectRequestDTO) {
         LowerCategory lowerCategory = lowerCategoryRepository
-                .findById(selectLowerCategoryRequestDTO.getLowerCategoryNo())
+                .findById(lowerCategorySelectRequestDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
         return new LowerCategoryInfoVO(lowerCategory);
@@ -36,28 +36,28 @@ public class LowerCategoryService {
     }
 
     @Transactional
-    public Long insert(InsertLowerCategoryRequestDTO insertLowerCategoryRequestDTO) {
+    public Long insert(LowerCategoryInsertRequestDTO lowerCategoryInsertRequestDTO) {
         return lowerCategoryRepository
-                .save(insertLowerCategoryRequestDTO.toEntity())
+                .save(lowerCategoryInsertRequestDTO.toEntity())
                 .getLowerCategoryNo();
     }
 
     @Transactional
-    public Long update(UpdateLowerCategoryRequestDTO updateLowerCategoryRequestDTO) {
+    public Long update(LowerCategoryUpdateRequestDTO lowerCategoryUpdateRequestDTO) {
         LowerCategory lowerCategory = lowerCategoryRepository
-                .findById(updateLowerCategoryRequestDTO.getLowerCategoryNo())
+                .findById(lowerCategoryUpdateRequestDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
-        lowerCategory.update(updateLowerCategoryRequestDTO.getUpperCategory(),
-                updateLowerCategoryRequestDTO.getName());
+        lowerCategory.update(lowerCategoryUpdateRequestDTO.getUpperCategory(),
+                lowerCategoryUpdateRequestDTO.getName());
 
-        return updateLowerCategoryRequestDTO.getLowerCategoryNo();
+        return lowerCategoryUpdateRequestDTO.getLowerCategoryNo();
     }
 
     @Transactional
-    public void delete(DeleteLowerCategoryRequestDTO deleteLowerCategoryRequestDTO) {
+    public void delete(LowerCategoryDeleteRequestDTO lowerCategoryDeleteRequestDTO) {
         LowerCategory lowerCategory = lowerCategoryRepository
-                .findById(deleteLowerCategoryRequestDTO.getLowerCategoryNo())
+                .findById(lowerCategoryDeleteRequestDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
         lowerCategoryRepository.delete(lowerCategory);

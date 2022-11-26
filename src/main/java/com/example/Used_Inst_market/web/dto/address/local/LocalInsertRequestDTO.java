@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class InsertLocalRequestDTO {
+public class LocalInsertRequestDTO {
     private String name;
 
     @Builder
-    public InsertLocalRequestDTO(String name) {
+    public LocalInsertRequestDTO(String name) {
         this.name = name;
     }
 

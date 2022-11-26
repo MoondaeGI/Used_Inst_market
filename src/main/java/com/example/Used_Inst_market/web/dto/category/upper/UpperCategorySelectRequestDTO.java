@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class DeleteUpperCategoryRequestDTO {
+public class UpperCategorySelectRequestDTO {
     private Long upperCategoryNo;
 
     @Builder
-    public DeleteUpperCategoryRequestDTO(Long upperCategoryNo) {
+    public UpperCategorySelectRequestDTO(Long upperCategoryNo) {
         this.upperCategoryNo = upperCategoryNo;
     }
 }

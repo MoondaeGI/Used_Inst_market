@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UpdateUpperCategoryRequestDTO {
+public class UpperCategoryUpdateRequestDTO {
     private Long upperCategoryNo;
     private String name;
 
     @Builder
-    public UpdateUpperCategoryRequestDTO(Long upperCategoryNo, String name) {
+    public UpperCategoryUpdateRequestDTO(Long upperCategoryNo, String name) {
         this.upperCategoryNo = upperCategoryNo;
         this.name = name;
     }

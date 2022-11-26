@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UpdateLowerCategoryRequestDTO {
+public class LowerCategoryUpdateRequestDTO {
     private Long lowerCategoryNo;
     private UpperCategory upperCategory;
     private String name;
 
     @Builder
-    public UpdateLowerCategoryRequestDTO(Long lowerCategoryNo,
+    public LowerCategoryUpdateRequestDTO(Long lowerCategoryNo,
                                          UpperCategory upperCategory, String name) {
         this.lowerCategoryNo = lowerCategoryNo;
         this.upperCategory = upperCategory;

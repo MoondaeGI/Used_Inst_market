@@ -2,10 +2,10 @@ package com.example.Used_Inst_market.service.brand;
 
 import com.example.Used_Inst_market.domain.brand.Brand;
 import com.example.Used_Inst_market.domain.brand.BrandRepository;
-import com.example.Used_Inst_market.web.dto.brand.DeleteBrandRequestDTO;
-import com.example.Used_Inst_market.web.dto.brand.InsertBrandRequestDTO;
-import com.example.Used_Inst_market.web.dto.brand.SelectBrandRequestDTO;
-import com.example.Used_Inst_market.web.dto.brand.UpdateBrandRequestDTO;
+import com.example.Used_Inst_market.web.dto.brand.BrandDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.brand.BrandInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.brand.BrandSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.brand.BrandUpdateRequestDTO;
 import com.example.Used_Inst_market.web.vo.brand.BrandInfoVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,8 @@ public class BrandService {
     private final BrandRepository brandRepository;
 
     @Transactional
-    public BrandInfoVO select(SelectBrandRequestDTO selectBrandRequestDTO) {
-        Brand brand = brandRepository.findById(selectBrandRequestDTO.getBrandNo())
+    public BrandInfoVO select(BrandSelectRequestDTO brandSelectRequestDTO) {
+        Brand brand = brandRepository.findById(brandSelectRequestDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
 
         return new BrandInfoVO(brand);
@@ -35,23 +35,23 @@ public class BrandService {
     }
 
     @Transactional
-    public Long insert(InsertBrandRequestDTO insertBrandRequestDTO) {
-        return brandRepository.save(insertBrandRequestDTO.toEntity()).getBrandNo();
+    public Long insert(BrandInsertRequestDTO brandInsertRequestDTO) {
+        return brandRepository.save(brandInsertRequestDTO.toEntity()).getBrandNo();
     }
 
     @Transactional
-    public Long update(UpdateBrandRequestDTO updateBrandRequestDTO) {
-        Brand brand = brandRepository.findById(updateBrandRequestDTO.getBrandNo())
+    public Long update(BrandUpdateRequestDTO brandUpdateRequestDTO) {
+        Brand brand = brandRepository.findById(brandUpdateRequestDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
 
-        brand.update(updateBrandRequestDTO.getLowerCategory(), updateBrandRequestDTO.getName());
+        brand.update(brandUpdateRequestDTO.getLowerCategory(), brandUpdateRequestDTO.getName());
 
         return brand.getBrandNo();
     }
 
     @Transactional
-    public void delete(DeleteBrandRequestDTO deleteBrandRequestDTO) {
-        Brand brand = brandRepository.findById(deleteBrandRequestDTO.getBrandNo())
+    public void delete(BrandDeleteRequestDTO brandDeleteRequestDTO) {
+        Brand brand = brandRepository.findById(brandDeleteRequestDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브렌드가 없습니다."));
 
         brandRepository.delete(brand);

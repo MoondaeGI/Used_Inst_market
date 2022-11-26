@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class DeleteBrandRequestDTO {
+public class BrandDeleteRequestDTO {
     private Long brandNo;
 
     @Builder
-    public DeleteBrandRequestDTO(Long brandNo) {
+    public BrandDeleteRequestDTO(Long brandNo) {
         this.brandNo = brandNo;
     }
 }

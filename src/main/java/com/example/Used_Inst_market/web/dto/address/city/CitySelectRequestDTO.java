@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SelectCityRequestDTO {
+public class CitySelectRequestDTO {
     private Long cityNo;
 
     @Builder
-    public SelectCityRequestDTO(Long cityNo) {
+    public CitySelectRequestDTO(Long cityNo) {
         this.cityNo = cityNo;
     }
 }

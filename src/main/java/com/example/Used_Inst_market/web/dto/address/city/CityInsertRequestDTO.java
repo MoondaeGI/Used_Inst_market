@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class InsertCityRequestDTO {
+public class CityInsertRequestDTO {
     private String name;
     private Local local;
 
     @Builder
-    public InsertCityRequestDTO(String name, Local local) {
+    public CityInsertRequestDTO(String name, Local local) {
         this.local = local;
         this.name = name;
     }

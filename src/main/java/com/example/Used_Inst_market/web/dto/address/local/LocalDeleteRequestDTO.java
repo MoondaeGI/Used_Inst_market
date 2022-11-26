@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SelectLocalRequestDTO {
+public class LocalDeleteRequestDTO {
     private Long localNo;
 
     @Builder
-    public SelectLocalRequestDTO(Long localNo) {
+    public LocalDeleteRequestDTO(Long localNo) {
         this.localNo = localNo;
     }
 }

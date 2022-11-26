@@ -48,4 +48,10 @@ public class Post extends BaseTimeStamp {
 
     @OneToMany(mappedBy = "post")
     private List<LocalSelect> localSelects = new ArrayList<LocalSelect>();
+
+    public void update(String title, String content, SoldYN soldYN) {
+        this.title = title;
+        this.content = content;
+        this.soldYN = soldYN;
+    }
 }

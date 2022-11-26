@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class InsertBrandRequestDTO {
+public class BrandInsertRequestDTO {
     private LowerCategory lowerCategory;
     private String name;
 
     @Builder
-    public InsertBrandRequestDTO(Brand brand) {
+    public BrandInsertRequestDTO(Brand brand) {
         this.lowerCategory = brand.getLowerCategory();
         this.name = brand.getName();
     }

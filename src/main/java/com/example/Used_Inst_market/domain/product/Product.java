@@ -50,4 +50,10 @@ public class Product extends BaseTimeStamp {
 
     @OneToMany(mappedBy = "product")
     private List<TransactionHistory> transactionHistories = new ArrayList<TransactionHistory>();
+
+    public void update(Brand brand, String name, Integer price) {
+        this.brand = brand;
+        this.name = name;
+        this.price = price;
+    }
 }

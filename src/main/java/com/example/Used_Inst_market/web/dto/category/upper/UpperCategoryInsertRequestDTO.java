@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class InsertUpperCategoryRequestDTO {
+public class UpperCategoryInsertRequestDTO {
     private String name;
 
     @Builder
-    public InsertUpperCategoryRequestDTO(String name) {
+    public UpperCategoryInsertRequestDTO(String name) {
         this.name = name;
     }
 

@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UpdateBrandRequestDTO {
+public class BrandUpdateRequestDTO {
     private Long brandNo;
     private LowerCategory lowerCategory;
     private String name;
 
     @Builder
-    public UpdateBrandRequestDTO(Long brandNo, LowerCategory lowerCategory, String name) {
+    public BrandUpdateRequestDTO(Long brandNo, LowerCategory lowerCategory, String name) {
         this.brandNo = brandNo;
         this.lowerCategory = lowerCategory;
         this.name = name;

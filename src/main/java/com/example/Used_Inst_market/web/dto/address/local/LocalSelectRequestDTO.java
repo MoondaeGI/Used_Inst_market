@@ -6,13 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UpdateLocalRequestDTO {
+public class LocalSelectRequestDTO {
     private Long localNo;
-    private String name;
 
     @Builder
-    public UpdateLocalRequestDTO(Long localNo, String name) {
+    public LocalSelectRequestDTO(Long localNo) {
         this.localNo = localNo;
-        this.name = name;
     }
 }
