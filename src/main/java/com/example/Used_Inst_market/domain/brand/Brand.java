@@ -3,6 +3,7 @@ package com.example.Used_Inst_market.domain.brand;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.domain.product.Product;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class Brand extends BaseTimeStamp {
         this.name = name;
     }
 
+    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "brand")
     private List<Product> products = new ArrayList<Product>();
 

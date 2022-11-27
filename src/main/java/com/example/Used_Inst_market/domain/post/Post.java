@@ -4,6 +4,7 @@ import com.example.Used_Inst_market.domain.product.Product;
 import com.example.Used_Inst_market.domain.select.local.LocalSelect;
 import com.example.Used_Inst_market.domain.user.User;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,9 +44,11 @@ public class Post extends BaseTimeStamp {
         this.soldYN = SoldYN.SALE;  // default값
     }
 
+    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "post")
     private List<Product> products = new ArrayList<Product>();
 
+    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "post")
     private List<LocalSelect> localSelects = new ArrayList<LocalSelect>();
 

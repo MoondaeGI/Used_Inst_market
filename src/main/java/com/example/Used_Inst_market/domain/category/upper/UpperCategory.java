@@ -3,6 +3,7 @@ package com.example.Used_Inst_market.domain.category.upper;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.domain.select.category.CategorySelect;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,9 +30,11 @@ public class UpperCategory extends BaseTimeStamp {
         this.name = name;
     }
 
+    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "upperCategory")
     private List<LowerCategory> lowerCategories = new ArrayList<LowerCategory>();
 
+    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "upperCategory")
     private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
 

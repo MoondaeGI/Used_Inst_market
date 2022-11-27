@@ -4,6 +4,7 @@ import com.example.Used_Inst_market.domain.address.addressdetail.Address;
 import com.example.Used_Inst_market.domain.post.Post;
 import com.example.Used_Inst_market.domain.transactionhistory.TransactionHistory;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,12 +44,15 @@ public class User extends BaseTimeStamp {
         this.role = Role.GUEST;
     }
 
+    @Getter(AccessLevel.NONE)
     @OneToOne(mappedBy = "user")
     private Address address;
 
+    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<Post>();
 
+    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "user")
     private List<TransactionHistory> transactionHistories = new ArrayList<TransactionHistory>();
 

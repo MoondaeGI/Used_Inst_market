@@ -2,6 +2,7 @@ package com.example.Used_Inst_market.domain.address.city;
 
 import com.example.Used_Inst_market.domain.address.addressdetail.Address;
 import com.example.Used_Inst_market.domain.address.local.Local;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,7 @@ public class City {
         this.name = name;
     }
 
+    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "city")
     private List<Address> addresses = new ArrayList<Address>();
 

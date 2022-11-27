@@ -5,6 +5,7 @@ import com.example.Used_Inst_market.domain.post.Post;
 import com.example.Used_Inst_market.domain.select.category.CategorySelect;
 import com.example.Used_Inst_market.domain.transactionhistory.TransactionHistory;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,9 +46,11 @@ public class Product extends BaseTimeStamp {
         this.price = price;
     }
 
+    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "product")
     private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
 
+    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "product")
     private List<TransactionHistory> transactionHistories = new ArrayList<TransactionHistory>();
 

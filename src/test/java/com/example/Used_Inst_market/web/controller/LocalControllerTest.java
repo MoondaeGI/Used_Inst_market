@@ -26,13 +26,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LocalControllerTest {
+    private static final String URL = "/local/info";
     @Autowired
     private TestRestTemplate testRestTemplate;
 
     @Autowired
     private LocalRepository localRepository;
-
-    private static String URL = "/local/info";
 
     @After
     public void teardown() {
