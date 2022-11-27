@@ -6,7 +6,7 @@ import com.example.Used_Inst_market.web.dto.product.ProductDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.product.ProductInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.product.ProductSelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.product.ProductUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.product.ProductInfoVO;
+import com.example.Used_Inst_market.web.vo.product.ProductVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +20,17 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public ProductInfoVO select(ProductSelectRequestDTO productSelectRequestDTO) {
+    public ProductVO select(ProductSelectRequestDTO productSelectRequestDTO) {
         Product product = productRepository.findById(productSelectRequestDTO.getProductNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다."));
 
-        return new ProductInfoVO(product);
+        return new ProductVO(product);
     }
 
     @Transactional
-    public List<ProductInfoVO> selectAll() {
+    public List<ProductVO> selectAll() {
         return productRepository.findAll().stream()
-                .map(ProductInfoVO::new)
+                .map(ProductVO::new)
                 .collect(Collectors.toList());
     }
 

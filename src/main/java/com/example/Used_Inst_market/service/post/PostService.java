@@ -6,7 +6,7 @@ import com.example.Used_Inst_market.web.dto.post.PostDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.post.PostInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.post.PostSelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.post.PostUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.post.PostInfoVO;
+import com.example.Used_Inst_market.web.vo.post.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +20,17 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public PostInfoVO select(PostSelectRequestDTO postSelectRequestDTO) {
+    public PostVO select(PostSelectRequestDTO postSelectRequestDTO) {
         Post post = postRepository.findById(postSelectRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
-        return new PostInfoVO(post);
+        return new PostVO(post);
     }
 
     @Transactional
-    public List<PostInfoVO> selectAll() {
+    public List<PostVO> selectAll() {
         return postRepository.findAll().stream()
-                .map(PostInfoVO::new)
+                .map(PostVO::new)
                 .collect(Collectors.toList());
     }
 

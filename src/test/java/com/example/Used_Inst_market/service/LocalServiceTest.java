@@ -4,7 +4,7 @@ import com.example.Used_Inst_market.domain.address.local.Local;
 import com.example.Used_Inst_market.domain.address.local.LocalRepository;
 import com.example.Used_Inst_market.service.address.LocalService;
 import com.example.Used_Inst_market.web.dto.address.local.*;
-import com.example.Used_Inst_market.web.vo.address.LocalInfoVO;
+import com.example.Used_Inst_market.web.vo.address.LocalVO;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +40,7 @@ public class LocalServiceTest {
                 .build());
 
         LocalSelectRequestDTO localSelectRequestDTO = new LocalSelectRequestDTO(testLocal.getLocalNo());
-        LocalInfoVO selectedLocal = localService.select(localSelectRequestDTO);
+        LocalVO selectedLocal = localService.select(localSelectRequestDTO);
 
         List<Local> locals = localRepository.findAll();
 
@@ -55,10 +55,10 @@ public class LocalServiceTest {
         testLocals.add(Local.builder().name("test2").build());
 
         localRepository.saveAll(testLocals);
-        List<LocalInfoVO> localInfoVOList = localService.selectAll();
+        List<LocalVO> localVOList = localService.selectAll();
 
-        assertThat(localInfoVOList.get(0).getName()).isEqualTo("test1");
-        assertThat(localInfoVOList.get(1).getName()).isEqualTo("test2");
+        assertThat(localVOList.get(0).getName()).isEqualTo("test1");
+        assertThat(localVOList.get(1).getName()).isEqualTo("test2");
     }
 
     @Test

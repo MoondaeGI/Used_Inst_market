@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class BrandInfoVO {
+public class BrandVO {
     private Long brandNo;
     private String name;
     private LowerCategory lowerCategory;
 
     @Builder
-    public BrandInfoVO(Brand brand) {
+    public BrandVO(Brand brand) {
         this.brandNo = brand.getBrandNo();
         this.name = brand.getName();
         this.lowerCategory = brand.getLowerCategory();

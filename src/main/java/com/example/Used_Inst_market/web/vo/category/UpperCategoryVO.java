@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UpperCategoryInfoVO {
+public class UpperCategoryVO {
     private Long upperCategoryNo;
     private String name;
 
     @Builder
-    public UpperCategoryInfoVO(UpperCategory upperCategory) {
+    public UpperCategoryVO(UpperCategory upperCategory) {
         this.upperCategoryNo = upperCategory.getUpperCategoryNo();
         this.name = upperCategory.getName();
     }

@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class LocalInfoVO {
+public class LocalVO {
     private Long localNo;
     private String name;
 
     @Builder
-    public LocalInfoVO(Local local) {
+    public LocalVO(Local local) {
         this.localNo = local.getLocalNo();
         this.name = local.getName();
     }

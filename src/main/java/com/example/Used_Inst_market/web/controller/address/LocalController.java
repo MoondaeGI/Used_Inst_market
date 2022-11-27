@@ -5,7 +5,7 @@ import com.example.Used_Inst_market.web.dto.address.local.LocalDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.local.LocalInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.local.LocalSelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.local.LocalUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.address.LocalInfoVO;
+import com.example.Used_Inst_market.web.vo.address.LocalVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +17,8 @@ import java.util.List;
 public class LocalController {
     private final LocalService localService;
 
-    @GetMapping(value = "/select")
-    public LocalInfoVO select(@RequestParam("localNo") Long localNo) {
+    @GetMapping(value = "/info")
+    public LocalVO select(@RequestParam(name = "no") Long localNo) {
         LocalSelectRequestDTO localSelectRequestDTO = LocalSelectRequestDTO.builder()
                 .localNo(localNo)
                 .build();
@@ -26,23 +26,23 @@ public class LocalController {
         return localService.select(localSelectRequestDTO);
     }
 
-    @GetMapping(value = "selectAll")
-    public List<LocalInfoVO> selectAll() {
+    @GetMapping(value = "/info/list")
+    public List<LocalVO> selectAll() {
         return localService.selectAll();
     }
 
-    @PostMapping(value = "/insert")
+    @PostMapping(value = "/info")
     public Long insert(@RequestBody LocalInsertRequestDTO localInsertRequestDTO) {
         return localService.insert(localInsertRequestDTO);
     }
 
-    @PutMapping(value = "/update")
+    @PutMapping(value = "/info")
     public Long update(@RequestBody LocalUpdateRequestDTO localUpdateRequestDTO) {
         return localService.update(localUpdateRequestDTO);
     }
 
-    @DeleteMapping(value = "/delete")
-    public void delete(@RequestParam("localNo") Long localNo) {
+    @DeleteMapping(value = "/info")
+    public void delete(@RequestParam(name = "no") Long localNo) {
         LocalDeleteRequestDTO localDeleteRequestDTO = LocalDeleteRequestDTO.builder()
                 .localNo(localNo)
                 .build();

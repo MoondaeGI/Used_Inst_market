@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CityInfoVO {
+public class CityVO {
     private Long cityNo;
     private String name;
     private Local local;
 
     @Builder
-    public CityInfoVO(City city) {
+    public CityVO(City city) {
         this.cityNo = city.getCityNo();
         this.name = city.getName();
         this.local = city.getLocal();

@@ -9,7 +9,7 @@ import com.example.Used_Inst_market.web.dto.address.city.CityDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.city.CityInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.city.CitySelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.city.CityUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.address.CityInfoVO;
+import com.example.Used_Inst_market.web.vo.address.CityVO;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,12 +59,12 @@ public class CityServiceTest {
                 .name(testName)
                 .build());
 
-        CityInfoVO cityInfoVO =
+        CityVO cityVO =
                 cityService.select(new CitySelectRequestDTO(testCity.getCityNo()));
 
-        assertThat(cityInfoVO.getCityNo()).isEqualTo(testCity.getCityNo());
-        assertThat(cityInfoVO.getName()).isEqualTo(testName);
-        assertThat(cityInfoVO.getLocal().getLocalNo()).isEqualTo(testLocal.getLocalNo());
+        assertThat(cityVO.getCityNo()).isEqualTo(testCity.getCityNo());
+        assertThat(cityVO.getName()).isEqualTo(testName);
+        assertThat(cityVO.getLocal().getLocalNo()).isEqualTo(testLocal.getLocalNo());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class CityServiceTest {
         testCities.add(City.builder().name(testName2).local(testLocal).build());
 
         cityRepository.saveAll(testCities);
-        List<CityInfoVO> selectedCities = cityService.selectAll();
+        List<CityVO> selectedCities = cityService.selectAll();
 
         assertThat(selectedCities.get(0).getCityNo()).isEqualTo(testCities.get(0).getCityNo());
         assertThat(selectedCities.get(0).getName()).isEqualTo(testCities.get(0).getName());

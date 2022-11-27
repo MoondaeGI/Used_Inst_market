@@ -6,7 +6,7 @@ import com.example.Used_Inst_market.web.dto.address.city.CityDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.city.CityInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.city.CitySelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.city.CityUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.address.CityInfoVO;
+import com.example.Used_Inst_market.web.vo.address.CityVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +20,17 @@ public class CityService {
     private final CityRepository cityRepository;
 
     @Transactional
-    public CityInfoVO select(CitySelectRequestDTO citySelectRequestDTO) {
+    public CityVO select(CitySelectRequestDTO citySelectRequestDTO) {
         City city = cityRepository.findById(citySelectRequestDTO.getCityNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 도시가 없습니다."));
 
-        return new CityInfoVO(city);
+        return new CityVO(city);
     }
 
     @Transactional
-    public List<CityInfoVO> selectAll() {
+    public List<CityVO> selectAll() {
         return cityRepository.findAll().stream()
-                .map(CityInfoVO::new)
+                .map(CityVO::new)
                 .collect(Collectors.toList());
     }
 

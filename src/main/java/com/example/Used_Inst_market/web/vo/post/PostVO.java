@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class PostInfoVO {
+public class PostVO {
     private Long postNo;
     private User user;
     private String title;
@@ -17,7 +17,7 @@ public class PostInfoVO {
     private SoldYN soldYN;
 
     @Builder
-    public PostInfoVO(Post post) {
+    public PostVO(Post post) {
         this.postNo = post.getPostNo();
         this.user = post.getUser();
         this.title = post.getTitle();

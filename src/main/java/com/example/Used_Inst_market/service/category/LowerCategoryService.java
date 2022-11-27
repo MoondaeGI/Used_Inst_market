@@ -6,7 +6,7 @@ import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryDeleteRe
 import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.lower.LowerCategorySelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.category.LowerCategoryInfoVO;
+import com.example.Used_Inst_market.web.vo.category.LowerCategoryVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,18 +20,18 @@ public class LowerCategoryService {
     private final LowerCategoryRepository lowerCategoryRepository;
 
     @Transactional
-    public LowerCategoryInfoVO select(LowerCategorySelectRequestDTO lowerCategorySelectRequestDTO) {
+    public LowerCategoryVO select(LowerCategorySelectRequestDTO lowerCategorySelectRequestDTO) {
         LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(lowerCategorySelectRequestDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
-        return new LowerCategoryInfoVO(lowerCategory);
+        return new LowerCategoryVO(lowerCategory);
     }
 
     @Transactional
-    public List<LowerCategoryInfoVO> selectAll() {
+    public List<LowerCategoryVO> selectAll() {
         return lowerCategoryRepository.findAll().stream()
-                .map(LowerCategoryInfoVO::new)
+                .map(LowerCategoryVO::new)
                 .collect(Collectors.toList());
     }
 

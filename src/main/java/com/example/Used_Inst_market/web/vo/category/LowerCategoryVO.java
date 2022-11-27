@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class LowerCategoryInfoVO {
+public class LowerCategoryVO {
     private Long lowerCategoryNo;
     private UpperCategory upperCategory;
     private String name;
 
     @Builder
-    public LowerCategoryInfoVO(LowerCategory lowerCategory) {
+    public LowerCategoryVO(LowerCategory lowerCategory) {
         this.lowerCategoryNo = lowerCategory.getLowerCategoryNo();
         this.upperCategory = lowerCategory.getUpperCategory();
         this.name = lowerCategory.getName();

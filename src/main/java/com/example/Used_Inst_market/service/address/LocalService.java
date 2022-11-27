@@ -3,7 +3,7 @@ package com.example.Used_Inst_market.service.address;
 import com.example.Used_Inst_market.domain.address.local.Local;
 import com.example.Used_Inst_market.domain.address.local.LocalRepository;
 import com.example.Used_Inst_market.web.dto.address.local.*;
-import com.example.Used_Inst_market.web.vo.address.LocalInfoVO;
+import com.example.Used_Inst_market.web.vo.address.LocalVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +17,18 @@ public class LocalService {
     private final LocalRepository localRepository;
 
     @Transactional
-    public LocalInfoVO select(LocalSelectRequestDTO localSelectRequestDTO) {
+    public LocalVO select(LocalSelectRequestDTO localSelectRequestDTO)
+            throws IllegalArgumentException {
         Local local = localRepository.findById(localSelectRequestDTO.getLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
 
-        return new LocalInfoVO(local);
+        return new LocalVO(local);
     }
 
     @Transactional
-    public List<LocalInfoVO> selectAll() {
+    public List<LocalVO> selectAll() {
         return localRepository.findAll().stream()
-                .map(LocalInfoVO::new)
+                .map(LocalVO::new)
                 .collect(Collectors.toList());
     }
 
@@ -37,7 +38,8 @@ public class LocalService {
     }
 
     @Transactional
-    public Long update(LocalUpdateRequestDTO localUpdateRequestDTO) {
+    public Long update(LocalUpdateRequestDTO localUpdateRequestDTO)
+            throws IllegalArgumentException {
         Local local = localRepository.findById(localUpdateRequestDTO.getLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
 
@@ -47,7 +49,8 @@ public class LocalService {
     }
 
     @Transactional
-    public void delete(LocalDeleteRequestDTO localDeleteRequestDTO) {
+    public void delete(LocalDeleteRequestDTO localDeleteRequestDTO)
+            throws IllegalArgumentException {
         Local local = localRepository.findById(localDeleteRequestDTO.getLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
 

@@ -6,7 +6,7 @@ import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryDeleteRe
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategorySelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.category.UpperCategoryInfoVO;
+import com.example.Used_Inst_market.web.vo.category.UpperCategoryVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,18 +20,18 @@ public class UpperCategoryService {
     private final UpperCategoryRepository upperCategoryRepository;
 
     @Transactional
-    public UpperCategoryInfoVO select(UpperCategorySelectRequestDTO upperCategorySelectRequestDTO) {
+    public UpperCategoryVO select(UpperCategorySelectRequestDTO upperCategorySelectRequestDTO) {
         UpperCategory upperCategory = upperCategoryRepository
                 .findById(upperCategorySelectRequestDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
-        return new UpperCategoryInfoVO(upperCategory);
+        return new UpperCategoryVO(upperCategory);
     }
 
     @Transactional
-    public List<UpperCategoryInfoVO> selectAll() {
+    public List<UpperCategoryVO> selectAll() {
         return upperCategoryRepository.findAll().stream()
-                .map(UpperCategoryInfoVO::new)
+                .map(UpperCategoryVO::new)
                 .collect(Collectors.toList());
     }
 

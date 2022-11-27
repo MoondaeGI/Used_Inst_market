@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ProductInfoVO {
+public class ProductVO {
     private Long productNo;
     private Post post;
     private Brand brand;
@@ -17,7 +17,7 @@ public class ProductInfoVO {
     private Integer price;
 
     @Builder
-    public ProductInfoVO(Product product) {
+    public ProductVO(Product product) {
         this.productNo = product.getProductNo();
         this.post = product.getPost();
         this.brand = product.getBrand();
