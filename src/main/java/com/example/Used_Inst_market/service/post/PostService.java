@@ -9,8 +9,8 @@ import com.example.Used_Inst_market.web.dto.post.PostUpdateRequestDTO;
 import com.example.Used_Inst_market.web.vo.post.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class PostService {
     private final PostRepository postRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public PostVO select(PostSelectRequestDTO postSelectRequestDTO)
             throws IllegalArgumentException {
         Post post = postRepository.findById(postSelectRequestDTO.getPostNo())
@@ -28,7 +28,7 @@ public class PostService {
         return new PostVO(post);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PostVO> selectAll() {
         return postRepository.findAll().stream()
                 .map(PostVO::new)

@@ -9,8 +9,8 @@ import com.example.Used_Inst_market.web.dto.address.city.CityUpdateRequestDTO;
 import com.example.Used_Inst_market.web.vo.address.CityVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class CityService {
     private final CityRepository cityRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public CityVO select(CitySelectRequestDTO citySelectRequestDTO) {
         City city = cityRepository.findById(citySelectRequestDTO.getCityNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 도시가 없습니다."));
@@ -27,7 +27,7 @@ public class CityService {
         return new CityVO(city);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CityVO> selectAll() {
         return cityRepository.findAll().stream()
                 .map(CityVO::new)

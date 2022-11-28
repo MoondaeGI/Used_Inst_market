@@ -16,8 +16,8 @@ import com.example.Used_Inst_market.web.vo.category.LowerCategoryVO;
 import com.example.Used_Inst_market.web.vo.category.UpperCategoryVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +27,7 @@ public class CategoryService {
     private final UpperCategoryRepository upperCategoryRepository;
     private final LowerCategoryRepository lowerCategoryRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public UpperCategoryVO upperCategorySelect(
             UpperCategorySelectRequestDTO upperCategorySelectRequestDTO)
             throws IllegalArgumentException {
@@ -38,7 +38,7 @@ public class CategoryService {
         return new UpperCategoryVO(upperCategory);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<UpperCategoryVO> upperCategorySelectAll() {
         return upperCategoryRepository.findAll().stream()
                 .map(UpperCategoryVO::new)

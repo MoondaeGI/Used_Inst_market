@@ -9,8 +9,8 @@ import com.example.Used_Inst_market.web.dto.category.brand.BrandUpdateRequestDTO
 import com.example.Used_Inst_market.web.vo.category.BrandVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class BrandService {
     private final BrandRepository brandRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public BrandVO select(BrandSelectRequestDTO brandSelectRequestDTO) {
         Brand brand = brandRepository.findById(brandSelectRequestDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
@@ -27,7 +27,7 @@ public class BrandService {
         return new BrandVO(brand);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<BrandVO> selectAll() {
         return brandRepository.findAll().stream()
                 .map(BrandVO::new)

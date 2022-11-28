@@ -6,8 +6,8 @@ import com.example.Used_Inst_market.web.dto.address.local.*;
 import com.example.Used_Inst_market.web.vo.address.LocalVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class LocalService {
     private final LocalRepository localRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public LocalVO select(LocalSelectRequestDTO localSelectRequestDTO)
             throws IllegalArgumentException {
         Local local = localRepository.findById(localSelectRequestDTO.getLocalNo())
@@ -25,7 +25,7 @@ public class LocalService {
         return new LocalVO(local);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<LocalVO> selectAll() {
         return localRepository.findAll().stream()
                 .map(LocalVO::new)
