@@ -20,7 +20,8 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public PostVO select(PostSelectRequestDTO postSelectRequestDTO) {
+    public PostVO select(PostSelectRequestDTO postSelectRequestDTO)
+            throws IllegalArgumentException {
         Post post = postRepository.findById(postSelectRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
@@ -40,18 +41,20 @@ public class PostService {
     }
 
     @Transactional
-    public Long update(PostUpdateRequestDTO postUpdateRequestDTO) {
+    public Long update(PostUpdateRequestDTO postUpdateRequestDTO)
+            throws IllegalArgumentException {
         Post post = postRepository.findById(postUpdateRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         post.update(postUpdateRequestDTO.getTitle(), postUpdateRequestDTO.getContent(),
-                postUpdateRequestDTO.getSoldYN());
+                postUpdateRequestDTO.getPrice(), postUpdateRequestDTO.getSoldYN());
 
         return postUpdateRequestDTO.getPostNo();
     }
 
     @Transactional
-    public void delete(PostDeleteRequestDTO postDeleteRequestDTO) {
+    public void delete(PostDeleteRequestDTO postDeleteRequestDTO)
+            throws IllegalArgumentException {
         Post post = postRepository.findById(postDeleteRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 

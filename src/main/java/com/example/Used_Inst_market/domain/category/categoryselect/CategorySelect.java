@@ -1,8 +1,9 @@
-package com.example.Used_Inst_market.domain.select.category;
+package com.example.Used_Inst_market.domain.category.categoryselect;
 
+import com.example.Used_Inst_market.domain.category.brand.Brand;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
-import com.example.Used_Inst_market.domain.product.Product;
+import com.example.Used_Inst_market.domain.post.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +21,7 @@ public class CategorySelect {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_NO", nullable = false)
-    private Product product;
+    private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PD_UPPER_CT_NO", nullable = false)
@@ -29,4 +30,8 @@ public class CategorySelect {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PD_LOWER_CT_NO", nullable = false)
     private LowerCategory lowerCategory;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BRAND_NO", nullable = false)
+    private Brand brand;
 }

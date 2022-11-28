@@ -1,7 +1,7 @@
-package com.example.Used_Inst_market.domain.brand;
+package com.example.Used_Inst_market.domain.category.brand;
 
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
-import com.example.Used_Inst_market.domain.product.Product;
+import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -37,7 +37,7 @@ public class Brand extends BaseTimeStamp {
 
     @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "brand")
-    private List<Product> products = new ArrayList<Product>();
+    private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
 
     public void update(LowerCategory lowerCategory, String name) {
         this.lowerCategory = lowerCategory;

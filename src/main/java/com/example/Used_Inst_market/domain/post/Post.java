@@ -1,7 +1,7 @@
 package com.example.Used_Inst_market.domain.post;
 
-import com.example.Used_Inst_market.domain.product.Product;
-import com.example.Used_Inst_market.domain.select.local.LocalSelect;
+import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelect;
+import com.example.Used_Inst_market.domain.address.localselect.LocalSelect;
 import com.example.Used_Inst_market.domain.user.User;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
 import lombok.AccessLevel;
@@ -32,29 +32,34 @@ public class Post extends BaseTimeStamp {
     @Column(name = "CONTENT", nullable = false)
     private String content;
 
+    @Column(name = "PRICE", nullable = false)
+    private Integer price;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "SOLD_YN", nullable = false)
     private SoldYN soldYN;
 
     @Builder
-    public Post(User user, String title, String content) {
+    public Post(User user, String title, String content, Integer price) {
         this.user = user;
         this.title = title;
         this.content = content;
+        this.price = price;
         this.soldYN = SoldYN.SALE;  // default값
     }
 
     @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "post")
-    private List<Product> products = new ArrayList<Product>();
+    private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
 
     @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "post")
     private List<LocalSelect> localSelects = new ArrayList<LocalSelect>();
 
-    public void update(String title, String content, SoldYN soldYN) {
+    public void update(String title, String content, Integer price, SoldYN soldYN) {
         this.title = title;
         this.content = content;
+        this.price = price;
         this.soldYN = soldYN;
     }
 }

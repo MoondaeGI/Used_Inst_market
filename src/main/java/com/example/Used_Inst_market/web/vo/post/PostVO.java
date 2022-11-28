@@ -14,6 +14,7 @@ public class PostVO {
     private User user;
     private String title;
     private String content;
+    private Integer price;
     private SoldYN soldYN;
 
     @Builder
@@ -22,6 +23,7 @@ public class PostVO {
         this.user = post.getUser();
         this.title = post.getTitle();
         this.content = post.getContent();
+        this.price = post.getPrice();
         this.soldYN = post.getSoldYN();
     }
 }

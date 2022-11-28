@@ -12,12 +12,15 @@ public class PostInsertRequestDTO {
     private User user;
     private String title;
     private String content;
+    private Integer price;
 
     @Builder
-    public PostInsertRequestDTO(User user, String title, String content) {
+    public PostInsertRequestDTO(
+            User user, String title, String content, Integer price) {
         this.user = user;
         this.title = title;
         this.content = content;
+        this.price = price;
     }
 
     public Post toEntity() {
@@ -25,6 +28,7 @@ public class PostInsertRequestDTO {
                 .user(user)
                 .title(title)
                 .content(content)
+                .price(price)
                 .build();
     }
 }

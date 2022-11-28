@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.web.dto.brand;
+package com.example.Used_Inst_market.web.dto.category.brand;
 
 import lombok.Builder;
 import lombok.Getter;

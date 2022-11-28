@@ -1,6 +1,6 @@
-package com.example.Used_Inst_market.web.vo.brand;
+package com.example.Used_Inst_market.web.vo.category;
 
-import com.example.Used_Inst_market.domain.brand.Brand;
+import com.example.Used_Inst_market.domain.category.brand.Brand;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.domain.select.category;
+package com.example.Used_Inst_market.domain.category.categoryselect;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

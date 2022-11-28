@@ -1,12 +1,12 @@
-package com.example.Used_Inst_market.service.brand;
+package com.example.Used_Inst_market.service.category;
 
-import com.example.Used_Inst_market.domain.brand.Brand;
-import com.example.Used_Inst_market.domain.brand.BrandRepository;
-import com.example.Used_Inst_market.web.dto.brand.BrandDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.brand.BrandInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.brand.BrandSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.brand.BrandUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.brand.BrandVO;
+import com.example.Used_Inst_market.domain.category.brand.Brand;
+import com.example.Used_Inst_market.domain.category.brand.BrandRepository;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandUpdateRequestDTO;
+import com.example.Used_Inst_market.web.vo.category.BrandVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

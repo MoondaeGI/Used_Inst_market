@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.domain.select.local;
+package com.example.Used_Inst_market.domain.address.localselect;
 
 import com.example.Used_Inst_market.domain.address.city.City;
 import com.example.Used_Inst_market.domain.address.local.Local;
