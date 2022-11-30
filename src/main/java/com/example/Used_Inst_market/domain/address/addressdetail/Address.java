@@ -16,9 +16,13 @@ import javax.persistence.*;
 @Table(name = "TB_ADDRESS")
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ADDRESS_NO")
     private Long addressNo;
+
+    @MapsId
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "USER_NO")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LOCAL_NO", nullable = false)
@@ -37,8 +41,4 @@ public class Address {
         this.city = city;
         this.addressDetail = addressDetail;
     }
-
-    @Getter(AccessLevel.NONE)
-    @OneToOne(mappedBy = "address", orphanRemoval = true)
-    private User user;
 }

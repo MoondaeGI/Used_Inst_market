@@ -24,5 +24,5 @@ public interface CategorySelectRepository extends JpaRepository<CategorySelect, 
     @Query("SELECT categorySelect.post " +
             "FROM CategorySelect categorySelect " +
             "WHERE categorySelect.brand = :brand")
-    List<Post> findByBrand(@Param("brad") Brand brand);
+    List<Post> findByBrand(@Param("brand") Brand brand);
 }

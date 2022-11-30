@@ -27,7 +27,8 @@ public class BaseTimeStampTest {
 
     @Test
     public void BaseTimeStamp_등록_검증() {
-        LocalDateTime testDate = LocalDateTime.of(2022, 11, 25, 0, 0, 0);
+        LocalDateTime testDate =
+                LocalDateTime.of(2022, 11, 25, 0, 0, 0);
 
         localRepository.save(Local.builder()
                 .name("test")
@@ -36,5 +37,15 @@ public class BaseTimeStampTest {
 
         assertThat(locals.get(0).getRegDt()).isAfter(testDate);
         assertThat(locals.get(0).getModDt()).isAfter(testDate);
+    }
+
+    @Test
+    public void modDt_검증() {
+        LocalDateTime testDate =
+                LocalDateTime.of(2022, 11, 30, 0, 0, 0);
+
+        localRepository.save(Local.builder()
+                .name("test")
+                .build());
     }
 }

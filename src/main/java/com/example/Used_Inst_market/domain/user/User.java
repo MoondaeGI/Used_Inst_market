@@ -22,8 +22,7 @@ public class User extends BaseTimeStamp {
     @Column(name = "USER_NO")
     private Long userNo;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "ADDRESS_NO", nullable = false)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Address address;
 
     @Column(name = "NAME", nullable = false)
