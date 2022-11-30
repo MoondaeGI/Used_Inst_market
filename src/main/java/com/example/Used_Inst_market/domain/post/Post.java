@@ -47,11 +47,11 @@ public class Post extends BaseTimeStamp {
     }
 
     @Getter(AccessLevel.NONE)
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private CategorySelect categorySelect;
 
     @Getter(AccessLevel.NONE)
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private LocalSelect localSelect;
 
     public void update(String title, String content, Integer price, SoldYN soldYN) {

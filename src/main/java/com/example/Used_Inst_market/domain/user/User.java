@@ -3,7 +3,6 @@ package com.example.Used_Inst_market.domain.user;
 import com.example.Used_Inst_market.domain.address.addressdetail.Address;
 import com.example.Used_Inst_market.domain.post.Post;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +21,8 @@ public class User extends BaseTimeStamp {
     @Column(name = "USER_NO")
     private Long userNo;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "ADDRESS_NO")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = true)
     public Address address;
 
     @Column(name = "NAME", nullable = false)
@@ -41,14 +40,16 @@ public class User extends BaseTimeStamp {
 
     @Builder
     public User(String name, String email,
-                String phoneNumber) {
+                String phoneNumber, Address address) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.address = address;
         this.role = Role.GUEST;
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<Post>();
 
     public String getRoleKey() {
