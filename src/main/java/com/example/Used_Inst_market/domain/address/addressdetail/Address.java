@@ -3,6 +3,7 @@ package com.example.Used_Inst_market.domain.address.addressdetail;
 import com.example.Used_Inst_market.domain.address.city.City;
 import com.example.Used_Inst_market.domain.address.local.Local;
 import com.example.Used_Inst_market.domain.user.User;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,9 @@ import javax.persistence.*;
 @Table(name = "TB_ADDRESS")
 public class Address {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ADDRESS_NO")
     private Long addressNo;
-
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_NO")
-    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LOCAL_NO", nullable = false)
@@ -39,4 +37,8 @@ public class Address {
         this.city = city;
         this.addressDetail = addressDetail;
     }
+
+    @Getter(AccessLevel.NONE)
+    @OneToOne(mappedBy = "address", orphanRemoval = true)
+    private User user;
 }

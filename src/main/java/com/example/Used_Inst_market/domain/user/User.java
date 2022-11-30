@@ -2,7 +2,6 @@ package com.example.Used_Inst_market.domain.user;
 
 import com.example.Used_Inst_market.domain.address.addressdetail.Address;
 import com.example.Used_Inst_market.domain.post.Post;
-import com.example.Used_Inst_market.domain.transactionhistory.TransactionHistory;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,6 +22,10 @@ public class User extends BaseTimeStamp {
     @Column(name = "USER_NO")
     private Long userNo;
 
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "ADDRESS_NO", nullable = false)
+    private Address address;
+
     @Column(name = "NAME", nullable = false)
     private String name;
 
@@ -37,24 +40,18 @@ public class User extends BaseTimeStamp {
     private Role role;
 
     @Builder
-    public User(String name, String email, String phoneNumber) {
+    public User(String name, String email,
+                String phoneNumber, Address address) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.address = address;
         this.role = Role.GUEST;
     }
 
     @Getter(AccessLevel.NONE)
-    @OneToOne(mappedBy = "user")
-    private Address address;
-
-    @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<Post> posts = new ArrayList<Post>();
-
-    @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "user")
-    private List<TransactionHistory> transactionHistories = new ArrayList<TransactionHistory>();
 
     public String getRoleKey() {
         return this.role.getKey();

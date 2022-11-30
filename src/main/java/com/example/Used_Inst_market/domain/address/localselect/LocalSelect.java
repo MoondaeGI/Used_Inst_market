@@ -15,9 +15,13 @@ import javax.persistence.*;
 @Table(name = "TB_LOCAL_SELECT")
 public class LocalSelect {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOCAL_SELECT_NO")
     private Long localSelectNo;
+
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "POST_NO")
+    private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LOCAL_NO", nullable = false)
@@ -27,14 +31,10 @@ public class LocalSelect {
     @JoinColumn(name = "CITY_NO", nullable = false)
     private City city;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "POST_NO", nullable = false)
-    private Post post;
-
     @Builder
-    public LocalSelect(Local local, City city, Post post) {
+    public LocalSelect(Post post, Local local, City city) {
+        this.post = post;
         this.local = local;
         this.city = city;
-        this.post = post;
     }
 }

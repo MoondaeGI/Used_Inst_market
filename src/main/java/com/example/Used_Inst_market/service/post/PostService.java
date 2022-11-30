@@ -1,5 +1,9 @@
 package com.example.Used_Inst_market.service.post;
 
+import com.example.Used_Inst_market.domain.address.localselect.LocalSelect;
+import com.example.Used_Inst_market.domain.address.localselect.LocalSelectRepository;
+import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelect;
+import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelectRepository;
 import com.example.Used_Inst_market.domain.post.Post;
 import com.example.Used_Inst_market.domain.post.PostRepository;
 import com.example.Used_Inst_market.web.dto.post.PostDeleteRequestDTO;
@@ -18,6 +22,8 @@ import java.util.stream.Collectors;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final CategorySelectRepository categorySelectRepository;
+    private final LocalSelectRepository localSelectRepository;
 
     @Transactional(readOnly = true)
     public PostVO select(PostSelectRequestDTO postSelectRequestDTO)
@@ -37,7 +43,24 @@ public class PostService {
 
     @Transactional
     public Long insert(PostInsertRequestDTO postInsertRequestDTO) {
-        return postRepository.save(postInsertRequestDTO.toEntity()).getPostNo();
+        Post post = postRepository.save(postInsertRequestDTO.toEntity());
+
+        categorySelectRepository.save(
+                CategorySelect.builder()
+                        .post(post)
+                        .upperCategory(postInsertRequestDTO.getUpperCategory())
+                        .lowerCategory(postInsertRequestDTO.getLowerCategory())
+                        .brand(postInsertRequestDTO.getBrand())
+                        .build());
+
+        localSelectRepository.save(
+                LocalSelect.builder()
+                        .post(post)
+                        .local(postInsertRequestDTO.getUser().getAddress().getLocal())
+                        .city(postInsertRequestDTO.getUser().getAddress().getCity())
+                        .build());
+
+        return post.getPostNo();
     }
 
     @Transactional
@@ -46,8 +69,14 @@ public class PostService {
         Post post = postRepository.findById(postUpdateRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
+        CategorySelect categorySelect = categorySelectRepository.findById(post.getPostNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+
         post.update(postUpdateRequestDTO.getTitle(), postUpdateRequestDTO.getContent(),
                 postUpdateRequestDTO.getPrice(), postUpdateRequestDTO.getSoldYN());
+
+        categorySelect.update(postUpdateRequestDTO.getUpperCategory(),
+                postUpdateRequestDTO.getLowerCategory(), postUpdateRequestDTO.getBrand());
 
         return postUpdateRequestDTO.getPostNo();
     }

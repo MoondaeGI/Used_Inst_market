@@ -1,11 +1,15 @@
 package com.example.Used_Inst_market.domain.address.local;
 
+import com.example.Used_Inst_market.domain.address.city.City;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -22,6 +26,10 @@ public class Local extends BaseTimeStamp{
 
     @Builder
     public Local(String name) { this.name = name; }
+
+    @Getter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "local", orphanRemoval = true)
+    private List<City> cities = new ArrayList<City>();
 
     public void update(String name) { this.name = name; }
 }

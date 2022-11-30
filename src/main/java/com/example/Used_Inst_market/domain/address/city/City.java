@@ -22,7 +22,7 @@ public class City {
     private Long cityNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LOCAL_NO")
+    @JoinColumn(name = "LOCAL_NO", nullable = false)
     private Local local;
 
     @Column(name = "NAME", nullable = false)
@@ -35,7 +35,7 @@ public class City {
     }
 
     @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "city")
+    @OneToMany(mappedBy = "city", orphanRemoval = true)
     private List<Address> addresses = new ArrayList<Address>();
 
     public void update(String name, Local local) {

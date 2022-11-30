@@ -21,11 +21,8 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class LocalServiceTest {
-    @Autowired
-    private LocalRepository localRepository;
-
-    @Autowired
-    private LocalService localService;
+    @Autowired private LocalRepository localRepository;
+    @Autowired private LocalService localService;
 
     @After
     public void teardown() {

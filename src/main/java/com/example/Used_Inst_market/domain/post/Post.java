@@ -10,8 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -49,12 +47,12 @@ public class Post extends BaseTimeStamp {
     }
 
     @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "post")
-    private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
+    private CategorySelect categorySelect;
 
     @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "post")
-    private List<LocalSelect> localSelects = new ArrayList<LocalSelect>();
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
+    private LocalSelect localSelect;
 
     public void update(String title, String content, Integer price, SoldYN soldYN) {
         this.title = title;
