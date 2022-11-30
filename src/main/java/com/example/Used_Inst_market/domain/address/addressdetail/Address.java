@@ -19,11 +19,6 @@ public class Address {
     @Column(name = "ADDRESS_NO")
     private Long addressNo;
 
-    @MapsId
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "USER_NO")
-    private User user;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LOCAL_NO", nullable = false)
     private Local local;
@@ -35,8 +30,12 @@ public class Address {
     @Column(name = "ADDRESS_DETAIL", nullable = false)
     private String addressDetail;
 
+    @OneToOne(mappedBy = "address", optional = false)
+    public User user;
+
     @Builder
-    public Address(Local local, City city, String addressDetail) {
+    public Address(User user, Local local, City city, String addressDetail) {
+        this.user = user;
         this.local = local;
         this.city = city;
         this.addressDetail = addressDetail;

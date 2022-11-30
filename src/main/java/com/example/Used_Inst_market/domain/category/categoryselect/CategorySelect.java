@@ -16,10 +16,10 @@ import javax.persistence.*;
 @Table(name = "TB_PD_CT_SELECT")
 public class CategorySelect {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PD_CT_SELECT_NO")
     private Long categorySelectNo;
 
-    @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "POST_NO")
     private Post post;

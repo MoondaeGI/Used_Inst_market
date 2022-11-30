@@ -15,10 +15,10 @@ import javax.persistence.*;
 @Table(name = "TB_LOCAL_SELECT")
 public class LocalSelect {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOCAL_SELECT_NO")
     private Long localSelectNo;
 
-    @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "POST_NO")
     private Post post;

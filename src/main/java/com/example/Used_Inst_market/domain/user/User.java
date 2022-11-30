@@ -22,8 +22,9 @@ public class User extends BaseTimeStamp {
     @Column(name = "USER_NO")
     private Long userNo;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Address address;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "ADDRESS_NO")
+    public Address address;
 
     @Column(name = "NAME", nullable = false)
     private String name;
@@ -40,16 +41,14 @@ public class User extends BaseTimeStamp {
 
     @Builder
     public User(String name, String email,
-                String phoneNumber, Address address) {
+                String phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.address = address;
         this.role = Role.GUEST;
     }
 
-    @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<Post>();
 
     public String getRoleKey() {

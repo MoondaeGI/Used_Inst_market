@@ -1,5 +1,7 @@
 package com.example.Used_Inst_market.domain;
 
+import com.example.Used_Inst_market.domain.address.addressdetail.Address;
+import com.example.Used_Inst_market.domain.address.addressdetail.AddressRepository;
 import com.example.Used_Inst_market.domain.user.Role;
 import com.example.Used_Inst_market.domain.user.User;
 import com.example.Used_Inst_market.domain.user.UserRepository;
@@ -17,8 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserRepositoryTest {
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired private UserRepository userRepository;
+    @Autowired private AddressRepository addressRepository;
 
     @After
     public void teardown() {

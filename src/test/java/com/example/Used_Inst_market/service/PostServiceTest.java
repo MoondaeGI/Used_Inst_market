@@ -6,11 +6,9 @@ import com.example.Used_Inst_market.domain.address.city.City;
 import com.example.Used_Inst_market.domain.address.city.CityRepository;
 import com.example.Used_Inst_market.domain.address.local.Local;
 import com.example.Used_Inst_market.domain.address.local.LocalRepository;
-import com.example.Used_Inst_market.domain.address.localselect.LocalSelect;
 import com.example.Used_Inst_market.domain.address.localselect.LocalSelectRepository;
 import com.example.Used_Inst_market.domain.category.brand.Brand;
 import com.example.Used_Inst_market.domain.category.brand.BrandRepository;
-import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelectRepository;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategoryRepository;
@@ -86,19 +84,19 @@ public class PostServiceTest {
                         .name("test")
                         .build());
 
-        Address testAddress = addressRepository.save(
+        User testUser = userRepository.save(User.builder()
+                .name("test")
+                .email("test1234@test.com")
+                .phoneNumber("010-0000-0000")
+                .build());
+
+        addressRepository.save(
                 Address.builder()
+                        .user(testUser)
                         .local(testLocal)
                         .city(testCity)
                         .addressDetail("test")
                         .build());
-
-        userRepository.save(User.builder()
-                .name("test")
-                .email("test1234@test.com")
-                .phoneNumber("010-0000-0000")
-                .address(testAddress)
-                .build());
     }
 
     @After
