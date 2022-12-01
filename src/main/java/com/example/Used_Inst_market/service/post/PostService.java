@@ -1,15 +1,20 @@
 package com.example.Used_Inst_market.service.post;
 
-import com.example.Used_Inst_market.domain.address.localselect.LocalSelect;
-import com.example.Used_Inst_market.domain.address.localselect.LocalSelectRepository;
-import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelect;
-import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelectRepository;
+import com.example.Used_Inst_market.domain.select.localselect.LocalSelect;
+import com.example.Used_Inst_market.domain.select.localselect.LocalSelectRepository;
+import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
+import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelectRepository;
 import com.example.Used_Inst_market.domain.post.Post;
 import com.example.Used_Inst_market.domain.post.PostRepository;
 import com.example.Used_Inst_market.web.dto.post.PostDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.post.PostInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.post.PostSelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.post.PostUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromBrandRequestDTO;
+import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromLowerRequestDTO;
+import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromUpperRequestDTO;
+import com.example.Used_Inst_market.web.dto.select.localselect.SelectFromCityRequestDTO;
+import com.example.Used_Inst_market.web.dto.select.localselect.SelectFromLocalRequestDTO;
 import com.example.Used_Inst_market.web.vo.post.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,8 +32,7 @@ public class PostService {
     private final LocalSelectRepository localSelectRepository;
 
     @Transactional(readOnly = true)
-    public PostVO select(@NotNull PostSelectRequestDTO postSelectRequestDTO)
-            throws IllegalArgumentException {
+    public PostVO select(@NotNull PostSelectRequestDTO postSelectRequestDTO) {
         Post post = postRepository.findById(postSelectRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
@@ -65,8 +69,7 @@ public class PostService {
     }
 
     @Transactional
-    public Long update(@NotNull PostUpdateRequestDTO postUpdateRequestDTO)
-            throws IllegalArgumentException {
+    public Long update(@NotNull PostUpdateRequestDTO postUpdateRequestDTO) {
         Post post = postRepository.findById(postUpdateRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
@@ -82,11 +85,55 @@ public class PostService {
     }
 
     @Transactional
-    public void delete(@NotNull PostDeleteRequestDTO postDeleteRequestDTO)
-            throws IllegalArgumentException {
+    public void delete(@NotNull PostDeleteRequestDTO postDeleteRequestDTO) {
         Post post = postRepository.findById(postDeleteRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         postRepository.delete(post);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostVO> selectFromUpperCategory(
+            SelectFromUpperRequestDTO selectFromUpperRequestDTO) {
+        return categorySelectRepository
+                .findByUpperCategory(selectFromUpperRequestDTO.getUpperCategory())
+                .stream().map(PostVO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostVO> selectFromLowerCategory(
+            SelectFromLowerRequestDTO selectFromLowerRequestDTO) {
+        return categorySelectRepository
+                .findByLowerCategory(selectFromLowerRequestDTO.getLowerCategory())
+                .stream().map(PostVO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostVO> selectFromBrand(
+            SelectFromBrandRequestDTO selectFromBrandRequestDTO) {
+        return categorySelectRepository
+                .findByBrand(selectFromBrandRequestDTO.getBrand())
+                .stream().map(PostVO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostVO> selectFromLocal(
+            SelectFromLocalRequestDTO selectFromLocalRequestDTO) {
+        return localSelectRepository
+                .findByLocal(selectFromLocalRequestDTO.getLocal())
+                .stream().map(PostVO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostVO> selectFromCity(
+            SelectFromCityRequestDTO selectFromCityRequestDTO) {
+        return localSelectRepository
+                .findByCity(selectFromCityRequestDTO.getCity())
+                .stream().map(PostVO::new)
+                .collect(Collectors.toList());
     }
 }

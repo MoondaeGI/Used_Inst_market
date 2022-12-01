@@ -1,7 +1,7 @@
 package com.example.Used_Inst_market.domain.post;
 
-import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelect;
-import com.example.Used_Inst_market.domain.address.localselect.LocalSelect;
+import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
+import com.example.Used_Inst_market.domain.select.localselect.LocalSelect;
 import com.example.Used_Inst_market.domain.user.User;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
 import lombok.AccessLevel;

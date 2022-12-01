@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.domain.category.categoryselect;
+package com.example.Used_Inst_market.domain.select.categoryselect;
 
 import com.example.Used_Inst_market.domain.category.brand.Brand;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;

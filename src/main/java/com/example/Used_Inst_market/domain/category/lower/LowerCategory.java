@@ -2,7 +2,7 @@ package com.example.Used_Inst_market.domain.category.lower;
 
 import com.example.Used_Inst_market.domain.category.brand.Brand;
 import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
-import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelect;
+import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
 import lombok.AccessLevel;
 import lombok.Builder;
