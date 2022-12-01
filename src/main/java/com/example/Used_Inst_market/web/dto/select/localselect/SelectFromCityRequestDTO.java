@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class SelectFromCityRequestDTO {
-    private City city;
+    private Long cityNo;
 
     @Builder
-    public SelectFromCityRequestDTO(City city) {
-        this.city = city;
+    public SelectFromCityRequestDTO(Long cityNo) {
+        this.cityNo = cityNo;
     }
 }

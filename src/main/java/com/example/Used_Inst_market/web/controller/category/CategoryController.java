@@ -1,6 +1,10 @@
 package com.example.Used_Inst_market.web.controller.category;
 
 import com.example.Used_Inst_market.service.category.CategoryService;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandUpdateRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.lower.LowerCategorySelectRequestDTO;
@@ -9,6 +13,7 @@ import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryDeleteRe
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategorySelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateRequestDTO;
+import com.example.Used_Inst_market.web.vo.category.BrandVO;
 import com.example.Used_Inst_market.web.vo.category.LowerCategoryVO;
 import com.example.Used_Inst_market.web.vo.category.UpperCategoryVO;
 import lombok.RequiredArgsConstructor;
@@ -98,5 +103,40 @@ public class CategoryController {
                         .build();
 
         categoryService.lowerCategoryDelete(lowerCategoryDeleteRequestDTO);
+    }
+
+    @GetMapping("/brand/info")
+    public BrandVO brandSelect(@RequestParam(name = "no") Long brandNo) {
+        BrandSelectRequestDTO brandSelectRequestDTO =
+                BrandSelectRequestDTO.builder()
+                        .brandNo(brandNo)
+                        .build();
+
+        return categoryService.brandSelect(brandSelectRequestDTO);
+    }
+
+    @GetMapping("/brand/info/list")
+    public List<BrandVO> brandSelectAll() {
+        return categoryService.brandSelectAll();
+    }
+
+    @PostMapping("/brand/info")
+    public Long insert(@RequestBody BrandInsertRequestDTO brandInsertRequestDTO) {
+        return categoryService.brandInsert(brandInsertRequestDTO);
+    }
+
+    @PutMapping("/brand/info")
+    public Long brandUpdate(@RequestBody BrandUpdateRequestDTO brandUpdateRequestDTO) {
+        return categoryService.brandUpdate(brandUpdateRequestDTO);
+    }
+
+    @DeleteMapping("/brand/info")
+    public void delete(@RequestParam(name = "no") Long brandNo) {
+        BrandDeleteRequestDTO brandDeleteRequestDTO =
+                BrandDeleteRequestDTO.builder()
+                        .brandNo(brandNo)
+                        .build();
+
+        categoryService.brandDelete(brandDeleteRequestDTO);
     }
 }

@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class SelectFromLocalRequestDTO {
-    Local local;
+    Long localNo;
 
     @Builder
-    public SelectFromLocalRequestDTO(Local local) {
-        this.local = local;
+    public SelectFromLocalRequestDTO(Long localNo) {
+        this.localNo = localNo;
     }
 }

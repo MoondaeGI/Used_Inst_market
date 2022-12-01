@@ -8,10 +8,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class SelectFromUpperRequestDTO {
-    UpperCategory upperCategory;
+    private Long upperCategoryNo;
 
     @Builder
-    public SelectFromUpperRequestDTO(UpperCategory upperCategory) {
-        this.upperCategory = upperCategory;
+    public SelectFromUpperRequestDTO(Long upperCategoryNo) {
+
+        this.upperCategoryNo = upperCategoryNo;
     }
 }

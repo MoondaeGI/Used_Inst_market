@@ -1,5 +1,15 @@
 package com.example.Used_Inst_market.service.post;
 
+import com.example.Used_Inst_market.domain.address.city.City;
+import com.example.Used_Inst_market.domain.address.city.CityRepository;
+import com.example.Used_Inst_market.domain.address.local.Local;
+import com.example.Used_Inst_market.domain.address.local.LocalRepository;
+import com.example.Used_Inst_market.domain.category.brand.Brand;
+import com.example.Used_Inst_market.domain.category.brand.BrandRepository;
+import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
+import com.example.Used_Inst_market.domain.category.lower.LowerCategoryRepository;
+import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
+import com.example.Used_Inst_market.domain.category.upper.UpperCategoryRepository;
 import com.example.Used_Inst_market.domain.select.localselect.LocalSelect;
 import com.example.Used_Inst_market.domain.select.localselect.LocalSelectRepository;
 import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
@@ -29,7 +39,13 @@ import java.util.stream.Collectors;
 public class PostService {
     private final PostRepository postRepository;
     private final CategorySelectRepository categorySelectRepository;
+    private final UpperCategoryRepository upperCategoryRepository;
+    private final LowerCategoryRepository lowerCategoryRepository;
+    private final BrandRepository brandRepository;
+
     private final LocalSelectRepository localSelectRepository;
+    private final LocalRepository localRepository;
+    private final CityRepository cityRepository;
 
     @Transactional(readOnly = true)
     public PostVO select(@NotNull PostSelectRequestDTO postSelectRequestDTO) {
@@ -95,8 +111,13 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostVO> selectFromUpperCategory(
             SelectFromUpperRequestDTO selectFromUpperRequestDTO) {
+
+        UpperCategory upperCategory = upperCategoryRepository
+                .findById(selectFromUpperRequestDTO.getUpperCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
+
         return categorySelectRepository
-                .findByUpperCategory(selectFromUpperRequestDTO.getUpperCategory())
+                .findByUpperCategory(upperCategory)
                 .stream().map(PostVO::new)
                 .collect(Collectors.toList());
     }
@@ -104,8 +125,13 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostVO> selectFromLowerCategory(
             SelectFromLowerRequestDTO selectFromLowerRequestDTO) {
+
+        LowerCategory lowerCategory = lowerCategoryRepository
+                .findById(selectFromLowerRequestDTO.getLowerCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
+
         return categorySelectRepository
-                .findByLowerCategory(selectFromLowerRequestDTO.getLowerCategory())
+                .findByLowerCategory(lowerCategory)
                 .stream().map(PostVO::new)
                 .collect(Collectors.toList());
     }
@@ -113,8 +139,13 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostVO> selectFromBrand(
             SelectFromBrandRequestDTO selectFromBrandRequestDTO) {
+
+        Brand brand = brandRepository
+                .findById(selectFromBrandRequestDTO.getBrandNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
+
         return categorySelectRepository
-                .findByBrand(selectFromBrandRequestDTO.getBrand())
+                .findByBrand(brand)
                 .stream().map(PostVO::new)
                 .collect(Collectors.toList());
     }
@@ -122,8 +153,13 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostVO> selectFromLocal(
             SelectFromLocalRequestDTO selectFromLocalRequestDTO) {
+
+        Local local = localRepository
+                .findById(selectFromLocalRequestDTO.getLocalNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
+
         return localSelectRepository
-                .findByLocal(selectFromLocalRequestDTO.getLocal())
+                .findByLocal(local)
                 .stream().map(PostVO::new)
                 .collect(Collectors.toList());
     }
@@ -131,8 +167,13 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostVO> selectFromCity(
             SelectFromCityRequestDTO selectFromCityRequestDTO) {
+
+        City city = cityRepository
+                .findById(selectFromCityRequestDTO.getCityNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 도시가 없습니다."));
+
         return localSelectRepository
-                .findByCity(selectFromCityRequestDTO.getCity())
+                .findByCity(city)
                 .stream().map(PostVO::new)
                 .collect(Collectors.toList());
     }

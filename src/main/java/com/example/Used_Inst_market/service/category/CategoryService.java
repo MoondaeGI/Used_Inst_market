@@ -1,9 +1,15 @@
 package com.example.Used_Inst_market.service.category;
 
+import com.example.Used_Inst_market.domain.category.brand.Brand;
+import com.example.Used_Inst_market.domain.category.brand.BrandRepository;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategoryRepository;
 import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.domain.category.upper.UpperCategoryRepository;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandUpdateRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.lower.LowerCategorySelectRequestDTO;
@@ -12,6 +18,7 @@ import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryDeleteRe
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategorySelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateRequestDTO;
+import com.example.Used_Inst_market.web.vo.category.BrandVO;
 import com.example.Used_Inst_market.web.vo.category.LowerCategoryVO;
 import com.example.Used_Inst_market.web.vo.category.UpperCategoryVO;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +33,7 @@ import java.util.stream.Collectors;
 public class CategoryService {
     private final UpperCategoryRepository upperCategoryRepository;
     private final LowerCategoryRepository lowerCategoryRepository;
+    private final BrandRepository brandRepository;
 
     @Transactional(readOnly = true)
     public UpperCategoryVO upperCategorySelect(
@@ -126,5 +134,43 @@ public class CategoryService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
         lowerCategoryRepository.delete(lowerCategory);
+    }
+
+    @Transactional(readOnly = true)
+    public BrandVO brandSelect(BrandSelectRequestDTO brandSelectRequestDTO) {
+        Brand brand = brandRepository.findById(brandSelectRequestDTO.getBrandNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
+
+        return new BrandVO(brand);
+    }
+
+    @Transactional(readOnly = true)
+    public List<BrandVO> brandSelectAll() {
+        return brandRepository.findAll().stream()
+                .map(BrandVO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Long brandInsert(BrandInsertRequestDTO brandInsertRequestDTO) {
+        return brandRepository.save(brandInsertRequestDTO.toEntity()).getBrandNo();
+    }
+
+    @Transactional
+    public Long brandUpdate(BrandUpdateRequestDTO brandUpdateRequestDTO) {
+        Brand brand = brandRepository.findById(brandUpdateRequestDTO.getBrandNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
+
+        brand.update(brandUpdateRequestDTO.getLowerCategory(), brandUpdateRequestDTO.getName());
+
+        return brand.getBrandNo();
+    }
+
+    @Transactional
+    public void brandDelete(BrandDeleteRequestDTO brandDeleteRequestDTO) {
+        Brand brand = brandRepository.findById(brandDeleteRequestDTO.getBrandNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 브렌드가 없습니다."));
+
+        brandRepository.delete(brand);
     }
 }
