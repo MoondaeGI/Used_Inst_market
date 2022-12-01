@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SelectedAsBrandRequestDTO {
+public class SelectFromBrandRequestDTO {
     private Brand brand;
 
     @Builder
-    public SelectedAsBrandRequestDTO(Brand brand) {
+    public SelectFromBrandRequestDTO(Brand brand) {
         this.brand = brand;
     }
 }

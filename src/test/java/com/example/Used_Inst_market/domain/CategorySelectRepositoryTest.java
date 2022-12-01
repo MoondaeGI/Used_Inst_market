@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.service;
+package com.example.Used_Inst_market.domain;
 
 import com.example.Used_Inst_market.domain.address.addressdetail.Address;
 import com.example.Used_Inst_market.domain.address.addressdetail.AddressRepository;
@@ -8,20 +8,16 @@ import com.example.Used_Inst_market.domain.address.local.Local;
 import com.example.Used_Inst_market.domain.address.local.LocalRepository;
 import com.example.Used_Inst_market.domain.category.brand.Brand;
 import com.example.Used_Inst_market.domain.category.brand.BrandRepository;
+import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelect;
+import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelectRepository;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategoryRepository;
 import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.domain.category.upper.UpperCategoryRepository;
+import com.example.Used_Inst_market.domain.post.Post;
 import com.example.Used_Inst_market.domain.post.PostRepository;
 import com.example.Used_Inst_market.domain.user.User;
 import com.example.Used_Inst_market.domain.user.UserRepository;
-import com.example.Used_Inst_market.service.category.CategorySelectService;
-import com.example.Used_Inst_market.service.post.PostService;
-import com.example.Used_Inst_market.web.dto.category.categoryselect.SelectFromBrandRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.categoryselect.SelectFromLowerRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.categoryselect.SelectFromUpperRequestDTO;
-import com.example.Used_Inst_market.web.dto.post.PostInsertRequestDTO;
-import com.example.Used_Inst_market.web.vo.post.PostVO;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,19 +33,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CategorySelectServiceTest {
-    @Autowired private CategorySelectService categorySelectService;
-    @Autowired private PostService postService;
+public class CategorySelectRepositoryTest {
+    @Autowired
+    private CategorySelectRepository categorySelectRepository;
 
     @Autowired private PostRepository postRepository;
     @Autowired private UpperCategoryRepository upperCategoryRepository;
     @Autowired private LowerCategoryRepository lowerCategoryRepository;
     @Autowired private BrandRepository brandRepository;
 
+    @Autowired private UserRepository userRepository;
     @Autowired private LocalRepository localRepository;
     @Autowired private CityRepository cityRepository;
     @Autowired private AddressRepository addressRepository;
-    @Autowired private UserRepository userRepository;
 
     @Before
     public void setup() {
@@ -118,108 +114,39 @@ public class CategorySelectServiceTest {
                 .build());
 
         brandRepository.saveAll(testBrandList);
-
-        postService.insert(PostInsertRequestDTO.builder()
-                .title("test1")
-                .content("test")
-                .price(1)
-                .user(userRepository.findAll().get(0))
-                .upperCategory(testUpperCategoryList.get(0))
-                .lowerCategory(testLowerCategoryList.get(0))
-                .brand(testBrandList.get(0))
-                .build());
-
-        postService.insert(PostInsertRequestDTO.builder()
-                .title("test2")
-                .content("test")
-                .price(1)
-                .user(userRepository.findAll().get(0))
-                .upperCategory(testUpperCategoryList.get(0))
-                .lowerCategory(testLowerCategoryList.get(0))
-                .brand(testBrandList.get(1))
-                .build());
-
-        postService.insert(PostInsertRequestDTO.builder()
-                .title("test3")
-                .content("test")
-                .price(1)
-                .user(userRepository.findAll().get(0))
-                .upperCategory(testUpperCategoryList.get(0))
-                .lowerCategory(testLowerCategoryList.get(1))
-                .brand(testBrandList.get(2))
-                .build());
-
-        postService.insert(PostInsertRequestDTO.builder()
-                .title("test4")
-                .content("test")
-                .price(1)
-                .user(userRepository.findAll().get(0))
-                .upperCategory(testUpperCategoryList.get(0))
-                .lowerCategory(testLowerCategoryList.get(2))
-                .brand(testBrandList.get(3))
-                .build());
-
-        postService.insert(PostInsertRequestDTO.builder()
-                .title("test5")
-                .content("test")
-                .price(1)
-                .user(userRepository.findAll().get(0))
-                .upperCategory(testUpperCategoryList.get(0))
-                .lowerCategory(testLowerCategoryList.get(2))
-                .brand(testBrandList.get(3))
-                .build());
     }
 
     @After
     public void teardown() {
-        userRepository.deleteAll();
-        postRepository.deleteAll();
+        cityRepository.deleteAll();
         localRepository.deleteAll();
+
+        brandRepository.deleteAll();
+        lowerCategoryRepository.deleteAll();
         upperCategoryRepository.deleteAll();
     }
 
     @Test
-    public void selectedAsUpperCategory_검증() {
-        SelectFromUpperRequestDTO selectFromUpperRequestDTO =
-                SelectFromUpperRequestDTO.builder()
+    public void TB_PD_CT_SELECT_삽입검증() {
+        Long testPostNo = postRepository.save(
+                Post.builder()
+                        .title("test")
+                        .content("test")
+                        .price(1)
+                        .user(userRepository.findAll().get(0))
+                        .build()).getPostNo();
+
+        CategorySelect testCategorySelect = categorySelectRepository.save(
+                CategorySelect.builder()
+                        .post(postRepository.findAll().get(0))
                         .upperCategory(upperCategoryRepository.findAll().get(0))
-                        .build();
-
-        List<PostVO> testResultPostList = categorySelectService
-                .selectFromUpperCategory(selectFromUpperRequestDTO);
-
-        assertThat(testResultPostList.get(0).getPostNo())
-                .isEqualTo(postRepository.findAll().get(0).getPostNo());
-    }
-
-    @Test
-    public void selectFromLowerCategory_검증() {
-        SelectFromLowerRequestDTO selectFromLowerRequestDTO =
-                SelectFromLowerRequestDTO.builder()
                         .lowerCategory(lowerCategoryRepository.findAll().get(0))
-                        .build();
+                        .brand(brandRepository.findAll().get(0))
+                        .build());
 
-        List<PostVO> testResultPostList = categorySelectService
-                .selectFromLowerCategory(selectFromLowerRequestDTO);
-
-        assertThat(testResultPostList.get(0).getPostNo())
-                .isEqualTo(postRepository.findAll().get(0).getPostNo());
-        assertThat(testResultPostList.size()).isGreaterThan(1);
-    }
-
-    @Test
-    public void selectFromBrand_검증() {
-        SelectFromBrandRequestDTO selectFromBrandRequestDTO =
-                SelectFromBrandRequestDTO.builder()
-                        .brand(brandRepository.findAll().get(3))
-                        .build();
-
-        List<PostVO> testResultPostList = categorySelectService
-                .selectFromBrand(selectFromBrandRequestDTO);
-
-        assertThat(testResultPostList.get(0).getTitle())
-                .isEqualTo("test4");
-        assertThat(testResultPostList.get(1).getTitle())
-                .isEqualTo("test5");
+        assertThat(categorySelectRepository.findAll().get(0).getCategorySelectNo())
+                .isEqualTo(testCategorySelect.getCategorySelectNo());
+        assertThat(categorySelectRepository.findAll().get(0).getPost())
+                .isEqualTo(testPostNo);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.Used_Inst_market.domain.category.lower;
 
+import com.example.Used_Inst_market.domain.category.brand.Brand;
 import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
@@ -35,8 +36,13 @@ public class LowerCategory extends BaseTimeStamp {
         this.name = name;
     }
 
+    @OneToMany(mappedBy = "lowerCategory",
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Brand> brands = new ArrayList<>();
+
     @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "lowerCategory")
+    @OneToMany(mappedBy = "lowerCategory",
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
 
     public void update(UpperCategory upperCategory, String name) {

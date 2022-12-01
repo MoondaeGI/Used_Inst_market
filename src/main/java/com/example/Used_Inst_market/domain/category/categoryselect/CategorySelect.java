@@ -24,16 +24,16 @@ public class CategorySelect {
     @JoinColumn(name = "POST_NO")
     private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PD_UPPER_CT_NO", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "PD_UPPER_CT_NO")
     private UpperCategory upperCategory;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PD_LOWER_CT_NO", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "PD_LOWER_CT_NO")
     private LowerCategory lowerCategory;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BRAND_NO", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "BRAND_NO")
     private Brand brand;
 
     @Builder

@@ -23,12 +23,12 @@ public class LocalSelect {
     @JoinColumn(name = "POST_NO")
     private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LOCAL_NO", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "LOCAL_NO")
     private Local local;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CITY_NO", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "CITY_NO")
     private City city;
 
     @Builder

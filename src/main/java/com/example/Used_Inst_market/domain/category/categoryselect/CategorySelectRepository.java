@@ -11,6 +11,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CategorySelectRepository extends JpaRepository<CategorySelect, Long> {
+    @Query("SELECT categorySelect " +
+        "FROM CategorySelect categorySelect " +
+        "WHERE categorySelect.post = :post")
+    CategorySelect findByPost(@Param("post") Post post);
+
     @Query("SELECT categorySelect.post " +
             "FROM CategorySelect categorySelect " +
             "WHERE categorySelect.upperCategory = :upperCategory")

@@ -14,6 +14,7 @@ import com.example.Used_Inst_market.web.vo.post.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class PostService {
     private final LocalSelectRepository localSelectRepository;
 
     @Transactional(readOnly = true)
-    public PostVO select(PostSelectRequestDTO postSelectRequestDTO)
+    public PostVO select(@NotNull PostSelectRequestDTO postSelectRequestDTO)
             throws IllegalArgumentException {
         Post post = postRepository.findById(postSelectRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
@@ -42,7 +43,7 @@ public class PostService {
     }
 
     @Transactional
-    public Long insert(PostInsertRequestDTO postInsertRequestDTO) {
+    public Long insert(@NotNull PostInsertRequestDTO postInsertRequestDTO) {
         Post post = postRepository.save(postInsertRequestDTO.toEntity());
 
         categorySelectRepository.save(
@@ -64,13 +65,12 @@ public class PostService {
     }
 
     @Transactional
-    public Long update(PostUpdateRequestDTO postUpdateRequestDTO)
+    public Long update(@NotNull PostUpdateRequestDTO postUpdateRequestDTO)
             throws IllegalArgumentException {
         Post post = postRepository.findById(postUpdateRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
-        CategorySelect categorySelect = categorySelectRepository.findById(post.getPostNo())
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        CategorySelect categorySelect = categorySelectRepository.findByPost(post);
 
         post.update(postUpdateRequestDTO.getTitle(), postUpdateRequestDTO.getContent(),
                 postUpdateRequestDTO.getPrice(), postUpdateRequestDTO.getSoldYN());
@@ -82,7 +82,7 @@ public class PostService {
     }
 
     @Transactional
-    public void delete(PostDeleteRequestDTO postDeleteRequestDTO)
+    public void delete(@NotNull PostDeleteRequestDTO postDeleteRequestDTO)
             throws IllegalArgumentException {
         Post post = postRepository.findById(postDeleteRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));

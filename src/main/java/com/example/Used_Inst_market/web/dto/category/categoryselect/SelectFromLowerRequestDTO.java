@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SelectedAsLowerRequestDTO {
+public class SelectFromLowerRequestDTO {
     private LowerCategory lowerCategory;
 
     @Builder
-    public SelectedAsLowerRequestDTO(LowerCategory lowerCategory) {
+    public SelectFromLowerRequestDTO(LowerCategory lowerCategory) {
         this.lowerCategory = lowerCategory;
     }
 }

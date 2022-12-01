@@ -105,9 +105,6 @@ public class PostServiceTest {
 
         userRepository.deleteAll();
         localRepository.deleteAll();
-
-        brandRepository.deleteAll();
-        localRepository.deleteAll();
         upperCategoryRepository.deleteAll();
     }
 

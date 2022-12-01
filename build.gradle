@@ -28,6 +28,9 @@ dependencies {
 
 	// mustache 의존성 추가
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
+    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation 'org.jetbrains:annotations:20.1.0'
+	implementation 'org.jetbrains:annotations:20.1.0'
 
 	// loombok 의존성 추가
 	compileOnly 'org.projectlombok:lombok'

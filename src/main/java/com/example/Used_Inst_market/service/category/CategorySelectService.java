@@ -1,9 +1,9 @@
 package com.example.Used_Inst_market.service.category;
 
 import com.example.Used_Inst_market.domain.category.categoryselect.CategorySelectRepository;
-import com.example.Used_Inst_market.web.dto.category.categoryselect.SelectedAsBrandRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.categoryselect.SelectedAsLowerRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.categoryselect.SelectedAsUpperRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.categoryselect.SelectFromBrandRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.categoryselect.SelectFromLowerRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.categoryselect.SelectFromUpperRequestDTO;
 import com.example.Used_Inst_market.web.vo.post.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,28 +18,28 @@ public class CategorySelectService {
     private final CategorySelectRepository categorySelectRepository;
 
     @Transactional(readOnly = true)
-    public List<PostVO> selectedAsUpperCategory(
-            SelectedAsUpperRequestDTO selectedAsUpperRequestDTO) {
+    public List<PostVO> selectFromUpperCategory(
+            SelectFromUpperRequestDTO selectFromUpperRequestDTO) {
         return categorySelectRepository
-                .findByUpperCategory(selectedAsUpperRequestDTO.getUpperCategory())
+                .findByUpperCategory(selectFromUpperRequestDTO.getUpperCategory())
                 .stream().map(PostVO::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<PostVO> selectedAsLowerCategory(
-            SelectedAsLowerRequestDTO selectedAsLowerRequestDTO) {
+    public List<PostVO> selectFromLowerCategory(
+            SelectFromLowerRequestDTO selectFromLowerRequestDTO) {
         return categorySelectRepository
-                .findByLowerCategory(selectedAsLowerRequestDTO.getLowerCategory())
+                .findByLowerCategory(selectFromLowerRequestDTO.getLowerCategory())
                 .stream().map(PostVO::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<PostVO> selectedAsBrand(
-            SelectedAsBrandRequestDTO selectedAsBrandRequestDTO) {
+    public List<PostVO> selectFromBrand(
+            SelectFromBrandRequestDTO selectFromBrandRequestDTO) {
         return categorySelectRepository
-                .findByBrand(selectedAsBrandRequestDTO.getBrand())
+                .findByBrand(selectFromBrandRequestDTO.getBrand())
                 .stream().map(PostVO::new)
                 .collect(Collectors.toList());
     }
