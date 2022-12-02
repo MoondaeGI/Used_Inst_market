@@ -10,6 +10,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface LocalSelectRepository extends JpaRepository<LocalSelect, Long> {
+    @Query("SELECT localSelect " +
+            "From LocalSelect localSelect " +
+            "WHERE localSelect.post = :post")
+    LocalSelect findByPost(@Param("post") Post post);
+
     @Query("SELECT localSelect.post " +
             "FROM LocalSelect localSelect " +
             "WHERE localSelect.local = :local")

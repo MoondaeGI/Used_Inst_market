@@ -8,14 +8,14 @@ import com.example.Used_Inst_market.domain.address.local.Local;
 import com.example.Used_Inst_market.domain.address.local.LocalRepository;
 import com.example.Used_Inst_market.domain.category.brand.Brand;
 import com.example.Used_Inst_market.domain.category.brand.BrandRepository;
-import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
-import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelectRepository;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategoryRepository;
 import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.domain.category.upper.UpperCategoryRepository;
 import com.example.Used_Inst_market.domain.post.Post;
 import com.example.Used_Inst_market.domain.post.PostRepository;
+import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
+import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelectRepository;
 import com.example.Used_Inst_market.domain.select.localselect.LocalSelect;
 import com.example.Used_Inst_market.domain.select.localselect.LocalSelectRepository;
 import com.example.Used_Inst_market.domain.user.User;
@@ -28,18 +28,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CategorySelectRepositoryTest {
+public class LocalSelectRepositoryTest {
     @Autowired
     private PostRepository postRepository;
 
-    @Autowired private CategorySelectRepository categorySelectRepository;
     @Autowired private UpperCategoryRepository upperCategoryRepository;
     @Autowired private LowerCategoryRepository lowerCategoryRepository;
     @Autowired private BrandRepository brandRepository;
@@ -108,26 +104,27 @@ public class CategorySelectRepositoryTest {
 
     @Test
     public void TB_POST_삽입검증() {
+        String testTitle = "test";
+
         Post testPost = postRepository.save(
                 Post.builder()
-                        .title("test")
+                        .title(testTitle)
                         .content("test")
                         .price(1)
                         .user(userRepository.findAll().get(0))
                         .build());
 
-        CategorySelect testCategorySelect = categorySelectRepository.save(
-                CategorySelect.builder()
+        LocalSelect testLocalSelect = localSelectRepository.save(
+                LocalSelect.builder()
                         .post(testPost)
-                        .upperCategory(upperCategoryRepository.findAll().get(0))
-                        .lowerCategory(lowerCategoryRepository.findAll().get(0))
-                        .brand(brandRepository.findAll().get(0))
+                        .local(localRepository.findAll().get(0))
+                        .city(cityRepository.findAll().get(0))
                         .build());
 
         assertThat(postRepository.findAll().get(0).getPostNo())
                 .isEqualTo(testPost.getPostNo());
-        assertThat(categorySelectRepository.findAll().get(0).getCategorySelectNo())
-                .isEqualTo(testCategorySelect.getCategorySelectNo());
+        assertThat(localSelectRepository.findAll().get(0).getLocalSelectNo())
+                .isEqualTo(testLocalSelect.getLocalSelectNo());
     }
 
     @Test
@@ -140,21 +137,20 @@ public class CategorySelectRepositoryTest {
                         .user(userRepository.findAll().get(0))
                         .build());
 
-        categorySelectRepository.save(
-                CategorySelect.builder()
+        localSelectRepository.save(
+                LocalSelect.builder()
                         .post(testPost)
-                        .upperCategory(upperCategoryRepository.findAll().get(0))
-                        .lowerCategory(lowerCategoryRepository.findAll().get(0))
-                        .brand(brandRepository.findAll().get(0))
+                        .local(localRepository.findAll().get(0))
+                        .city(cityRepository.findAll().get(0))
                         .build());
 
         assertThat(postRepository.findAll().get(0).getPostNo())
-                .isEqualTo(categorySelectRepository
+                .isEqualTo(localSelectRepository
                         .findByPost(testPost).getPost().getPostNo());
     }
 
     @Test
-    public void findByUpperCategory_검증() {
+    public void findByLocal_검증() {
         Post testPost = postRepository.save(
                 Post.builder()
                         .title("test")
@@ -163,42 +159,16 @@ public class CategorySelectRepositoryTest {
                         .user(userRepository.findAll().get(0))
                         .build());
 
-        categorySelectRepository.save(
-                CategorySelect.builder()
+        localSelectRepository.save(
+                LocalSelect.builder()
                         .post(testPost)
-                        .upperCategory(upperCategoryRepository.findAll().get(0))
-                        .lowerCategory(lowerCategoryRepository.findAll().get(0))
-                        .brand(brandRepository.findAll().get(0))
+                        .local(localRepository.findAll().get(0))
+                        .city(cityRepository.findAll().get(0))
                         .build());
 
         assertThat(postRepository.findAll().get(0).getPostNo())
-                .isEqualTo(categorySelectRepository
-                        .findByUpperCategory(upperCategoryRepository.findAll().get(0))
-                        .get(0)
-                        .getPostNo());
-    }
-
-    @Test
-    public void findByLowerCategory_검증() {
-        Post testPost = postRepository.save(
-                Post.builder()
-                        .title("test")
-                        .content("test")
-                        .price(1)
-                        .user(userRepository.findAll().get(0))
-                        .build());
-
-        categorySelectRepository.save(
-                CategorySelect.builder()
-                        .post(testPost)
-                        .upperCategory(upperCategoryRepository.findAll().get(0))
-                        .lowerCategory(lowerCategoryRepository.findAll().get(0))
-                        .brand(brandRepository.findAll().get(0))
-                        .build());
-
-        assertThat(postRepository.findAll().get(0).getPostNo())
-                .isEqualTo(categorySelectRepository
-                        .findByLowerCategory(lowerCategoryRepository.findAll().get(0))
+                .isEqualTo(localSelectRepository
+                        .findByLocal(localRepository.findAll().get(0))
                         .get(0)
                         .getPostNo());
     }
