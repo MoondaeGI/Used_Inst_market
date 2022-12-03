@@ -18,20 +18,20 @@ public class PostInsertRequestDTO {
     private String title;
     private String content;
     private Integer price;
-    private UpperCategory upperCategory;
-    private LowerCategory lowerCategory;
-    private Brand brand;
+    private Long upperCategoryNo;
+    private Long lowerCategoryNo;
+    private Long brandNo;
 
     @Builder
     public PostInsertRequestDTO(
             Long userNo, String title, String content, Integer price,
-            UpperCategory upperCategory, LowerCategory lowerCategory, Brand brand) {
+            Long upperCategoryNo, Long lowerCategoryNo, Long brandNo) {
         this.userNo = userNo;
         this.title = title;
         this.content = content;
         this.price = price;
-        this.upperCategory = upperCategory;
-        this.lowerCategory = lowerCategory;
-        this.brand = brand;
+        this.upperCategoryNo = upperCategoryNo;
+        this.lowerCategoryNo = lowerCategoryNo;
+        this.brandNo = brandNo;
     }
 }

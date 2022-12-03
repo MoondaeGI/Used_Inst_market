@@ -72,6 +72,18 @@ public class PostService {
         User user = userRepository.findById(postInsertRequestDTO.getUserNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."));
 
+        UpperCategory upperCategory = upperCategoryRepository
+                .findById(postInsertRequestDTO.getUpperCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
+
+        LowerCategory lowerCategory = lowerCategoryRepository
+                .findById(postInsertRequestDTO.getLowerCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
+
+        Brand brand = brandRepository.findById(postInsertRequestDTO.getBrandNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 브렌드가 없습니다."));
+
+
         Post post = postRepository.save(
                 Post.builder()
                         .user(user)
@@ -83,9 +95,9 @@ public class PostService {
         categorySelectRepository.save(
                 CategorySelect.builder()
                         .post(post)
-                        .upperCategory(postInsertRequestDTO.getUpperCategory())
-                        .lowerCategory(postInsertRequestDTO.getLowerCategory())
-                        .brand(postInsertRequestDTO.getBrand())
+                        .upperCategory(upperCategory)
+                        .lowerCategory(lowerCategory)
+                        .brand(brand)
                         .build());
 
         localSelectRepository.save(
@@ -103,13 +115,23 @@ public class PostService {
         Post post = postRepository.findById(postUpdateRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
+        UpperCategory upperCategory = upperCategoryRepository
+                .findById(postUpdateRequestDTO.getUpperCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
+
+        LowerCategory lowerCategory = lowerCategoryRepository
+                .findById(postUpdateRequestDTO.getLowerCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
+
+        Brand brand = brandRepository.findById(postUpdateRequestDTO.getBrandNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 브렌드가 없습니다."));
+
         CategorySelect categorySelect = categorySelectRepository.findByPost(post);
 
         post.update(postUpdateRequestDTO.getTitle(), postUpdateRequestDTO.getContent(),
                 postUpdateRequestDTO.getPrice(), postUpdateRequestDTO.getSoldYN());
 
-        categorySelect.update(postUpdateRequestDTO.getUpperCategory(),
-                postUpdateRequestDTO.getLowerCategory(), postUpdateRequestDTO.getBrand());
+        categorySelect.update(upperCategory, lowerCategory, brand);
 
         return postUpdateRequestDTO.getPostNo();
     }

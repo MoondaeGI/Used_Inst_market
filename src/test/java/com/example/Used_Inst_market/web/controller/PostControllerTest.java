@@ -206,9 +206,11 @@ public class PostControllerTest {
                         .content("test")
                         .price(1)
                         .userNo(userRepository.findAll().get(0).getUserNo())
-                        .upperCategory(upperCategoryRepository.findAll().get(0))
-                        .lowerCategory(lowerCategoryRepository.findAll().get(0))
-                        .brand(brandRepository.findAll().get(0))
+                        .upperCategoryNo(upperCategoryRepository
+                                .findAll().get(0).getUpperCategoryNo())
+                        .lowerCategoryNo(lowerCategoryRepository
+                                .findAll().get(0).getLowerCategoryNo())
+                        .brandNo(brandRepository.findAll().get(0).getBrandNo())
                         .build();
 
         ResponseEntity<Long> responseEntity = testRestTemplate
@@ -217,11 +219,5 @@ public class PostControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody())
                 .isEqualTo(postRepository.findAll().get(0).getPostNo());
-
-        assertThat(categorySelectRepository.findByPost(
-                postRepository.findById(responseEntity.getBody())
-                        .orElseThrow(IllegalArgumentException::new))
-                .getPost().getTitle())
-                .isEqualTo(testTitle);
     }
 }

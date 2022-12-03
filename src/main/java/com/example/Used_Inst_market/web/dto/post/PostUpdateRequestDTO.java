@@ -16,21 +16,21 @@ public class PostUpdateRequestDTO {
     private String content;
     private Integer price;
     private SoldYN soldYN;
-    private UpperCategory upperCategory;
-    private LowerCategory lowerCategory;
-    private Brand brand;
+    private Long upperCategoryNo;
+    private Long lowerCategoryNo;
+    private Long brandNo;
 
     @Builder
     public PostUpdateRequestDTO(Long postNo, String title, String content,
-                                Integer price, SoldYN soldYN, UpperCategory upperCategory,
-                                LowerCategory lowerCategory, Brand brand) {
+                                Integer price, SoldYN soldYN, Long upperCategoryNo,
+                                Long lowerCategoryNo, Long brandNo) {
         this.postNo = postNo;
         this.title = title;
         this.content = content;
         this.price = price;
         this.soldYN = soldYN;
-        this.upperCategory = upperCategory;
-        this.lowerCategory = lowerCategory;
-        this.brand = brand;
+        this.upperCategoryNo = upperCategoryNo;
+        this.lowerCategoryNo = lowerCategoryNo;
+        this.brandNo = brandNo;
     }
 }

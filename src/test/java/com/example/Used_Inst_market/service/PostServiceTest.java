@@ -192,9 +192,11 @@ public class PostServiceTest {
                         .title("test")
                         .content("test")
                         .price(1)
-                        .upperCategory(upperCategoryRepository.findAll().get(0))
-                        .lowerCategory(lowerCategoryRepository.findAll().get(0))
-                        .brand(brandRepository.findAll().get(0))
+                        .upperCategoryNo(upperCategoryRepository
+                                .findAll().get(0).getUpperCategoryNo())
+                        .lowerCategoryNo(lowerCategoryRepository
+                                .findAll().get(0).getLowerCategoryNo())
+                        .brandNo(brandRepository.findAll().get(0).getBrandNo())
                         .build();
 
         Long testPostNo = postService.insert(postInsertRequestDTO);
@@ -236,9 +238,11 @@ public class PostServiceTest {
                 .content("test")
                 .price(1)
                 .userNo(userRepository.findAll().get(0).getUserNo())
-                .upperCategory(upperCategoryRepository.findAll().get(0))
-                .lowerCategory(lowerCategoryRepository.findAll().get(0))
-                .brand(brandRepository.findAll().get(0))
+                .upperCategoryNo(upperCategoryRepository
+                        .findAll().get(0).getUpperCategoryNo())
+                .lowerCategoryNo(lowerCategoryRepository
+                        .findAll().get(0).getLowerCategoryNo())
+                .brandNo(brandRepository.findAll().get(0).getBrandNo())
                 .build());
 
         PostUpdateRequestDTO postUpdateRequestDTO =
@@ -248,9 +252,11 @@ public class PostServiceTest {
                         .content(updateContent)
                         .price(updatePrice)
                         .soldYN(SoldYN.SOLD_OUT)
-                        .upperCategory(updateUpperCategory)
-                        .lowerCategory(updateLowerCategory)
-                        .brand(updateBrand)
+                        .upperCategoryNo(updateUpperCategory
+                                .getUpperCategoryNo())
+                        .lowerCategoryNo(updateLowerCategory
+                                .getLowerCategoryNo())
+                        .brandNo(updateBrand.getBrandNo())
                         .build();
 
         Long updatePostNo = postService.update(postUpdateRequestDTO);
@@ -279,9 +285,11 @@ public class PostServiceTest {
                 .content("test")
                 .price(1)
                 .userNo(userRepository.findAll().get(0).getUserNo())
-                .upperCategory(upperCategoryRepository.findAll().get(0))
-                .lowerCategory(lowerCategoryRepository.findAll().get(0))
-                .brand(brandRepository.findAll().get(0))
+                .upperCategoryNo(upperCategoryRepository
+                        .findAll().get(0).getUpperCategoryNo())
+                .lowerCategoryNo(lowerCategoryRepository
+                        .findAll().get(0).getLowerCategoryNo())
+                .brandNo(brandRepository.findAll().get(0).getBrandNo())
                 .build());
 
         PostDeleteRequestDTO postDeleteRequestDTO =
