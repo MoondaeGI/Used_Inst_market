@@ -6,6 +6,8 @@ import com.example.Used_Inst_market.domain.address.city.City;
 import com.example.Used_Inst_market.domain.address.city.CityRepository;
 import com.example.Used_Inst_market.domain.address.local.Local;
 import com.example.Used_Inst_market.domain.address.local.LocalRepository;
+import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
+import com.example.Used_Inst_market.domain.select.localselect.LocalSelect;
 import com.example.Used_Inst_market.domain.select.localselect.LocalSelectRepository;
 import com.example.Used_Inst_market.domain.category.brand.Brand;
 import com.example.Used_Inst_market.domain.category.brand.BrandRepository;
@@ -120,6 +122,21 @@ public class PostServiceTest {
                         .user(userRepository.findAll().get(0))
                         .build());
 
+        categorySelectRepository.save(
+                CategorySelect.builder()
+                        .post(testPost)
+                        .upperCategory(upperCategoryRepository.findAll().get(0))
+                        .lowerCategory(lowerCategoryRepository.findAll().get(0))
+                        .brand(brandRepository.findAll().get(0))
+                        .build());
+
+        localSelectRepository.save(
+                LocalSelect.builder()
+                        .post(testPost)
+                        .local(localRepository.findAll().get(0))
+                        .city(cityRepository.findAll().get(0))
+                        .build());
+
         PostSelectRequestDTO postSelectRequestDTO =
                 PostSelectRequestDTO.builder()
                         .postNo(testPost.getPostNo())
@@ -130,6 +147,14 @@ public class PostServiceTest {
         assertThat(testPostVO.getTitle()).isEqualTo(testString);
         assertThat(testPostVO.getContent()).isEqualTo(testString);
         assertThat(testPostVO.getSoldYN()).isEqualTo(SoldYN.SALE);
+
+        assertThat(testPostVO.getPostNo())
+                .isEqualTo(categorySelectRepository
+                        .findByPost(testPost).getPost().getPostNo());
+
+        assertThat(testPostVO.getPostNo())
+                .isEqualTo(localSelectRepository
+                        .findByPost(testPost).getPost().getPostNo());
     }
 
     @Test
@@ -163,7 +188,7 @@ public class PostServiceTest {
     public void insert_검증() {
         PostInsertRequestDTO postInsertRequestDTO =
                 PostInsertRequestDTO.builder()
-                        .user(userRepository.findAll().get(0))
+                        .userNo(userRepository.findAll().get(0).getUserNo())
                         .title("test")
                         .content("test")
                         .price(1)
@@ -210,7 +235,7 @@ public class PostServiceTest {
                 .title("test")
                 .content("test")
                 .price(1)
-                .user(userRepository.findAll().get(0))
+                .userNo(userRepository.findAll().get(0).getUserNo())
                 .upperCategory(upperCategoryRepository.findAll().get(0))
                 .lowerCategory(lowerCategoryRepository.findAll().get(0))
                 .brand(brandRepository.findAll().get(0))
@@ -253,7 +278,7 @@ public class PostServiceTest {
                 .title("test")
                 .content("test")
                 .price(1)
-                .user(userRepository.findAll().get(0))
+                .userNo(userRepository.findAll().get(0).getUserNo())
                 .upperCategory(upperCategoryRepository.findAll().get(0))
                 .lowerCategory(lowerCategoryRepository.findAll().get(0))
                 .brand(brandRepository.findAll().get(0))

@@ -36,7 +36,7 @@ public class Brand extends BaseTimeStamp {
     }
 
     @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(mappedBy = "brand", orphanRemoval = true)
     private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
 
     public void update(LowerCategory lowerCategory, String name) {

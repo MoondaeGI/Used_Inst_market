@@ -3,7 +3,6 @@ package com.example.Used_Inst_market.domain.address.addressdetail;
 import com.example.Used_Inst_market.domain.address.city.City;
 import com.example.Used_Inst_market.domain.address.local.Local;
 import com.example.Used_Inst_market.domain.user.User;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

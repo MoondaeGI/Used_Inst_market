@@ -1,5 +1,6 @@
 package com.example.Used_Inst_market.service.post;
 
+import com.example.Used_Inst_market.domain.address.addressdetail.AddressRepository;
 import com.example.Used_Inst_market.domain.address.city.City;
 import com.example.Used_Inst_market.domain.address.city.CityRepository;
 import com.example.Used_Inst_market.domain.address.local.Local;
@@ -16,6 +17,8 @@ import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelectRepository;
 import com.example.Used_Inst_market.domain.post.Post;
 import com.example.Used_Inst_market.domain.post.PostRepository;
+import com.example.Used_Inst_market.domain.user.User;
+import com.example.Used_Inst_market.domain.user.UserRepository;
 import com.example.Used_Inst_market.web.dto.post.PostDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.post.PostInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.post.PostSelectRequestDTO;
@@ -46,13 +49,15 @@ public class PostService {
     private final LocalSelectRepository localSelectRepository;
     private final LocalRepository localRepository;
     private final CityRepository cityRepository;
+    private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
 
     @Transactional(readOnly = true)
     public PostVO select(@NotNull PostSelectRequestDTO postSelectRequestDTO) {
         Post post = postRepository.findById(postSelectRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
-        return new PostVO(post);
+        return PostVO.from(post);
     }
 
     @Transactional(readOnly = true)
@@ -64,7 +69,16 @@ public class PostService {
 
     @Transactional
     public Long insert(@NotNull PostInsertRequestDTO postInsertRequestDTO) {
-        Post post = postRepository.save(postInsertRequestDTO.toEntity());
+        User user = userRepository.findById(postInsertRequestDTO.getUserNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."));
+
+        Post post = postRepository.save(
+                Post.builder()
+                        .user(user)
+                        .title(postInsertRequestDTO.getTitle())
+                        .content(postInsertRequestDTO.getContent())
+                        .price(postInsertRequestDTO.getPrice())
+                        .build());
 
         categorySelectRepository.save(
                 CategorySelect.builder()
@@ -77,8 +91,8 @@ public class PostService {
         localSelectRepository.save(
                 LocalSelect.builder()
                         .post(post)
-                        .local(postInsertRequestDTO.getUser().getAddress().getLocal())
-                        .city(postInsertRequestDTO.getUser().getAddress().getCity())
+                        .local(addressRepository.findByUser(user).getLocal())
+                        .city(addressRepository.findByUser(user).getCity())
                         .build());
 
         return post.getPostNo();

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PostInsertRequestDTO {
-    private User user;
+    private Long userNo;
     private String title;
     private String content;
     private Integer price;
@@ -24,23 +24,14 @@ public class PostInsertRequestDTO {
 
     @Builder
     public PostInsertRequestDTO(
-            User user, String title, String content, Integer price,
+            Long userNo, String title, String content, Integer price,
             UpperCategory upperCategory, LowerCategory lowerCategory, Brand brand) {
-        this.user = user;
+        this.userNo = userNo;
         this.title = title;
         this.content = content;
         this.price = price;
         this.upperCategory = upperCategory;
         this.lowerCategory = lowerCategory;
         this.brand = brand;
-    }
-
-    public Post toEntity() {
-        return Post.builder()
-                .user(user)
-                .title(title)
-                .content(content)
-                .price(price)
-                .build();
     }
 }

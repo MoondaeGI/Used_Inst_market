@@ -21,8 +21,8 @@ public class User extends BaseTimeStamp {
     @Column(name = "USER_NO")
     private Long userNo;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user",
+            fetch = FetchType.LAZY, orphanRemoval = true)
     public Address address;
 
     @Column(name = "NAME", nullable = false)
@@ -39,17 +39,15 @@ public class User extends BaseTimeStamp {
     private Role role;
 
     @Builder
-    public User(String name, String email,
-                String phoneNumber, Address address) {
+    public User(String name, String email, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.address = address;
         this.role = Role.GUEST;
     }
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Post> posts = new ArrayList<Post>();
 
     public String getRoleKey() {

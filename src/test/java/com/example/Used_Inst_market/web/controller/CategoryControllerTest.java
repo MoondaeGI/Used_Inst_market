@@ -140,8 +140,6 @@ public class CategoryControllerTest {
         assertThat(upperCategoryRepository.findById(testUpperCategoryNo)).isEmpty();
     }
 
-    //=======================================================================================
-
     @Test
     public void lowerCategorySelect_검증() {
         UpperCategory testUpperCategory = upperCategoryRepository.save(

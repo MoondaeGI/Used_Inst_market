@@ -31,13 +31,11 @@ public class UpperCategory extends BaseTimeStamp {
     }
 
     @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "upperCategory",
-            cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "upperCategory", orphanRemoval = true)
     private List<LowerCategory> lowerCategories = new ArrayList<LowerCategory>();
 
     @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "upperCategory",
-            cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "upperCategory", orphanRemoval = true)
     private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
 
     public void update(String name) { this.name = name; }
