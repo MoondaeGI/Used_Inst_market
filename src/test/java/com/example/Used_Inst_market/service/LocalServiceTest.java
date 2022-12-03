@@ -1,5 +1,6 @@
 package com.example.Used_Inst_market.service;
 
+import com.example.Used_Inst_market.domain.address.city.CityRepository;
 import com.example.Used_Inst_market.domain.address.local.Local;
 import com.example.Used_Inst_market.domain.address.local.LocalRepository;
 import com.example.Used_Inst_market.service.address.LocalService;
@@ -23,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 public class LocalServiceTest {
     @Autowired private LocalRepository localRepository;
     @Autowired private LocalService localService;
+    @Autowired private CityRepository cityRepository;
 
     @After
     public void teardown() {
@@ -30,14 +32,14 @@ public class LocalServiceTest {
     }
 
     @Test
-    public void select_검증() {
+    public void localSelect_검증() {
         String testName = "test";
         Local testLocal = localRepository.save(Local.builder()
                 .name(testName)
                 .build());
 
         LocalSelectRequestDTO localSelectRequestDTO = new LocalSelectRequestDTO(testLocal.getLocalNo());
-        LocalVO selectedLocal = localService.select(localSelectRequestDTO);
+        LocalVO selectedLocal = localService.localSelect(localSelectRequestDTO);
 
         List<Local> locals = localRepository.findAll();
 
@@ -46,31 +48,31 @@ public class LocalServiceTest {
     }
 
     @Test
-    public void selectAll_검증() {
+    public void localSelectAll_검증() {
         List<Local> testLocals = new ArrayList<Local>();
         testLocals.add(Local.builder().name("test1").build());
         testLocals.add(Local.builder().name("test2").build());
 
         localRepository.saveAll(testLocals);
-        List<LocalVO> localVOList = localService.selectAll();
+        List<LocalVO> localVOList = localService.localSelectAll();
 
         assertThat(localVOList.get(0).getName()).isEqualTo("test1");
         assertThat(localVOList.get(1).getName()).isEqualTo("test2");
     }
 
     @Test
-    public void insert_검증() {
+    public void localInsert_검증() {
         String testName = "test";
         LocalInsertRequestDTO localInsertRequestDTO = new LocalInsertRequestDTO(testName);
 
-        localService.insert(localInsertRequestDTO);
+        localService.localInsert(localInsertRequestDTO);
         List<Local> locals = localRepository.findAll();
 
         assertThat(locals.get(0).getName()).isEqualTo(testName);
     }
 
     @Test
-    public void update_검증() {
+    public void localUpdate_검증() {
         String testName = "test";
         String updateTestName = "update test";
 
@@ -81,25 +83,25 @@ public class LocalServiceTest {
 
         LocalUpdateRequestDTO localUpdateRequestDTO
                 = new LocalUpdateRequestDTO(testLocal.getLocalNo(), updateTestName);
-        localService.update(localUpdateRequestDTO);
+        localService.localUpdate(localUpdateRequestDTO);
 
         assertThat(localRepository.findAll().get(0).getName()).isEqualTo(updateTestName);
     }
 
     @Test
-    public void delete_검증() {
+    public void localDelete_검증() {
         Local testLocal = localRepository.save(Local.builder()
                 .name("test")
                 .build());
 
         Long testLocalNo = testLocal.getLocalNo();
 
-        localService.delete(LocalDeleteRequestDTO.builder()
+        localService.localDelete(LocalDeleteRequestDTO.builder()
                 .localNo(testLocalNo)
                 .build());
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> localService.select(
+                .isThrownBy(() -> localService.localSelect(
                         LocalSelectRequestDTO.builder()
                                 .localNo(testLocalNo)
                                 .build()));

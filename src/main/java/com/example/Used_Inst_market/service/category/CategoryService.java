@@ -37,37 +37,18 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public UpperCategoryVO upperCategorySelect(
-            UpperCategorySelectRequestDTO upperCategorySelectRequestDTO)
-            throws IllegalArgumentException {
+            UpperCategorySelectRequestDTO upperCategorySelectRequestDTO) {
         UpperCategory upperCategory = upperCategoryRepository
                 .findById(upperCategorySelectRequestDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
-        return new UpperCategoryVO(upperCategory);
+        return UpperCategoryVO.from(upperCategory);
     }
 
     @Transactional(readOnly = true)
     public List<UpperCategoryVO> upperCategorySelectAll() {
         return upperCategoryRepository.findAll().stream()
                 .map(UpperCategoryVO::new)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public LowerCategoryVO lowerCategorySelect(
-            LowerCategorySelectRequestDTO lowerCategorySelectRequestDTO)
-            throws IllegalArgumentException {
-        LowerCategory lowerCategory = lowerCategoryRepository
-                .findById(lowerCategorySelectRequestDTO.getLowerCategoryNo())
-                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
-
-        return new LowerCategoryVO(lowerCategory);
-    }
-
-    @Transactional
-    public List<LowerCategoryVO> lowerCategorySelectAll() {
-        return lowerCategoryRepository.findAll().stream()
-                .map(LowerCategoryVO::new)
                 .collect(Collectors.toList());
     }
 
@@ -80,17 +61,8 @@ public class CategoryService {
     }
 
     @Transactional
-    public Long lowerCategoryInsert(
-            LowerCategoryInsertRequestDTO lowerCategoryInsertRequestDTO) {
-        return lowerCategoryRepository
-                .save(lowerCategoryInsertRequestDTO.toEntity())
-                .getLowerCategoryNo();
-    }
-
-    @Transactional
     public Long upperCategoryUpdate(
-            UpperCategoryUpdateRequestDTO upperCategoryUpdateRequestDTO)
-            throws IllegalArgumentException {
+            UpperCategoryUpdateRequestDTO upperCategoryUpdateRequestDTO) {
         UpperCategory upperCategory = upperCategoryRepository
                 .findById(upperCategoryUpdateRequestDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
@@ -98,6 +70,41 @@ public class CategoryService {
         upperCategory.update(upperCategoryUpdateRequestDTO.getName());
 
         return upperCategoryUpdateRequestDTO.getUpperCategoryNo();
+    }
+
+    @Transactional
+    public void upperCategoryDelete(
+            UpperCategoryDeleteRequestDTO upperCategoryDeleteRequestDTO) {
+        UpperCategory upperCategory = upperCategoryRepository
+                .findById(upperCategoryDeleteRequestDTO.getUpperCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException());
+
+        upperCategoryRepository.delete(upperCategory);
+    }
+
+    @Transactional(readOnly = true)
+    public LowerCategoryVO lowerCategorySelect(
+            LowerCategorySelectRequestDTO lowerCategorySelectRequestDTO) {
+        LowerCategory lowerCategory = lowerCategoryRepository
+                .findById(lowerCategorySelectRequestDTO.getLowerCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
+
+        return LowerCategoryVO.from(lowerCategory);
+    }
+
+    @Transactional(readOnly = true)
+    public List<LowerCategoryVO> lowerCategorySelectAll() {
+        return lowerCategoryRepository.findAll().stream()
+                .map(LowerCategoryVO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Long lowerCategoryInsert(
+            LowerCategoryInsertRequestDTO lowerCategoryInsertRequestDTO) {
+        return lowerCategoryRepository
+                .save(lowerCategoryInsertRequestDTO.toEntity())
+                .getLowerCategoryNo();
     }
 
     @Transactional
@@ -115,20 +122,8 @@ public class CategoryService {
     }
 
     @Transactional
-    public void upperCategoryDelete(
-            UpperCategoryDeleteRequestDTO upperCategoryDeleteRequestDTO)
-            throws IllegalArgumentException {
-        UpperCategory upperCategory = upperCategoryRepository
-                .findById(upperCategoryDeleteRequestDTO.getUpperCategoryNo())
-                .orElseThrow(() -> new IllegalArgumentException());
-
-        upperCategoryRepository.delete(upperCategory);
-    }
-
-    @Transactional
     public void lowerCategoryDelete(
-            LowerCategoryDeleteRequestDTO lowerCategoryDeleteRequestDTO)
-            throws IllegalArgumentException {
+            LowerCategoryDeleteRequestDTO lowerCategoryDeleteRequestDTO) {
         LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(lowerCategoryDeleteRequestDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
@@ -141,7 +136,7 @@ public class CategoryService {
         Brand brand = brandRepository.findById(brandSelectRequestDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
 
-        return new BrandVO(brand);
+        return BrandVO.from(brand);
     }
 
     @Transactional(readOnly = true)

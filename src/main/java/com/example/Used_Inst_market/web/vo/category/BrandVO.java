@@ -2,10 +2,11 @@ package com.example.Used_Inst_market.web.vo.category;
 
 import com.example.Used_Inst_market.domain.category.brand.Brand;
 import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
-import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode
 @Getter
 @NoArgsConstructor
 public class BrandVO {
@@ -13,10 +14,13 @@ public class BrandVO {
     private String name;
     private LowerCategory lowerCategory;
 
-    @Builder
     public BrandVO(Brand brand) {
         this.brandNo = brand.getBrandNo();
         this.name = brand.getName();
         this.lowerCategory = brand.getLowerCategory();
+    }
+
+    public static BrandVO from(Brand brand) {
+        return new BrandVO(brand);
     }
 }
