@@ -1,10 +1,14 @@
 package com.example.Used_Inst_market.service;
 
-import com.example.Used_Inst_market.domain.address.city.CityRepository;
-import com.example.Used_Inst_market.domain.address.local.Local;
-import com.example.Used_Inst_market.domain.address.local.LocalRepository;
-import com.example.Used_Inst_market.service.address.LocalService;
+import com.example.Used_Inst_market.domain.city.City;
+import com.example.Used_Inst_market.domain.city.CityRepository;
+import com.example.Used_Inst_market.domain.local.Local;
+import com.example.Used_Inst_market.domain.local.LocalRepository;
+import com.example.Used_Inst_market.service.local.LocalService;
+import com.example.Used_Inst_market.web.dto.address.city.CityInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.address.city.CitySelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.local.*;
+import com.example.Used_Inst_market.web.vo.address.CityVO;
 import com.example.Used_Inst_market.web.vo.address.LocalVO;
 import org.junit.After;
 import org.junit.Test;
@@ -105,5 +109,44 @@ public class LocalServiceTest {
                         LocalSelectRequestDTO.builder()
                                 .localNo(testLocalNo)
                                 .build()));
+    }
+
+    @Test
+    public void citySelect_검증() {
+        Local testLocal = localRepository.save(Local.builder()
+                .name("test")
+                .build());
+
+        City testCity = cityRepository.save(City.builder()
+                .local(testLocal)
+                .name("test")
+                .build());
+
+        CitySelectRequestDTO citySelectRequestDTO =
+                CitySelectRequestDTO.builder()
+                        .cityNo(testCity.getCityNo())
+                        .build();
+
+        CityVO testCityVO = localService.citySelect(citySelectRequestDTO);
+
+        assertThat(testCityVO.getCityNo())
+                .isEqualTo(cityRepository.findAll().get(0).getCityNo());
+    }
+
+    @Test
+    public void cityInsert_검증() {
+        Local testLocal = localRepository.save(Local.builder()
+                .name("test")
+                .build());
+
+        CityInsertRequestDTO cityInsertRequestDTO =
+                CityInsertRequestDTO.builder()
+                        .local(testLocal)
+                        .name("test")
+                        .build();
+
+        Long testCityNo = localService.cityInsert(cityInsertRequestDTO);
+
+        assertThat(testCityNo).isEqualTo(cityRepository.findAll().get(0).getCityNo());
     }
 }

@@ -1,11 +1,11 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.domain.address.addressdetail.Address;
-import com.example.Used_Inst_market.domain.address.addressdetail.AddressRepository;
-import com.example.Used_Inst_market.domain.address.city.City;
-import com.example.Used_Inst_market.domain.address.city.CityRepository;
-import com.example.Used_Inst_market.domain.address.local.Local;
-import com.example.Used_Inst_market.domain.address.local.LocalRepository;
+import com.example.Used_Inst_market.domain.address.Address;
+import com.example.Used_Inst_market.domain.address.AddressRepository;
+import com.example.Used_Inst_market.domain.city.City;
+import com.example.Used_Inst_market.domain.city.CityRepository;
+import com.example.Used_Inst_market.domain.local.Local;
+import com.example.Used_Inst_market.domain.local.LocalRepository;
 import com.example.Used_Inst_market.domain.category.brand.Brand;
 import com.example.Used_Inst_market.domain.category.brand.BrandRepository;
 import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
@@ -16,7 +16,6 @@ import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.domain.category.upper.UpperCategoryRepository;
 import com.example.Used_Inst_market.domain.post.Post;
 import com.example.Used_Inst_market.domain.post.PostRepository;
-import com.example.Used_Inst_market.domain.select.localselect.LocalSelect;
 import com.example.Used_Inst_market.domain.select.localselect.LocalSelectRepository;
 import com.example.Used_Inst_market.domain.user.User;
 import com.example.Used_Inst_market.domain.user.UserRepository;
@@ -27,9 +26,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

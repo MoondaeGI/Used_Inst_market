@@ -1,12 +1,11 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.domain.address.addressdetail.Address;
-import com.example.Used_Inst_market.domain.address.addressdetail.AddressRepository;
-import com.example.Used_Inst_market.domain.address.city.City;
-import com.example.Used_Inst_market.domain.address.city.CityRepository;
-import com.example.Used_Inst_market.domain.address.local.Local;
-import com.example.Used_Inst_market.domain.address.local.LocalRepository;
-import com.example.Used_Inst_market.domain.user.Role;
+import com.example.Used_Inst_market.domain.address.Address;
+import com.example.Used_Inst_market.domain.address.AddressRepository;
+import com.example.Used_Inst_market.domain.city.City;
+import com.example.Used_Inst_market.domain.city.CityRepository;
+import com.example.Used_Inst_market.domain.local.Local;
+import com.example.Used_Inst_market.domain.local.LocalRepository;
 import com.example.Used_Inst_market.domain.user.User;
 import com.example.Used_Inst_market.domain.user.UserRepository;
 import org.junit.After;
@@ -16,8 +15,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

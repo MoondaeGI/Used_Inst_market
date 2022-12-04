@@ -1,6 +1,6 @@
-package com.example.Used_Inst_market.domain.address.local;
+package com.example.Used_Inst_market.domain.local;
 
-import com.example.Used_Inst_market.domain.address.city.City;
+import com.example.Used_Inst_market.domain.city.City;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
 import lombok.AccessLevel;
 import lombok.Builder;

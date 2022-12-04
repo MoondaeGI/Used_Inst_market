@@ -1,7 +1,7 @@
 package com.example.Used_Inst_market.domain.select.localselect;
 
-import com.example.Used_Inst_market.domain.address.city.City;
-import com.example.Used_Inst_market.domain.address.local.Local;
+import com.example.Used_Inst_market.domain.city.City;
+import com.example.Used_Inst_market.domain.local.Local;
 import com.example.Used_Inst_market.domain.post.Post;
 import lombok.Builder;
 import lombok.Getter;

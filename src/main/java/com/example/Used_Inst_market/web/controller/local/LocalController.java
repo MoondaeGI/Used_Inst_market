@@ -1,6 +1,6 @@
-package com.example.Used_Inst_market.web.controller.address;
+package com.example.Used_Inst_market.web.controller.local;
 
-import com.example.Used_Inst_market.service.address.LocalService;
+import com.example.Used_Inst_market.service.local.LocalService;
 import com.example.Used_Inst_market.web.dto.address.city.CityDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.city.CityInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.address.city.CitySelectRequestDTO;

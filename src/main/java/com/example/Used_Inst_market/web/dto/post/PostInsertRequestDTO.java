@@ -1,12 +1,5 @@
 package com.example.Used_Inst_market.web.dto.post;
 
-import com.example.Used_Inst_market.domain.address.city.City;
-import com.example.Used_Inst_market.domain.address.local.Local;
-import com.example.Used_Inst_market.domain.category.brand.Brand;
-import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
-import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
-import com.example.Used_Inst_market.domain.post.Post;
-import com.example.Used_Inst_market.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

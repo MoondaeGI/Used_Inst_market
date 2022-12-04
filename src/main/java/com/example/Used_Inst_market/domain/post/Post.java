@@ -1,5 +1,6 @@
 package com.example.Used_Inst_market.domain.post;
 
+import com.example.Used_Inst_market.domain.file.File;
 import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.domain.select.localselect.LocalSelect;
 import com.example.Used_Inst_market.domain.user.User;
@@ -10,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -46,14 +49,13 @@ public class Post extends BaseTimeStamp {
         this.soldYN = SoldYN.SALE;  // default값
     }
 
-    @Getter(AccessLevel.NONE)
-    @OneToOne(mappedBy = "post",
-            cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
+    private List<File> fileList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "post", orphanRemoval = true)
     private CategorySelect categorySelect;
 
-    @Getter(AccessLevel.NONE)
-    @OneToOne(mappedBy = "post",
-            cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "post", orphanRemoval = true)
     private LocalSelect localSelect;
 
     public void update(String title, String content, Integer price, SoldYN soldYN) {

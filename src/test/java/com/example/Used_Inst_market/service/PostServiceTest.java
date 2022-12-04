@@ -1,11 +1,11 @@
 package com.example.Used_Inst_market.service;
 
-import com.example.Used_Inst_market.domain.address.addressdetail.Address;
-import com.example.Used_Inst_market.domain.address.addressdetail.AddressRepository;
-import com.example.Used_Inst_market.domain.address.city.City;
-import com.example.Used_Inst_market.domain.address.city.CityRepository;
-import com.example.Used_Inst_market.domain.address.local.Local;
-import com.example.Used_Inst_market.domain.address.local.LocalRepository;
+import com.example.Used_Inst_market.domain.address.Address;
+import com.example.Used_Inst_market.domain.address.AddressRepository;
+import com.example.Used_Inst_market.domain.city.City;
+import com.example.Used_Inst_market.domain.city.CityRepository;
+import com.example.Used_Inst_market.domain.local.Local;
+import com.example.Used_Inst_market.domain.local.LocalRepository;
 import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.domain.select.localselect.LocalSelect;
 import com.example.Used_Inst_market.domain.select.localselect.LocalSelectRepository;

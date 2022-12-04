@@ -1,6 +1,6 @@
 package com.example.Used_Inst_market.web.vo.address;
 
-import com.example.Used_Inst_market.domain.address.local.Local;
+import com.example.Used_Inst_market.domain.local.Local;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

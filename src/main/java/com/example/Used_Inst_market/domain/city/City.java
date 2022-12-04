@@ -1,7 +1,7 @@
-package com.example.Used_Inst_market.domain.address.city;
+package com.example.Used_Inst_market.domain.city;
 
-import com.example.Used_Inst_market.domain.address.addressdetail.Address;
-import com.example.Used_Inst_market.domain.address.local.Local;
+import com.example.Used_Inst_market.domain.address.Address;
+import com.example.Used_Inst_market.domain.local.Local;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
