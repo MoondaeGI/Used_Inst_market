@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.service.post;
+package com.example.Used_Inst_market.service.board;
 
 import com.example.Used_Inst_market.domain.address.AddressRepository;
 import com.example.Used_Inst_market.domain.city.City;
@@ -19,10 +19,10 @@ import com.example.Used_Inst_market.domain.board.post.Post;
 import com.example.Used_Inst_market.domain.board.post.PostRepository;
 import com.example.Used_Inst_market.domain.user.User;
 import com.example.Used_Inst_market.domain.user.UserRepository;
-import com.example.Used_Inst_market.web.dto.post.PostDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.post.PostInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.post.PostSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.post.PostUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostUpdateRequestDTO;
 import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromBrandRequestDTO;
 import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromLowerRequestDTO;
 import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromUpperRequestDTO;
@@ -41,6 +41,7 @@ import java.util.stream.Collectors;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+
     private final CategorySelectRepository categorySelectRepository;
     private final UpperCategoryRepository upperCategoryRepository;
     private final LowerCategoryRepository lowerCategoryRepository;
@@ -57,7 +58,7 @@ public class PostService {
         Post post = postRepository.findById(postSelectRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
-        return PostVO.from(post);
+        return PostVO.of(post, postSelectRequestDTO.getPictures());
     }
 
     @Transactional(readOnly = true)

@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.web.dto.post;
+package com.example.Used_Inst_market.web.dto.board.post;
 
 import com.example.Used_Inst_market.domain.board.post.SoldYN;
 import lombok.Builder;

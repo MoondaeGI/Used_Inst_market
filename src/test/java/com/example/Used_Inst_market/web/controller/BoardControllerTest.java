@@ -20,7 +20,7 @@ import com.example.Used_Inst_market.domain.select.localselect.LocalSelect;
 import com.example.Used_Inst_market.domain.select.localselect.LocalSelectRepository;
 import com.example.Used_Inst_market.domain.user.User;
 import com.example.Used_Inst_market.domain.user.UserRepository;
-import com.example.Used_Inst_market.web.dto.post.PostInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostInsertRequestDTO;
 import com.example.Used_Inst_market.web.vo.post.PostVO;
 import org.junit.After;
 import org.junit.Before;
@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PostControllerTest {
+public class BoardControllerTest {
     private static final String URL = "/post/info";
     private static final String CT_SELECT_URL = "/post/info/category";
     private static final String LO_SELECT_URL = "/post/info/local";

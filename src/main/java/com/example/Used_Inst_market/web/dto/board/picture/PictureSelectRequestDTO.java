@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.web.dto.post;
+package com.example.Used_Inst_market.web.dto.board.picture;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class PostSelectRequestDTO {
+public class PictureSelectRequestDTO {
     private Long postNo;
 
     @Builder
-    public PostSelectRequestDTO(Long postNo) {
+    public PictureSelectRequestDTO(Long postNo) {
         this.postNo = postNo;
     }
 }

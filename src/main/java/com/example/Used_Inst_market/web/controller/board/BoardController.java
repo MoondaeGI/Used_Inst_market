@@ -1,33 +1,46 @@
-package com.example.Used_Inst_market.web.controller.post;
+package com.example.Used_Inst_market.web.controller.board;
 
-import com.example.Used_Inst_market.service.post.PostService;
-import com.example.Used_Inst_market.web.dto.post.PostDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.post.PostInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.post.PostSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.post.PostUpdateRequestDTO;
+import com.example.Used_Inst_market.service.board.PictureService;
+import com.example.Used_Inst_market.service.board.PostService;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostUpdateRequestDTO;
 import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromBrandRequestDTO;
 import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromLowerRequestDTO;
 import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromUpperRequestDTO;
 import com.example.Used_Inst_market.web.dto.select.localselect.SelectFromCityRequestDTO;
 import com.example.Used_Inst_market.web.dto.select.localselect.SelectFromLocalRequestDTO;
+import com.example.Used_Inst_market.web.vo.post.PictureVO;
 import com.example.Used_Inst_market.web.vo.post.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("post")
 @RestController
-public class PostController {
+public class BoardController {
     private final PostService postService;
+    private final PictureService pictureService;
 
     @GetMapping("/info")
     public PostVO select(@RequestParam(name = "no") Long postNo) {
+        PictureSelectRequestDTO pictureSelectRequestDTO =
+                PictureSelectRequestDTO.builder()
+                        .postNo(postNo)
+                        .build();
+        List<PictureVO> pictures = pictureService.selectByPost(pictureSelectRequestDTO);
+
         PostSelectRequestDTO postSelectRequestDTO =
                 PostSelectRequestDTO.builder()
                         .postNo(postNo)
+                        .pictures(pictures)
                         .build();
 
         return postService.select(postSelectRequestDTO);
@@ -40,8 +53,21 @@ public class PostController {
 
     @PostMapping("/info")
     public Long insert(
-            @RequestBody PostInsertRequestDTO postInsertRequestDTO) {
-        return postService.insert(postInsertRequestDTO);
+            @RequestPart(value = "images") List<MultipartFile> multipartFiles,
+            @RequestPart(value = "postInsertRequestDTO")
+            PostInsertRequestDTO postInsertRequestDTO)
+            throws IOException {
+        Long postNo = postService.insert(postInsertRequestDTO);
+
+        PictureInsertRequestDTO pictureInsertRequestDTO =
+                PictureInsertRequestDTO.builder()
+                        .postNo(postNo)
+                        .multipartFiles(multipartFiles)
+                        .build();
+
+        pictureService.insert(pictureInsertRequestDTO);
+
+        return postNo;
     }
 
     @PutMapping("/info")

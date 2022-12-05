@@ -42,4 +42,12 @@ public class Picture {
         this.path = path;
         this.size = size;
     }
+
+    public void update(String originalFileName, String name,
+                       String path, Long size) {
+        this.originalFileName = originalFileName;
+        this.name = name;
+        this.path = path;
+        this.size = size;
+    }
 }
