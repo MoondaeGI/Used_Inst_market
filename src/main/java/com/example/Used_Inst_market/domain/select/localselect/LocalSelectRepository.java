@@ -2,7 +2,7 @@ package com.example.Used_Inst_market.domain.select.localselect;
 
 import com.example.Used_Inst_market.domain.city.City;
 import com.example.Used_Inst_market.domain.local.Local;
-import com.example.Used_Inst_market.domain.post.Post;
+import com.example.Used_Inst_market.domain.board.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

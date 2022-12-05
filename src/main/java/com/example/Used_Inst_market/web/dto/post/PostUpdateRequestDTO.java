@@ -1,9 +1,6 @@
 package com.example.Used_Inst_market.web.dto.post;
 
-import com.example.Used_Inst_market.domain.category.brand.Brand;
-import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
-import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
-import com.example.Used_Inst_market.domain.post.SoldYN;
+import com.example.Used_Inst_market.domain.board.post.SoldYN;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

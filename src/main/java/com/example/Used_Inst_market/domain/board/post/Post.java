@@ -1,11 +1,10 @@
-package com.example.Used_Inst_market.domain.post;
+package com.example.Used_Inst_market.domain.board.post;
 
-import com.example.Used_Inst_market.domain.file.File;
+import com.example.Used_Inst_market.domain.board.picture.Picture;
 import com.example.Used_Inst_market.domain.select.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.domain.select.localselect.LocalSelect;
 import com.example.Used_Inst_market.domain.user.User;
 import com.example.Used_Inst_market.domain.util.BaseTimeStamp;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,7 +49,7 @@ public class Post extends BaseTimeStamp {
     }
 
     @OneToMany(mappedBy = "post", orphanRemoval = true)
-    private List<File> fileList = new ArrayList<>();
+    private List<Picture> pictures = new ArrayList<>();
 
     @OneToOne(mappedBy = "post", orphanRemoval = true)
     private CategorySelect categorySelect;

@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.web.dto.address.local;
+package com.example.Used_Inst_market.web.dto.local;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class LocalSelectRequestDTO {
+public class LocalDeleteRequestDTO {
     private Long localNo;
 
     @Builder
-    public LocalSelectRequestDTO(Long localNo) {
+    public LocalDeleteRequestDTO(Long localNo) {
         this.localNo = localNo;
     }
 }

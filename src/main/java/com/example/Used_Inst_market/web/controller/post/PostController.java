@@ -13,6 +13,7 @@ import com.example.Used_Inst_market.web.dto.select.localselect.SelectFromLocalRe
 import com.example.Used_Inst_market.web.vo.post.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

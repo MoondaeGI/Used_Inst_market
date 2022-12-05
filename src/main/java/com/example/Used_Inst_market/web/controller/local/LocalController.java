@@ -1,14 +1,14 @@
 package com.example.Used_Inst_market.web.controller.local;
 
 import com.example.Used_Inst_market.service.local.LocalService;
-import com.example.Used_Inst_market.web.dto.address.city.CityDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.city.CityInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.city.CitySelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.city.CityUpdateRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.local.LocalDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.local.LocalInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.local.LocalSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.local.LocalUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.city.CityDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.city.CityInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.city.CitySelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.city.CityUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.LocalDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.LocalInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.LocalSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.LocalUpdateRequestDTO;
 import com.example.Used_Inst_market.web.vo.address.CityVO;
 import com.example.Used_Inst_market.web.vo.address.LocalVO;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.web.dto.address.city;
+package com.example.Used_Inst_market.web.dto.city;
 
 import lombok.Builder;
 import lombok.Getter;

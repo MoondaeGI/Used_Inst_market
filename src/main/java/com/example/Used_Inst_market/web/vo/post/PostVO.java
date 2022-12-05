@@ -1,7 +1,7 @@
 package com.example.Used_Inst_market.web.vo.post;
 
-import com.example.Used_Inst_market.domain.post.Post;
-import com.example.Used_Inst_market.domain.post.SoldYN;
+import com.example.Used_Inst_market.domain.board.post.Post;
+import com.example.Used_Inst_market.domain.board.post.SoldYN;
 import com.example.Used_Inst_market.web.vo.user.UserFromSelectPostVO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

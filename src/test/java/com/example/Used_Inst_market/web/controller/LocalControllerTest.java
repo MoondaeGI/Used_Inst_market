@@ -2,8 +2,8 @@ package com.example.Used_Inst_market.web.controller;
 
 import com.example.Used_Inst_market.domain.local.Local;
 import com.example.Used_Inst_market.domain.local.LocalRepository;
-import com.example.Used_Inst_market.web.dto.address.local.LocalInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.local.LocalUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.LocalInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.LocalUpdateRequestDTO;
 import com.example.Used_Inst_market.web.vo.address.LocalVO;
 import org.junit.After;
 import org.junit.Test;
