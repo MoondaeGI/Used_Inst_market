@@ -1,13 +1,13 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.domain.address.Address;
-import com.example.Used_Inst_market.domain.address.AddressRepository;
-import com.example.Used_Inst_market.domain.city.City;
-import com.example.Used_Inst_market.domain.city.CityRepository;
-import com.example.Used_Inst_market.domain.local.Local;
-import com.example.Used_Inst_market.domain.local.LocalRepository;
-import com.example.Used_Inst_market.domain.user.User;
-import com.example.Used_Inst_market.domain.user.UserRepository;
+import com.example.Used_Inst_market.model.domain.address.Address;
+import com.example.Used_Inst_market.model.domain.address.AddressRepository;
+import com.example.Used_Inst_market.model.domain.city.City;
+import com.example.Used_Inst_market.model.domain.city.CityRepository;
+import com.example.Used_Inst_market.model.domain.local.Local;
+import com.example.Used_Inst_market.model.domain.local.LocalRepository;
+import com.example.Used_Inst_market.model.domain.user.User;
+import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

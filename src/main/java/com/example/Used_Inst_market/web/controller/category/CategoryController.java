@@ -13,9 +13,9 @@ import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryDeleteRe
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategorySelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.category.BrandVO;
-import com.example.Used_Inst_market.web.vo.category.LowerCategoryVO;
-import com.example.Used_Inst_market.web.vo.category.UpperCategoryVO;
+import com.example.Used_Inst_market.model.vo.category.BrandVO;
+import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
+import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

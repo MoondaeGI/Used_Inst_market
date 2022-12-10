@@ -1,6 +1,6 @@
 package com.example.Used_Inst_market.web.dto.board.post;
 
-import com.example.Used_Inst_market.domain.board.post.SoldYN;
+import com.example.Used_Inst_market.model.domain.board.post.SoldYN;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,19 +1,18 @@
 package com.example.Used_Inst_market.service;
 
-import com.example.Used_Inst_market.domain.city.City;
-import com.example.Used_Inst_market.domain.city.CityRepository;
-import com.example.Used_Inst_market.domain.local.Local;
-import com.example.Used_Inst_market.domain.local.LocalRepository;
+import com.example.Used_Inst_market.model.domain.city.City;
+import com.example.Used_Inst_market.model.domain.city.CityRepository;
+import com.example.Used_Inst_market.model.domain.local.Local;
+import com.example.Used_Inst_market.model.domain.local.LocalRepository;
 import com.example.Used_Inst_market.service.local.LocalService;
 import com.example.Used_Inst_market.web.dto.city.CityInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.city.CitySelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.local.*;
 import com.example.Used_Inst_market.web.dto.local.LocalDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.local.LocalInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.local.LocalSelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.local.LocalUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.address.CityVO;
-import com.example.Used_Inst_market.web.vo.address.LocalVO;
+import com.example.Used_Inst_market.model.vo.address.CityVO;
+import com.example.Used_Inst_market.model.vo.address.LocalVO;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +45,8 @@ public class LocalServiceTest {
                 .name(testName)
                 .build());
 
-        LocalSelectRequestDTO localSelectRequestDTO = new LocalSelectRequestDTO(testLocal.getLocalNo());
+        LocalSelectRequestDTO localSelectRequestDTO =
+                new LocalSelectRequestDTO(testLocal.getLocalNo());
         LocalVO selectedLocal = localService.localSelect(localSelectRequestDTO);
 
         List<Local> locals = localRepository.findAll();

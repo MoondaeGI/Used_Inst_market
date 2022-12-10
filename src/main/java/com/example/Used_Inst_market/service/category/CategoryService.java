@@ -1,11 +1,11 @@
 package com.example.Used_Inst_market.service.category;
 
-import com.example.Used_Inst_market.domain.category.brand.Brand;
-import com.example.Used_Inst_market.domain.category.brand.BrandRepository;
-import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
-import com.example.Used_Inst_market.domain.category.lower.LowerCategoryRepository;
-import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
-import com.example.Used_Inst_market.domain.category.upper.UpperCategoryRepository;
+import com.example.Used_Inst_market.model.domain.category.brand.Brand;
+import com.example.Used_Inst_market.model.domain.category.brand.BrandRepository;
+import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
+import com.example.Used_Inst_market.model.domain.category.lower.LowerCategoryRepository;
+import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
+import com.example.Used_Inst_market.model.domain.category.upper.UpperCategoryRepository;
 import com.example.Used_Inst_market.web.dto.category.brand.BrandDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.brand.BrandInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.brand.BrandSelectRequestDTO;
@@ -18,9 +18,9 @@ import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryDeleteRe
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategorySelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.category.BrandVO;
-import com.example.Used_Inst_market.web.vo.category.LowerCategoryVO;
-import com.example.Used_Inst_market.web.vo.category.UpperCategoryVO;
+import com.example.Used_Inst_market.model.vo.category.BrandVO;
+import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
+import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

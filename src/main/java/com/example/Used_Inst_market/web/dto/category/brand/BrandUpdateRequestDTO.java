@@ -1,6 +1,6 @@
 package com.example.Used_Inst_market.web.dto.category.brand;
 
-import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
+import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,20 +1,19 @@
 package com.example.Used_Inst_market.service.local;
 
-import com.example.Used_Inst_market.domain.city.City;
-import com.example.Used_Inst_market.domain.city.CityRepository;
-import com.example.Used_Inst_market.domain.local.Local;
-import com.example.Used_Inst_market.domain.local.LocalRepository;
+import com.example.Used_Inst_market.model.domain.city.City;
+import com.example.Used_Inst_market.model.domain.city.CityRepository;
+import com.example.Used_Inst_market.model.domain.local.Local;
+import com.example.Used_Inst_market.model.domain.local.LocalRepository;
 import com.example.Used_Inst_market.web.dto.city.CityDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.city.CityInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.city.CitySelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.city.CityUpdateRequestDTO;
-import com.example.Used_Inst_market.web.dto.address.local.*;
 import com.example.Used_Inst_market.web.dto.local.LocalDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.local.LocalInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.local.LocalSelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.local.LocalUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.address.CityVO;
-import com.example.Used_Inst_market.web.vo.address.LocalVO;
+import com.example.Used_Inst_market.model.vo.address.CityVO;
+import com.example.Used_Inst_market.model.vo.address.LocalVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

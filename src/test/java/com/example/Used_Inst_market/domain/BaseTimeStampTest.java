@@ -1,7 +1,7 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.domain.local.Local;
-import com.example.Used_Inst_market.domain.local.LocalRepository;
+import com.example.Used_Inst_market.model.domain.local.Local;
+import com.example.Used_Inst_market.model.domain.local.LocalRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

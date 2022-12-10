@@ -1,13 +1,14 @@
 package com.example.Used_Inst_market.service.board;
 
-import com.example.Used_Inst_market.domain.board.picture.Picture;
-import com.example.Used_Inst_market.domain.board.picture.PictureRepository;
-import com.example.Used_Inst_market.domain.board.post.Post;
-import com.example.Used_Inst_market.domain.board.post.PostRepository;
-import com.example.Used_Inst_market.domain.util.FileHandler;
+import com.example.Used_Inst_market.model.domain.board.picture.Picture;
+import com.example.Used_Inst_market.model.domain.board.picture.PictureRepository;
+import com.example.Used_Inst_market.model.domain.board.post.Post;
+import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
+import com.example.Used_Inst_market.util.filehandler.FileHandler;
 import com.example.Used_Inst_market.web.dto.board.picture.PictureInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.picture.PictureSelectRequestDTO;
-import com.example.Used_Inst_market.web.vo.post.PictureVO;
+import com.example.Used_Inst_market.model.vo.board.PictureVO;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureUpdateRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class PictureService {
     private final FileHandler fileHandler;
 
     @Transactional(readOnly = true)
-    public List<PictureVO> selectByPost(
+    public List<PictureVO> selectAllByPost(
             PictureSelectRequestDTO pictureSelectRequestDTO) {
         Post post = postRepository.findById(pictureSelectRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
@@ -36,28 +37,35 @@ public class PictureService {
     }
 
     @Transactional
-    public Long insert(PictureInsertRequestDTO pictureInsertRequestDTO)
+    public void insert(PictureInsertRequestDTO pictureInsertRequestDTO)
             throws IOException {
         Post post = postRepository.findById(pictureInsertRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
 
         if(!pictureInsertRequestDTO.getMultipartFiles().isEmpty()) {
             List<Picture> pictures = fileHandler
-                    .parsePictureFileInfo(post, pictureInsertRequestDTO.getMultipartFiles());
+                    .parsePictureFileInfo(post,
+                            pictureInsertRequestDTO.getMultipartFiles());
+
             pictureRepository.saveAll(pictures);
         }
-
-        return pictureInsertRequestDTO.getPostNo();
     }
-/*
+
     @Transactional
-    public Long update(PictureUpdateRequestDTO pictureUpdateRequestDTO) {
+    public Long update(PictureUpdateRequestDTO pictureUpdateRequestDTO)
+            throws IOException {
         Post post = postRepository.findById(pictureUpdateRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
 
-        List<Picture> pictures = pictureRepository.findByPost(post);
+        List<Picture> updatePictures = fileHandler
+                .parsePictureFileInfo(post,
+                        pictureUpdateRequestDTO.getMultipartFiles());
 
+        if(!updatePictures.isEmpty()) {
+           pictureRepository.saveAll(updatePictures);
+        }
 
+        return pictureUpdateRequestDTO.getPostNo();
     }
- */
+
 }

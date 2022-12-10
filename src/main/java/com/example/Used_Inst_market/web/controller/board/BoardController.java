@@ -4,6 +4,7 @@ import com.example.Used_Inst_market.service.board.PictureService;
 import com.example.Used_Inst_market.service.board.PostService;
 import com.example.Used_Inst_market.web.dto.board.picture.PictureInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.picture.PictureSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureUpdateRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostSelectRequestDTO;
@@ -13,8 +14,8 @@ import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromLowe
 import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromUpperRequestDTO;
 import com.example.Used_Inst_market.web.dto.select.localselect.SelectFromCityRequestDTO;
 import com.example.Used_Inst_market.web.dto.select.localselect.SelectFromLocalRequestDTO;
-import com.example.Used_Inst_market.web.vo.post.PictureVO;
-import com.example.Used_Inst_market.web.vo.post.PostVO;
+import com.example.Used_Inst_market.model.vo.board.PictureVO;
+import com.example.Used_Inst_market.model.vo.board.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +36,8 @@ public class BoardController {
                 PictureSelectRequestDTO.builder()
                         .postNo(postNo)
                         .build();
-        List<PictureVO> pictures = pictureService.selectByPost(pictureSelectRequestDTO);
+        List<PictureVO> pictures = pictureService
+                .selectAllByPost(pictureSelectRequestDTO);
 
         PostSelectRequestDTO postSelectRequestDTO =
                 PostSelectRequestDTO.builder()
@@ -54,7 +56,7 @@ public class BoardController {
     @PostMapping("/info")
     public Long insert(
             @RequestPart(value = "images") List<MultipartFile> multipartFiles,
-            @RequestPart(value = "postInsertRequestDTO")
+            @RequestPart(value = "insertDTO")
             PostInsertRequestDTO postInsertRequestDTO)
             throws IOException {
         Long postNo = postService.insert(postInsertRequestDTO);
@@ -72,8 +74,21 @@ public class BoardController {
 
     @PutMapping("/info")
     public Long update(
-            @RequestBody PostUpdateRequestDTO postUpdateRequestDTO) {
-        return postService.update(postUpdateRequestDTO);
+            @RequestPart(value = "pictureUpdateRequestDTO", required = false)
+            List<MultipartFile> multipartFiles,
+            @RequestPart(value = "postUpdateRequestDTO")
+            PostUpdateRequestDTO postUpdateRequestDTO)
+            throws IOException {
+        Long postNo = postService.update(postUpdateRequestDTO);
+
+        PictureUpdateRequestDTO pictureUpdateRequestDTO =
+                PictureUpdateRequestDTO.builder()
+                        .postNo(postNo)
+                        .multipartFiles(multipartFiles)
+                        .build();
+        pictureService.update(pictureUpdateRequestDTO);
+
+        return postNo;
     }
 
     @DeleteMapping("/info")

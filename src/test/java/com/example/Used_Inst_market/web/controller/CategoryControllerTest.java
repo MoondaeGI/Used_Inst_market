@@ -1,15 +1,15 @@
 package com.example.Used_Inst_market.web.controller;
 
-import com.example.Used_Inst_market.domain.category.lower.LowerCategory;
-import com.example.Used_Inst_market.domain.category.lower.LowerCategoryRepository;
-import com.example.Used_Inst_market.domain.category.upper.UpperCategory;
-import com.example.Used_Inst_market.domain.category.upper.UpperCategoryRepository;
+import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
+import com.example.Used_Inst_market.model.domain.category.lower.LowerCategoryRepository;
+import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
+import com.example.Used_Inst_market.model.domain.category.upper.UpperCategoryRepository;
 import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryUpdateRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateRequestDTO;
-import com.example.Used_Inst_market.web.vo.category.LowerCategoryVO;
-import com.example.Used_Inst_market.web.vo.category.UpperCategoryVO;
+import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
+import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

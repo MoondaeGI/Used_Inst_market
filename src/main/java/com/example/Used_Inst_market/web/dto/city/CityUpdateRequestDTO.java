@@ -1,6 +1,6 @@
 package com.example.Used_Inst_market.web.dto.city;
 
-import com.example.Used_Inst_market.domain.local.Local;
+import com.example.Used_Inst_market.model.domain.local.Local;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
