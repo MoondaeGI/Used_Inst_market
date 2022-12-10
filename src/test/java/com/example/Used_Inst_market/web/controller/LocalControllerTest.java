@@ -4,7 +4,7 @@ import com.example.Used_Inst_market.model.domain.local.Local;
 import com.example.Used_Inst_market.model.domain.local.LocalRepository;
 import com.example.Used_Inst_market.web.dto.local.LocalInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.local.LocalUpdateRequestDTO;
-import com.example.Used_Inst_market.model.vo.address.LocalVO;
+import com.example.Used_Inst_market.model.vo.local.LocalVO;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

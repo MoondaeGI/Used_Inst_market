@@ -8,16 +8,16 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @Getter
 @NoArgsConstructor
-public class UserSelectPostReqVO {
+public class UserVO {
     private Long userNo;
     private String name;
 
-    public UserSelectPostReqVO(User user) {
+    public UserVO(User user) {
         this.userNo = user.getUserNo();
         this.name = user.getName();
     }
 
-    public static UserSelectPostReqVO from(User user) {
-        return new UserSelectPostReqVO(user);
+    public static UserVO from(User user) {
+        return new UserVO(user);
     }
 }

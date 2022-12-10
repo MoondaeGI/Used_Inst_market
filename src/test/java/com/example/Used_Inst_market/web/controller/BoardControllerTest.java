@@ -1,7 +1,5 @@
 package com.example.Used_Inst_market.web.controller;
 
-import com.example.Used_Inst_market.model.domain.address.Address;
-import com.example.Used_Inst_market.model.domain.address.AddressRepository;
 import com.example.Used_Inst_market.model.domain.city.City;
 import com.example.Used_Inst_market.model.domain.city.CityRepository;
 import com.example.Used_Inst_market.model.domain.local.Local;
@@ -57,10 +55,9 @@ public class BoardControllerTest {
 
     @Autowired private LocalSelectRepository localSelectRepository;
     @Autowired private UserRepository userRepository;
-    @Autowired private AddressRepository addressRepository;
     @Autowired private LocalRepository localRepository;
     @Autowired private CityRepository cityRepository;
-
+/*
     @Before
     public void setup() {
         UpperCategory testUpperCategory = upperCategoryRepository
@@ -111,7 +108,7 @@ public class BoardControllerTest {
         localRepository.deleteAll();
         upperCategoryRepository.deleteAll();
     }
-
+*/
     @Test
     public void setup_검증() {
         System.out.println("test");
@@ -119,40 +116,10 @@ public class BoardControllerTest {
 
     @Test
     public void select_검증() {
-        Post testPost = postRepository.save(
-                Post.builder()
-                        .title("test")
-                        .content("test")
-                        .price(1)
-                        .user(userRepository.findAll().get(0))
-                        .build());
-
-        CategorySelect testCategorySelect = categorySelectRepository.save(
-                CategorySelect.builder()
-                        .post(testPost)
-                        .upperCategory(upperCategoryRepository.findAll().get(0))
-                        .lowerCategory(lowerCategoryRepository.findAll().get(0))
-                        .brand(brandRepository.findAll().get(0))
-                        .build());
-
-        LocalSelect testLocalSelect = localSelectRepository.save(
-                LocalSelect.builder()
-                        .post(testPost)
-                        .local(localRepository.findAll().get(0))
-                        .city(cityRepository.findAll().get(0))
-                        .build());
-
         ResponseEntity<PostVO> responseEntity = testRestTemplate
-                .getForEntity(URL + "?no=" + testPost.getPostNo(), PostVO.class);
+                .getForEntity(URL + "?no=91", PostVO.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody().getPostNo())
-                .isEqualTo(postRepository.findAll().get(0).getPostNo());
-
-        assertThat(categorySelectRepository.findByPost(testPost).getCategorySelectNo())
-                .isEqualTo(testCategorySelect.getCategorySelectNo());
-        assertThat(localSelectRepository.findByPost(testPost).getLocalSelectNo())
-                .isEqualTo(testLocalSelect.getLocalSelectNo());
     }
 
     @Test

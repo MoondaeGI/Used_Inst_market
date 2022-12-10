@@ -1,7 +1,5 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.model.domain.address.Address;
-import com.example.Used_Inst_market.model.domain.address.AddressRepository;
 import com.example.Used_Inst_market.model.domain.city.City;
 import com.example.Used_Inst_market.model.domain.city.CityRepository;
 import com.example.Used_Inst_market.model.domain.local.Local;
@@ -22,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class UserRepositoryTest {
     @Autowired private UserRepository userRepository;
-    @Autowired private AddressRepository addressRepository;
     @Autowired private LocalRepository localRepository;
     @Autowired private CityRepository cityRepository;
 
@@ -52,20 +49,7 @@ public class UserRepositoryTest {
                         .phoneNumber("010-0000-0000")
                         .build());
 
-        Address testAddress = addressRepository.save(
-                Address.builder()
-                        .user(testUser)
-                        .local(localRepository.findAll().get(0))
-                        .city(cityRepository.findAll().get(0))
-                        .addressDetail("test")
-                        .build());
-
         assertThat(userRepository.findAll().get(0).getUserNo()).isEqualTo(testUser.getUserNo());
         assertThat(userRepository.findAll().get(0).getName()).isEqualTo(testName);
-
-        assertThat(addressRepository.findAll().get(0).getAddressNo())
-                .isEqualTo(testAddress.getAddressNo());
-        assertThat(addressRepository.findAll().get(0).getUser().getUserNo())
-                .isEqualTo(testUser.getUserNo());
     }
 }

@@ -9,8 +9,8 @@ import com.example.Used_Inst_market.web.dto.local.LocalDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.local.LocalInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.local.LocalSelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.local.LocalUpdateRequestDTO;
-import com.example.Used_Inst_market.model.vo.address.CityVO;
-import com.example.Used_Inst_market.model.vo.address.LocalVO;
+import com.example.Used_Inst_market.model.vo.local.CityVO;
+import com.example.Used_Inst_market.model.vo.local.LocalVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

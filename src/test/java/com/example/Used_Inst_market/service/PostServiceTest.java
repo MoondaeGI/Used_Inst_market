@@ -1,7 +1,5 @@
 package com.example.Used_Inst_market.service;
 
-import com.example.Used_Inst_market.model.domain.address.Address;
-import com.example.Used_Inst_market.model.domain.address.AddressRepository;
 import com.example.Used_Inst_market.model.domain.city.City;
 import com.example.Used_Inst_market.model.domain.city.CityRepository;
 import com.example.Used_Inst_market.model.domain.local.Local;
@@ -55,7 +53,6 @@ public class PostServiceTest {
 
     @Autowired private LocalSelectRepository localSelectRepository;
     @Autowired private UserRepository userRepository;
-    @Autowired private AddressRepository addressRepository;
     @Autowired private LocalRepository localRepository;
     @Autowired private CityRepository cityRepository;
 
@@ -91,14 +88,6 @@ public class PostServiceTest {
                 .email("test1234@test.com")
                 .phoneNumber("010-0000-0000")
                 .build());
-
-        addressRepository.save(
-                Address.builder()
-                        .user(testUser)
-                        .local(testLocal)
-                        .city(testCity)
-                        .addressDetail("test")
-                        .build());
     }
 
     @After

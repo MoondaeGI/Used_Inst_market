@@ -1,6 +1,5 @@
 package com.example.Used_Inst_market.service.board;
 
-import com.example.Used_Inst_market.model.domain.address.AddressRepository;
 import com.example.Used_Inst_market.model.domain.city.City;
 import com.example.Used_Inst_market.model.domain.city.CityRepository;
 import com.example.Used_Inst_market.model.domain.local.Local;
@@ -51,7 +50,6 @@ public class PostService {
     private final LocalRepository localRepository;
     private final CityRepository cityRepository;
     private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
 
     @Transactional(readOnly = true)
     public PostVO select(@NotNull PostSelectRequestDTO postSelectRequestDTO) {
@@ -84,6 +82,12 @@ public class PostService {
         Brand brand = brandRepository.findById(postInsertRequestDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브렌드가 없습니다."));
 
+        Local local = localRepository.findById(postInsertRequestDTO.getLocalNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
+
+        City city = cityRepository.findById(postInsertRequestDTO.getCityNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 도시가 없습니다."));
+
 
         Post post = postRepository.save(
                 Post.builder()
@@ -104,8 +108,8 @@ public class PostService {
         localSelectRepository.save(
                 LocalSelect.builder()
                         .post(post)
-                        .local(addressRepository.findByUser(user).getLocal())
-                        .city(addressRepository.findByUser(user).getCity())
+                        .local(local)
+                        .city(city)
                         .build());
 
         return post.getPostNo();

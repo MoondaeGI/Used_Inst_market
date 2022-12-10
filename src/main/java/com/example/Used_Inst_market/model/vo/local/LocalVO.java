@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.model.vo.address;
+package com.example.Used_Inst_market.model.vo.local;
 
 import com.example.Used_Inst_market.model.domain.local.Local;
 import lombok.Getter;

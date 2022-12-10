@@ -2,7 +2,7 @@ package com.example.Used_Inst_market.model.vo.board;
 
 import com.example.Used_Inst_market.model.domain.board.post.Post;
 import com.example.Used_Inst_market.model.domain.board.post.SoldYN;
-import com.example.Used_Inst_market.model.vo.user.UserSelectPostReqVO;
+import com.example.Used_Inst_market.model.vo.user.UserVO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PostVO {
     private Long postNo;
-    private UserSelectPostReqVO user;
+    private UserVO user;
     private String title;
     private String content;
     private Integer price;
@@ -28,7 +28,7 @@ public class PostVO {
         this.price = post.getPrice();
         this.soldYN = post.getSoldYN();
 
-        this.user = UserSelectPostReqVO.from(post.getUser());
+        this.user = UserVO.from(post.getUser());
         this.pictures = pictures;
     }
 
@@ -39,10 +39,13 @@ public class PostVO {
         this.price = post.getPrice();
         this.soldYN = post.getSoldYN();
 
-        this.user = UserSelectPostReqVO.from(post.getUser());
+        this.user = UserVO.from(post.getUser());
     }
 
     public static PostVO of(Post post, List<PictureVO> pictures) {
         return new PostVO(post, pictures);
+    }
+    public static PostVO from(Post post) {
+        return new PostVO(post);
     }
 }

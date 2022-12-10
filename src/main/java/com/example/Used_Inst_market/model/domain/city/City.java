@@ -1,15 +1,11 @@
 package com.example.Used_Inst_market.model.domain.city;
 
-import com.example.Used_Inst_market.model.domain.address.Address;
 import com.example.Used_Inst_market.model.domain.local.Local;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -33,10 +29,6 @@ public class City {
         this.local = local;
         this.name = name;
     }
-
-    @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "city", orphanRemoval = true)
-    private List<Address> addresses = new ArrayList<Address>();
 
     public void update(String name, Local local) {
         this.name = name;

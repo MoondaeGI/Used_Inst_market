@@ -1,6 +1,5 @@
 package com.example.Used_Inst_market.model.domain.user;
 
-import com.example.Used_Inst_market.model.domain.address.Address;
 import com.example.Used_Inst_market.model.domain.board.post.Post;
 import com.example.Used_Inst_market.model.domain.util.BaseTimeStamp;
 import lombok.Builder;
@@ -20,10 +19,6 @@ public class User extends BaseTimeStamp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_NO")
     private Long userNo;
-
-    @OneToOne(mappedBy = "user",
-            fetch = FetchType.LAZY, orphanRemoval = true)
-    public Address address;
 
     @Column(name = "NAME", nullable = false)
     private String name;
