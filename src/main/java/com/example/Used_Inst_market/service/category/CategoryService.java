@@ -48,7 +48,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public List<UpperCategoryVO> upperCategorySelectAll() {
         return upperCategoryRepository.findAll().stream()
-                .map(UpperCategoryVO::new)
+                .map(UpperCategoryVO::from)
                 .collect(Collectors.toList());
     }
 

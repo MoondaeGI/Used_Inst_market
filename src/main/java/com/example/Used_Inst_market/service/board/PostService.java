@@ -20,6 +20,7 @@ import com.example.Used_Inst_market.model.domain.board.post.Post;
 import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
+import com.example.Used_Inst_market.model.vo.board.PictureVO;
 import com.example.Used_Inst_market.util.filehandler.FileHandler;
 import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostInsertRequestDTO;
@@ -34,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -58,7 +60,12 @@ public class PostService {
         Post post = postRepository.findById(postSelectRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
-        return PostVO.of(post, postSelectRequestDTO.getPictures());
+        List<PictureVO> pictures = pictureRepository
+                .findByPost(post).stream()
+                .map(PictureVO::from)
+                .collect(Collectors.toList());
+
+        return PostVO.of(post, pictures);
     }
 
     @Transactional

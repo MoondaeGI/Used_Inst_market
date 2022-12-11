@@ -40,7 +40,7 @@ public class LocalService {
     @Transactional(readOnly = true)
     public List<UpperLocalVO> upperLocalSelectAll() {
         return upperLocalRepository.findAll().stream()
-                .map(UpperLocalVO::new)
+                .map(UpperLocalVO::from)
                 .collect(Collectors.toList());
     }
 

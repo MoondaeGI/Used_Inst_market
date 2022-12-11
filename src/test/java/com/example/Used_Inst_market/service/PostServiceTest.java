@@ -57,7 +57,7 @@ public class PostServiceTest {
     @Autowired private UserRepository userRepository;
     @Autowired private UpperLocalRepository upperLocalRepository;
     @Autowired private LowerLocalRepository lowerLocalRepository;
-
+/*
     @Before
     public void setup() {
         UpperCategory testUpperCategory = upperCategoryRepository
@@ -99,6 +99,18 @@ public class PostServiceTest {
         userRepository.deleteAll();
         upperLocalRepository.deleteAll();
         upperCategoryRepository.deleteAll();
+    }
+*/
+    @Test
+    public void select_검증2() {
+        PostSelectRequestDTO postSelectRequestDTO =
+                PostSelectRequestDTO.builder()
+                        .postNo(18L)
+                        .build();
+
+        PostVO resultPost = postService.select(postSelectRequestDTO);
+
+        assertThat(resultPost.getPostNo()).isEqualTo(18L);
     }
 
     @Test

@@ -32,9 +32,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BoardControllerTest {
-    private static final String URL = "/post/info";
-    private static final String CT_SELECT_URL = "/post/info/category";
-    private static final String LO_SELECT_URL = "/post/info/local";
+    private static final String URL = "/board/info";
+    private static final String CT_SELECT_URL = "/board/category";
+    private static final String LO_SELECT_URL = "/board/local";
 
     @Autowired private TestRestTemplate testRestTemplate;
 
@@ -109,7 +109,7 @@ public class BoardControllerTest {
     @Test
     public void select_검증() {
         ResponseEntity<PostVO> responseEntity = testRestTemplate
-                .getForEntity(URL + "?no=91", PostVO.class);
+                .getForEntity(URL + "?no=18", PostVO.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }

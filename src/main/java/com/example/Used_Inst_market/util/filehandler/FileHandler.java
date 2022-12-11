@@ -2,12 +2,12 @@ package com.example.Used_Inst_market.util.filehandler;
 
 import com.example.Used_Inst_market.model.domain.board.picture.Picture;
 import com.example.Used_Inst_market.model.domain.board.post.Post;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,5 +75,21 @@ public class FileHandler {
         }   
 
         return pictureList;
+    }
+
+    public List<byte[]> pictureFileToByte(List<Picture> pictures)
+            throws IOException {
+        List<byte[]> byteList = new ArrayList<>();
+
+        for (Picture picture : pictures) {
+            String path = picture.getPath();
+            InputStream imageStream = new FileInputStream(path);
+            byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+            imageStream.close();
+
+            byteList.add(imageByteArray);
+        }
+
+        return byteList;
     }
 }
