@@ -14,14 +14,14 @@ public class PostInsertRequestDTO {
     private Long upperCategoryNo;
     private Long lowerCategoryNo;
     private Long brandNo;
-    private Long localNo;
-    private Long cityNo;
+    private Long upperLocalNo;
+    private Long lowerLocalNo;
 
     @Builder
     public PostInsertRequestDTO(
             Long userNo, String title, String content, Integer price,
             Long upperCategoryNo, Long lowerCategoryNo, Long brandNo,
-            Long localNo, Long cityNo) {
+            Long upperLocalNo, Long lowerLocalNo) {
         this.userNo = userNo;
         this.title = title;
         this.content = content;
@@ -31,7 +31,7 @@ public class PostInsertRequestDTO {
         this.lowerCategoryNo = lowerCategoryNo;
         this.brandNo = brandNo;
 
-        this.localNo = localNo;
-        this.cityNo = cityNo;
+        this.upperLocalNo = upperLocalNo;
+        this.lowerLocalNo = lowerLocalNo;
     }
 }

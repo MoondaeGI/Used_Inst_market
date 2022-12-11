@@ -1,14 +1,9 @@
 package com.example.Used_Inst_market.web.controller;
 
-import com.example.Used_Inst_market.model.domain.city.City;
-import com.example.Used_Inst_market.model.domain.city.CityRepository;
-import com.example.Used_Inst_market.model.domain.local.Local;
-import com.example.Used_Inst_market.model.domain.local.LocalRepository;
-import com.example.Used_Inst_market.model.domain.category.brand.Brand;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
 import com.example.Used_Inst_market.model.domain.category.brand.BrandRepository;
-import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategoryRepository;
-import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategoryRepository;
 import com.example.Used_Inst_market.model.domain.board.post.Post;
 import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
@@ -16,12 +11,9 @@ import com.example.Used_Inst_market.model.domain.select.categoryselect.CategoryS
 import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelectRepository;
 import com.example.Used_Inst_market.model.domain.select.localselect.LocalSelect;
 import com.example.Used_Inst_market.model.domain.select.localselect.LocalSelectRepository;
-import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import com.example.Used_Inst_market.web.dto.board.post.PostInsertRequestDTO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +47,8 @@ public class BoardControllerTest {
 
     @Autowired private LocalSelectRepository localSelectRepository;
     @Autowired private UserRepository userRepository;
-    @Autowired private LocalRepository localRepository;
-    @Autowired private CityRepository cityRepository;
+    @Autowired private UpperLocalRepository upperLocalRepository;
+    @Autowired private LowerLocalRepository lowerLocalRepository;
 /*
     @Before
     public void setup() {
@@ -143,8 +135,8 @@ public class BoardControllerTest {
         LocalSelect testLocalSelect = localSelectRepository.save(
                 LocalSelect.builder()
                         .post(testPost)
-                        .local(localRepository.findAll().get(0))
-                        .city(cityRepository.findAll().get(0))
+                        .local(upperLocalRepository.findAll().get(0))
+                        .city(lowerLocalRepository.findAll().get(0))
                         .build());
 
         ResponseEntity<List<PostVO>> responseEntity = testRestTemplate

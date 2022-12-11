@@ -1,9 +1,9 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.model.domain.city.City;
-import com.example.Used_Inst_market.model.domain.city.CityRepository;
-import com.example.Used_Inst_market.model.domain.local.Local;
-import com.example.Used_Inst_market.model.domain.local.LocalRepository;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
 import com.example.Used_Inst_market.model.domain.category.brand.Brand;
 import com.example.Used_Inst_market.model.domain.category.brand.BrandRepository;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
@@ -38,8 +38,8 @@ public class LocalSelectRepositoryTest {
 
     @Autowired private LocalSelectRepository localSelectRepository;
     @Autowired private UserRepository userRepository;
-    @Autowired private LocalRepository localRepository;
-    @Autowired private CityRepository cityRepository;
+    @Autowired private UpperLocalRepository upperLocalRepository;
+    @Autowired private LowerLocalRepository lowerLocalRepository;
 
     @Before
     public void setup() {
@@ -57,14 +57,14 @@ public class LocalSelectRepositoryTest {
                 .name("test")
                 .build());
 
-        Local testLocal = localRepository.save(
-                Local.builder()
+        UpperLocal testLocal = upperLocalRepository.save(
+                UpperLocal.builder()
                         .name("test")
                         .build());
 
-        City testCity = cityRepository.save(
-                City.builder()
-                        .local(testLocal)
+        LowerLocal testLowerLocal = lowerLocalRepository.save(
+                LowerLocal.builder()
+                        .upperLocal(testLocal)
                         .name("test")
                         .build());
 
@@ -80,7 +80,7 @@ public class LocalSelectRepositoryTest {
         postRepository.deleteAll();
 
         userRepository.deleteAll();
-        localRepository.deleteAll();
+        upperLocalRepository.deleteAll();
         upperCategoryRepository.deleteAll();
     }
 
@@ -104,8 +104,8 @@ public class LocalSelectRepositoryTest {
         LocalSelect testLocalSelect = localSelectRepository.save(
                 LocalSelect.builder()
                         .post(testPost)
-                        .local(localRepository.findAll().get(0))
-                        .city(cityRepository.findAll().get(0))
+                        .upperLocal(upperLocalRepository.findAll().get(0))
+                        .lowerLocal(lowerLocalRepository.findAll().get(0))
                         .build());
 
         assertThat(postRepository.findAll().get(0).getPostNo())
@@ -127,8 +127,8 @@ public class LocalSelectRepositoryTest {
         localSelectRepository.save(
                 LocalSelect.builder()
                         .post(testPost)
-                        .local(localRepository.findAll().get(0))
-                        .city(cityRepository.findAll().get(0))
+                        .upperLocal(upperLocalRepository.findAll().get(0))
+                        .lowerLocal(lowerLocalRepository.findAll().get(0))
                         .build());
 
         assertThat(postRepository.findAll().get(0).getPostNo())
@@ -149,13 +149,13 @@ public class LocalSelectRepositoryTest {
         localSelectRepository.save(
                 LocalSelect.builder()
                         .post(testPost)
-                        .local(localRepository.findAll().get(0))
-                        .city(cityRepository.findAll().get(0))
+                        .upperLocal(upperLocalRepository.findAll().get(0))
+                        .lowerLocal(lowerLocalRepository.findAll().get(0))
                         .build());
 
         assertThat(postRepository.findAll().get(0).getPostNo())
                 .isEqualTo(localSelectRepository
-                        .findByLocal(localRepository.findAll().get(0))
+                        .findByUpperLocal(upperLocalRepository.findAll().get(0))
                         .get(0)
                         .getPostNo());
     }

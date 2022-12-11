@@ -1,10 +1,10 @@
 package com.example.Used_Inst_market.web.controller;
 
-import com.example.Used_Inst_market.model.domain.local.Local;
-import com.example.Used_Inst_market.model.domain.local.LocalRepository;
-import com.example.Used_Inst_market.web.dto.local.LocalInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.LocalUpdateRequestDTO;
-import com.example.Used_Inst_market.model.vo.local.LocalVO;
+import com.example.Used_Inst_market.model.domain.local.upper.Local;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalUpdateRequestDTO;
+import com.example.Used_Inst_market.model.vo.local.UpperLocalVO;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,21 +31,21 @@ public class LocalControllerTest {
     private TestRestTemplate testRestTemplate;
 
     @Autowired
-    private LocalRepository localRepository;
+    private UpperLocalRepository upperLocalRepository;
 
     @After
     public void teardown() {
-        localRepository.deleteAll();
+        upperLocalRepository.deleteAll();
     }
 
     @Test
     public void localSelect_검증() {
-        Long testLocalNo = localRepository.save(Local.builder()
+        Long testLocalNo = upperLocalRepository.save(Local.builder()
                 .name("test")
                 .build()).getLocalNo();
 
-        ResponseEntity<LocalVO> responseEntity = testRestTemplate
-                .getForEntity(URL + "?no=" + testLocalNo, LocalVO.class);
+        ResponseEntity<UpperLocalVO> responseEntity = testRestTemplate
+                .getForEntity(URL + "?no=" + testLocalNo, UpperLocalVO.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().getLocalNo()).isEqualTo(testLocalNo);
@@ -57,60 +57,60 @@ public class LocalControllerTest {
         locals.add(Local.builder().name("test1").build());
         locals.add(Local.builder().name("test2").build());
 
-        localRepository.saveAll(locals);
+        upperLocalRepository.saveAll(locals);
 
-        ResponseEntity<List<LocalVO>> responseEntity = testRestTemplate
+        ResponseEntity<List<UpperLocalVO>> responseEntity = testRestTemplate
                 .exchange(URL + "/list", HttpMethod.GET, null,
-                        new ParameterizedTypeReference<List<LocalVO>>() {});
+                        new ParameterizedTypeReference<List<UpperLocalVO>>() {});
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().get(0).getLocalNo())
-                .isEqualTo(localRepository.findAll().get(0).getLocalNo());
+                .isEqualTo(upperLocalRepository.findAll().get(0).getLocalNo());
         assertThat(responseEntity.getBody().get(1).getLocalNo())
-                .isEqualTo(localRepository.findAll().get(1).getLocalNo());
+                .isEqualTo(upperLocalRepository.findAll().get(1).getLocalNo());
     }
 
     @Test
     public void localInsert_검증() {
-        LocalInsertRequestDTO localInsertRequestDTO =
-                LocalInsertRequestDTO.builder()
+        UpperLocalInsertRequestDTO upperLocalInsertRequestDTO =
+                UpperLocalInsertRequestDTO.builder()
                         .name("test")
                         .build();
 
         ResponseEntity<Long> responseEntity = testRestTemplate
-                .postForEntity(URL, localInsertRequestDTO, Long.class);
+                .postForEntity(URL, upperLocalInsertRequestDTO, Long.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody())
-                .isEqualTo(localRepository.findAll().get(0).getLocalNo());
+                .isEqualTo(upperLocalRepository.findAll().get(0).getLocalNo());
     }
 
     @Test
     public void localUpdate_검증() {
-        Local testLocal = localRepository.save(
+        Local testLocal = upperLocalRepository.save(
                 Local.builder()
                         .name("test")
                         .build());
 
-        LocalUpdateRequestDTO localUpdateRequestDTO =
-                LocalUpdateRequestDTO.builder()
+        UpperLocalUpdateRequestDTO upperLocalUpdateRequestDTO =
+                UpperLocalUpdateRequestDTO.builder()
                         .localNo(testLocal.getLocalNo())
                         .name("updateTestName")
                         .build();
 
         ResponseEntity<Long> responseEntity = testRestTemplate
                 .exchange(URL, HttpMethod.PUT,
-                        new HttpEntity<>(localUpdateRequestDTO),
+                        new HttpEntity<>(upperLocalUpdateRequestDTO),
                         Long.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isEqualTo(testLocal.getLocalNo());
-        assertThat(localRepository.findAll().get(0).getName()).isEqualTo("updateTestName");
+        assertThat(upperLocalRepository.findAll().get(0).getName()).isEqualTo("updateTestName");
     }
 
     @Test
     public void localDelete_검증() {
-        Long testLocalNo = localRepository.save(Local.builder()
+        Long testLocalNo = upperLocalRepository.save(Local.builder()
                 .name("test")
                 .build()).getLocalNo();
 
@@ -120,6 +120,6 @@ public class LocalControllerTest {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isNull();
-        assertThat(localRepository.findById(testLocalNo)).isEmpty();
+        assertThat(upperLocalRepository.findById(testLocalNo)).isEmpty();
     }
 }

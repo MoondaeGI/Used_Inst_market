@@ -1,9 +1,9 @@
 package com.example.Used_Inst_market.service;
 
-import com.example.Used_Inst_market.model.domain.city.City;
-import com.example.Used_Inst_market.model.domain.city.CityRepository;
-import com.example.Used_Inst_market.model.domain.local.Local;
-import com.example.Used_Inst_market.model.domain.local.LocalRepository;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
 import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.model.domain.select.localselect.LocalSelect;
 import com.example.Used_Inst_market.model.domain.select.localselect.LocalSelectRepository;
@@ -53,8 +53,8 @@ public class PostServiceTest {
 
     @Autowired private LocalSelectRepository localSelectRepository;
     @Autowired private UserRepository userRepository;
-    @Autowired private LocalRepository localRepository;
-    @Autowired private CityRepository cityRepository;
+    @Autowired private UpperLocalRepository upperLocalRepository;
+    @Autowired private LowerLocalRepository lowerLocalRepository;
 
     @Before
     public void setup() {
@@ -72,14 +72,14 @@ public class PostServiceTest {
                 .name("test")
                 .build());
 
-        Local testLocal = localRepository.save(
-                Local.builder()
+        UpperLocal testUpperLocal = upperLocalRepository.save(
+                UpperLocal.builder()
                         .name("test")
                         .build());
 
-        City testCity = cityRepository.save(
-                City.builder()
-                        .local(testLocal)
+        LowerLocal testLowerLocal = lowerLocalRepository.save(
+                LowerLocal.builder()
+                        .upperLocal(testUpperLocal)
                         .name("test")
                         .build());
 
@@ -95,7 +95,7 @@ public class PostServiceTest {
         postRepository.deleteAll();
 
         userRepository.deleteAll();
-        localRepository.deleteAll();
+        upperLocalRepository.deleteAll();
         upperCategoryRepository.deleteAll();
     }
 
@@ -122,8 +122,8 @@ public class PostServiceTest {
         localSelectRepository.save(
                 LocalSelect.builder()
                         .post(testPost)
-                        .local(localRepository.findAll().get(0))
-                        .city(cityRepository.findAll().get(0))
+                        .upperLocal(upperLocalRepository.findAll().get(0))
+                        .lowerLocal(lowerLocalRepository.findAll().get(0))
                         .build());
 
         PostSelectRequestDTO postSelectRequestDTO =

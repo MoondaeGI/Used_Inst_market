@@ -1,8 +1,7 @@
-package com.example.Used_Inst_market.model.domain.local;
+package com.example.Used_Inst_market.model.domain.local.upper;
 
-import com.example.Used_Inst_market.model.domain.city.City;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
 import com.example.Used_Inst_market.model.domain.util.BaseTimeStamp;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,22 +13,21 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "TB_LOCAL")
-public class Local extends BaseTimeStamp {
+@Table(name = "TB_UPPER_LO")
+public class UpperLocal extends BaseTimeStamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LOCAL_NO")
-    private Long localNo;
+    @Column(name = "UPPER_LO_NO")
+    private Long upperLocalNo;
 
     @Column(name = "NAME", nullable = false)
     private String name;
 
     @Builder
-    public Local(String name) { this.name = name; }
+    public UpperLocal(String name) { this.name = name; }
 
-    @Getter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "local", orphanRemoval = true)
-    private List<City> cities = new ArrayList<City>();
+    @OneToMany(mappedBy = "upperLocal", orphanRemoval = true)
+    private List<LowerLocal> lowerLocals = new ArrayList<LowerLocal>();
 
     public void update(String name) { this.name = name; }
 }

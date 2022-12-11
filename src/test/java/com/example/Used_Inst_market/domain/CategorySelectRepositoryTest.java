@@ -1,9 +1,9 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.model.domain.city.City;
-import com.example.Used_Inst_market.model.domain.city.CityRepository;
-import com.example.Used_Inst_market.model.domain.local.Local;
-import com.example.Used_Inst_market.model.domain.local.LocalRepository;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
+import com.example.Used_Inst_market.model.domain.local.upper.Local;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
 import com.example.Used_Inst_market.model.domain.category.brand.Brand;
 import com.example.Used_Inst_market.model.domain.category.brand.BrandRepository;
 import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelect;
@@ -40,8 +40,8 @@ public class CategorySelectRepositoryTest {
 
     @Autowired private LocalSelectRepository localSelectRepository;
     @Autowired private UserRepository userRepository;
-    @Autowired private LocalRepository localRepository;
-    @Autowired private CityRepository cityRepository;
+    @Autowired private UpperLocalRepository upperLocalRepository;
+    @Autowired private LowerLocalRepository lowerLocalRepository;
 
     @Before
     public void setup() {
@@ -59,13 +59,13 @@ public class CategorySelectRepositoryTest {
                 .name("test")
                 .build());
 
-        Local testLocal = localRepository.save(
+        Local testLocal = upperLocalRepository.save(
                 Local.builder()
                         .name("test")
                         .build());
 
-        City testCity = cityRepository.save(
-                City.builder()
+        LowerLocal testLowerLocal = lowerLocalRepository.save(
+                LowerLocal.builder()
                         .local(testLocal)
                         .name("test")
                         .build());
@@ -82,7 +82,7 @@ public class CategorySelectRepositoryTest {
         postRepository.deleteAll();
 
         userRepository.deleteAll();
-        localRepository.deleteAll();
+        upperLocalRepository.deleteAll();
         upperCategoryRepository.deleteAll();
     }
 

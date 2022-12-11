@@ -1,9 +1,9 @@
 package com.example.Used_Inst_market.service.board;
 
-import com.example.Used_Inst_market.model.domain.city.City;
-import com.example.Used_Inst_market.model.domain.city.CityRepository;
-import com.example.Used_Inst_market.model.domain.local.Local;
-import com.example.Used_Inst_market.model.domain.local.LocalRepository;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
 import com.example.Used_Inst_market.model.domain.category.brand.Brand;
 import com.example.Used_Inst_market.model.domain.category.brand.BrandRepository;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
@@ -47,8 +47,8 @@ public class PostService {
     private final BrandRepository brandRepository;
 
     private final LocalSelectRepository localSelectRepository;
-    private final LocalRepository localRepository;
-    private final CityRepository cityRepository;
+    private final UpperLocalRepository upperLocalRepository;
+    private final LowerLocalRepository lowerLocalRepository;
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
@@ -82,12 +82,13 @@ public class PostService {
         Brand brand = brandRepository.findById(postInsertRequestDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브렌드가 없습니다."));
 
-        Local local = localRepository.findById(postInsertRequestDTO.getLocalNo())
+        UpperLocal upperLocal = upperLocalRepository
+                .findById(postInsertRequestDTO.getUpperLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
 
-        City city = cityRepository.findById(postInsertRequestDTO.getCityNo())
-                .orElseThrow(() -> new IllegalArgumentException("해당 도시가 없습니다."));
-
+        LowerLocal lowerLocal = lowerLocalRepository
+                .findById(postInsertRequestDTO.getLowerLocalNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
 
         Post post = postRepository.save(
                 Post.builder()
@@ -108,8 +109,8 @@ public class PostService {
         localSelectRepository.save(
                 LocalSelect.builder()
                         .post(post)
-                        .local(local)
-                        .city(city)
+                        .upperLocal(upperLocal)
+                        .lowerLocal(lowerLocal)
                         .build());
 
         return post.getPostNo();
@@ -131,12 +132,22 @@ public class PostService {
         Brand brand = brandRepository.findById(postUpdateRequestDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브렌드가 없습니다."));
 
+        UpperLocal upperLocal = upperLocalRepository
+                .findById(postUpdateRequestDTO.getUpperLocalNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
+
+        LowerLocal lowerLocal = lowerLocalRepository
+                .findById(postUpdateRequestDTO.getLowerLocalNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
+
         CategorySelect categorySelect = categorySelectRepository.findByPost(post);
+        LocalSelect localSelect = localSelectRepository.findByPost(post);
 
         post.update(postUpdateRequestDTO.getTitle(), postUpdateRequestDTO.getContent(),
                 postUpdateRequestDTO.getPrice(), postUpdateRequestDTO.getSoldYN());
 
         categorySelect.update(upperCategory, lowerCategory, brand);
+        localSelect.update(upperLocal, lowerLocal);
 
         return postUpdateRequestDTO.getPostNo();
     }
@@ -195,12 +206,12 @@ public class PostService {
     public List<PostVO> selectFromLocal(
             SelectFromLocalRequestDTO selectFromLocalRequestDTO) {
 
-        Local local = localRepository
+        UpperLocal upperLocal = upperLocalRepository
                 .findById(selectFromLocalRequestDTO.getLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
 
         return localSelectRepository
-                .findByLocal(local)
+                .findByUpperLocal(upperLocal)
                 .stream().map(PostVO::new)
                 .collect(Collectors.toList());
     }
@@ -209,12 +220,12 @@ public class PostService {
     public List<PostVO> selectFromCity(
             SelectFromCityRequestDTO selectFromCityRequestDTO) {
 
-        City city = cityRepository
+        LowerLocal lowerLocal = lowerLocalRepository
                 .findById(selectFromCityRequestDTO.getCityNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 도시가 없습니다."));
 
         return localSelectRepository
-                .findByCity(city)
+                .findByLowerLocal(lowerLocal)
                 .stream().map(PostVO::new)
                 .collect(Collectors.toList());
     }

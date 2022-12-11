@@ -1,9 +1,9 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.model.domain.city.City;
-import com.example.Used_Inst_market.model.domain.city.CityRepository;
-import com.example.Used_Inst_market.model.domain.local.Local;
-import com.example.Used_Inst_market.model.domain.local.LocalRepository;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
+import com.example.Used_Inst_market.model.domain.local.upper.Local;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import org.junit.After;
@@ -20,22 +20,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class UserRepositoryTest {
     @Autowired private UserRepository userRepository;
-    @Autowired private LocalRepository localRepository;
-    @Autowired private CityRepository cityRepository;
+    @Autowired private UpperLocalRepository upperLocalRepository;
+    @Autowired private LowerLocalRepository lowerLocalRepository;
 
     @Before
     public void setup() {
-        Local testLocal = localRepository.save(
+        Local testLocal = upperLocalRepository.save(
                 Local.builder().name("test").build());
 
-        City testCity = cityRepository.save(
-                City.builder().local(testLocal).name("test").build());
+        LowerLocal testLowerLocal = lowerLocalRepository.save(
+                LowerLocal.builder().local(testLocal).name("test").build());
     }
 
     @After
     public void teardown() {
         userRepository.deleteAll();
-        localRepository.deleteAll();
+        upperLocalRepository.deleteAll();
     }
 
     @Test

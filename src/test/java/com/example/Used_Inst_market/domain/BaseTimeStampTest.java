@@ -1,7 +1,7 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.model.domain.local.Local;
-import com.example.Used_Inst_market.model.domain.local.LocalRepository;
+import com.example.Used_Inst_market.model.domain.local.upper.Local;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,11 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class BaseTimeStampTest {
     @Autowired
-    private LocalRepository localRepository;
+    private UpperLocalRepository upperLocalRepository;
 
     @After
     public void teardown() {
-        localRepository.deleteAll();
+        upperLocalRepository.deleteAll();
     }
 
     @Test
@@ -30,10 +30,10 @@ public class BaseTimeStampTest {
         LocalDateTime testDate =
                 LocalDateTime.of(2022, 11, 25, 0, 0, 0);
 
-        localRepository.save(Local.builder()
+        upperLocalRepository.save(Local.builder()
                 .name("test")
                 .build());
-        List<Local> locals = localRepository.findAll();
+        List<Local> locals = upperLocalRepository.findAll();
 
         assertThat(locals.get(0).getRegDt()).isAfter(testDate);
         assertThat(locals.get(0).getModDt()).isAfter(testDate);
@@ -44,7 +44,7 @@ public class BaseTimeStampTest {
         LocalDateTime testDate =
                 LocalDateTime.of(2022, 11, 30, 0, 0, 0);
 
-        localRepository.save(Local.builder()
+        upperLocalRepository.save(Local.builder()
                 .name("test")
                 .build());
     }

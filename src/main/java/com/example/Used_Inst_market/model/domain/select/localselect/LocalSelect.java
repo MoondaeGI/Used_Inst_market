@@ -1,8 +1,8 @@
 package com.example.Used_Inst_market.model.domain.select.localselect;
 
-import com.example.Used_Inst_market.model.domain.city.City;
-import com.example.Used_Inst_market.model.domain.local.Local;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
 import com.example.Used_Inst_market.model.domain.board.post.Post;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,16 +25,21 @@ public class LocalSelect {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "LOCAL_NO")
-    private Local local;
+    private UpperLocal upperLocal;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CITY_NO")
-    private City city;
+    private LowerLocal lowerLocal;
 
     @Builder
-    public LocalSelect(Post post, Local local, City city) {
+    public LocalSelect(Post post, UpperLocal upperLocal, LowerLocal lowerLocal) {
         this.post = post;
-        this.local = local;
-        this.city = city;
+        this.upperLocal = upperLocal;
+        this.lowerLocal = lowerLocal;
+    }
+
+    public void update(UpperLocal upperLocal, LowerLocal lowerLocal) {
+        this.upperLocal = upperLocal;
+        this.lowerLocal = lowerLocal;
     }
 }

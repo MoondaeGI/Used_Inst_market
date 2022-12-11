@@ -1,16 +1,16 @@
 package com.example.Used_Inst_market.web.controller.local;
 
 import com.example.Used_Inst_market.service.local.LocalService;
-import com.example.Used_Inst_market.web.dto.city.CityDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.city.CityInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.city.CitySelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.city.CityUpdateRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.LocalDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.LocalInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.LocalSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.LocalUpdateRequestDTO;
-import com.example.Used_Inst_market.model.vo.local.CityVO;
-import com.example.Used_Inst_market.model.vo.local.LocalVO;
+import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalDeleteRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalUpdateRequestDTO;
+import com.example.Used_Inst_market.model.vo.local.LowerLocalVO;
+import com.example.Used_Inst_market.model.vo.local.UpperLocalVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,71 +22,78 @@ import java.util.List;
 public class LocalController {
     private final LocalService localService;
 
-    @GetMapping(value = "/info")
-    public LocalVO localSelect(@RequestParam(name = "no") Long localNo) {
-        LocalSelectRequestDTO localSelectRequestDTO = LocalSelectRequestDTO.builder()
-                .localNo(localNo)
-                .build();
+    @GetMapping(value = "/upper/info")
+    public UpperLocalVO upperLocalSelect(
+            @RequestParam(name = "no") Long upperLocalNo) {
+        UpperLocalSelectRequestDTO upperLocalSelectRequestDTO =
+                UpperLocalSelectRequestDTO.builder()
+                        .upperLocalNo(upperLocalNo)
+                        .build();
 
-        return localService.localSelect(localSelectRequestDTO);
+        return localService.upperLocalSelect(upperLocalSelectRequestDTO);
     }
 
-    @GetMapping(value = "/info/list")
-    public List<LocalVO> localSelectAll() {
-        return localService.localSelectAll();
+    @GetMapping(value = "/upper/info/list")
+    public List<UpperLocalVO> upperLocalSelectAll() {
+        return localService.upperLocalSelectAll();
     }
 
     @PostMapping(value = "/info")
-    public Long localInsert(@RequestBody LocalInsertRequestDTO localInsertRequestDTO) {
-        return localService.localInsert(localInsertRequestDTO);
+    public Long upperLocalInsert(
+            @RequestBody UpperLocalInsertRequestDTO upperLocalInsertRequestDTO) {
+        return localService.upperLocalInsert(upperLocalInsertRequestDTO);
     }
 
-    @PutMapping(value = "/info")
-    public Long localUpdate(@RequestBody LocalUpdateRequestDTO localUpdateRequestDTO) {
-        return localService.localUpdate(localUpdateRequestDTO);
+    @PutMapping(value = "/upper/info")
+    public Long upperLocalUpdate(
+            @RequestBody UpperLocalUpdateRequestDTO upperLocalUpdateRequestDTO) {
+        return localService.upperLocalUpdate(upperLocalUpdateRequestDTO);
     }
 
-    @DeleteMapping(value = "/info")
-    public void localDelete(@RequestParam(name = "no") Long localNo) {
-        LocalDeleteRequestDTO localDeleteRequestDTO = LocalDeleteRequestDTO.builder()
-                .localNo(localNo)
-                .build();
-
-        localService.localDelete(localDeleteRequestDTO);
-    }
-
-    @GetMapping("/city/info")
-    public CityVO citySelect(@RequestParam("no") Long cityNo) {
-        CitySelectRequestDTO citySelectRequestDTO =
-                CitySelectRequestDTO.builder()
-                        .cityNo(cityNo)
+    @DeleteMapping(value = "/upper/info")
+    public void upperLocalDelete(@RequestParam(name = "no") Long upperLocalNo) {
+        UpperLocalDeleteRequestDTO upperLocalDeleteRequestDTO =
+                UpperLocalDeleteRequestDTO.builder()
+                        .upperLocalNo(upperLocalNo)
                         .build();
 
-        return localService.citySelect(citySelectRequestDTO);
+        localService.upperLocalDelete(upperLocalDeleteRequestDTO);
     }
 
-    @GetMapping("/city/info/list")
-    public List<CityVO> citySelectAll() {
-        return localService.citySelectAll();
-    }
-
-    @PostMapping("/city/info")
-    public Long cityInsert(@RequestBody CityInsertRequestDTO cityInsertRequestDTO) {
-        return localService.cityInsert(cityInsertRequestDTO);
-    }
-
-    @PutMapping("/city/info")
-    public Long cityUpdate(@RequestBody CityUpdateRequestDTO cityUpdateRequestDTO) {
-        return localService.cityUpdate(cityUpdateRequestDTO);
-    }
-
-    @DeleteMapping("/city/info")
-    public void cityDelete(@RequestParam("no") Long cityNo) {
-        CityDeleteRequestDTO cityDeleteRequestDTO =
-                CityDeleteRequestDTO.builder()
-                        .cityNo(cityNo)
+    @GetMapping("/lower/info")
+    public LowerLocalVO lowerLocalSelect(@RequestParam("no") Long lowerLocalNo) {
+        LowerLocalSelectRequestDTO lowerLocalSelectRequestDTO =
+                LowerLocalSelectRequestDTO.builder()
+                        .lowerLocalNo(lowerLocalNo)
                         .build();
 
-        localService.cityDelete(cityDeleteRequestDTO);
+        return localService.lowerLocalSelect(lowerLocalSelectRequestDTO);
+    }
+
+    @GetMapping("/lower/info/list")
+    public List<LowerLocalVO> lowerLocalSelectAll() {
+        return localService.lowerLocalSelectAll();
+    }
+
+    @PostMapping("/lower/info")
+    public Long lowerLocalInsert(
+            @RequestBody LowerLocalInsertRequestDTO lowerLocalInsertRequestDTO) {
+        return localService.lowerLocalInsert(lowerLocalInsertRequestDTO);
+    }
+
+    @PutMapping("/lower/info")
+    public Long lowerLocalUpdate(
+            @RequestBody LowerLocalUpdateRequestDTO lowerLocalUpdateRequestDTO) {
+        return localService.lowerLocalUpdate(lowerLocalUpdateRequestDTO);
+    }
+
+    @DeleteMapping("/lower/info")
+    public void lowerLocalDelete(@RequestParam("no") Long lowerLocalNo) {
+        LowerLocalDeleteRequestDTO lowerLocalDeleteRequestDTO =
+                LowerLocalDeleteRequestDTO.builder()
+                        .lowerLocalNo(lowerLocalNo)
+                        .build();
+
+        localService.lowerLocalDelete(lowerLocalDeleteRequestDTO);
     }
 }
