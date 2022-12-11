@@ -1,6 +1,6 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.model.domain.local.upper.Local;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
 import org.junit.After;
 import org.junit.Test;
@@ -30,10 +30,10 @@ public class BaseTimeStampTest {
         LocalDateTime testDate =
                 LocalDateTime.of(2022, 11, 25, 0, 0, 0);
 
-        upperLocalRepository.save(Local.builder()
+        upperLocalRepository.save(UpperLocal.builder()
                 .name("test")
                 .build());
-        List<Local> locals = upperLocalRepository.findAll();
+        List<UpperLocal> locals = upperLocalRepository.findAll();
 
         assertThat(locals.get(0).getRegDt()).isAfter(testDate);
         assertThat(locals.get(0).getModDt()).isAfter(testDate);
@@ -44,7 +44,7 @@ public class BaseTimeStampTest {
         LocalDateTime testDate =
                 LocalDateTime.of(2022, 11, 30, 0, 0, 0);
 
-        upperLocalRepository.save(Local.builder()
+        upperLocalRepository.save(UpperLocal.builder()
                 .name("test")
                 .build());
     }

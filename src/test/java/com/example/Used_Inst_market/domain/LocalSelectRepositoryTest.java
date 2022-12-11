@@ -137,7 +137,7 @@ public class LocalSelectRepositoryTest {
     }
 
     @Test
-    public void findByLocal_검증() {
+    public void findByUpperLocal_검증() {
         Post testPost = postRepository.save(
                 Post.builder()
                         .title("test")

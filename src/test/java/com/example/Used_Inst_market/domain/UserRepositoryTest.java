@@ -2,7 +2,7 @@ package com.example.Used_Inst_market.domain;
 
 import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
 import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
-import com.example.Used_Inst_market.model.domain.local.upper.Local;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
@@ -25,11 +25,14 @@ public class UserRepositoryTest {
 
     @Before
     public void setup() {
-        Local testLocal = upperLocalRepository.save(
-                Local.builder().name("test").build());
+        UpperLocal testUpperLocal = upperLocalRepository.save(
+                UpperLocal.builder().name("test").build());
 
         LowerLocal testLowerLocal = lowerLocalRepository.save(
-                LowerLocal.builder().local(testLocal).name("test").build());
+                LowerLocal.builder()
+                        .upperLocal(testUpperLocal)
+                        .name("test")
+                        .build());
     }
 
     @After

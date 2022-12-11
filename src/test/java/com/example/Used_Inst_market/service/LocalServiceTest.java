@@ -59,12 +59,12 @@ public class LocalServiceTest {
 
     @Test
     public void localSelectAll_검증() {
-        List<Local> testLocals = new ArrayList<Local>();
-        testLocals.add(Local.builder().name("test1").build());
-        testLocals.add(Local.builder().name("test2").build());
+        List<UpperLocal> testUpperLocals = new ArrayList<UpperLocal>();
+        testUpperLocals.add(UpperLocal.builder().name("test1").build());
+        testUpperLocals.add(UpperLocal.builder().name("test2").build());
 
-        upperLocalRepository.saveAll(testLocals);
-        List<UpperLocalVO> upperLocalVOList = localService.localSelectAll();
+        upperLocalRepository.saveAll(testUpperLocals);
+        List<UpperLocalVO> upperLocalVOList = localService.upperLocalSelectAll();
 
         assertThat(upperLocalVOList.get(0).getName()).isEqualTo("test1");
         assertThat(upperLocalVOList.get(1).getName()).isEqualTo("test2");
@@ -73,86 +73,95 @@ public class LocalServiceTest {
     @Test
     public void localInsert_검증() {
         String testName = "test";
-        UpperLocalInsertRequestDTO upperLocalInsertRequestDTO = new UpperLocalInsertRequestDTO(testName);
+        UpperLocalInsertRequestDTO upperLocalInsertRequestDTO =
+                new UpperLocalInsertRequestDTO(testName);
 
-        localService.localInsert(upperLocalInsertRequestDTO);
-        List<Local> locals = upperLocalRepository.findAll();
+        localService.upperLocalInsert(upperLocalInsertRequestDTO);
+        List<UpperLocal> upperLocals = upperLocalRepository.findAll();
 
-        assertThat(locals.get(0).getName()).isEqualTo(testName);
+        assertThat(upperLocals.get(0).getName()).isEqualTo(testName);
     }
 
     @Test
-    public void localUpdate_검증() {
+    public void upperLocalUpdate_검증() {
         String testName = "test";
         String updateTestName = "update test";
 
-        upperLocalRepository.save(Local.builder()
+        upperLocalRepository.save(UpperLocal.builder()
                 .name(testName)
                 .build());
-        Local testLocal = upperLocalRepository.findAll().get(0);
+        UpperLocal testUpperLocal = upperLocalRepository.findAll().get(0);
 
-        UpperLocalUpdateRequestDTO upperLocalUpdateRequestDTO
-                = new UpperLocalUpdateRequestDTO(testLocal.getLocalNo(), updateTestName);
-        localService.localUpdate(upperLocalUpdateRequestDTO);
+        UpperLocalUpdateRequestDTO upperLocalUpdateRequestDTO =
+                UpperLocalUpdateRequestDTO.builder()
+                        .upperLocalNo(testUpperLocal.getUpperLocalNo())
+                        .name(updateTestName)
+                        .build();
 
-        assertThat(upperLocalRepository.findAll().get(0).getName()).isEqualTo(updateTestName);
+        localService.upperLocalUpdate(upperLocalUpdateRequestDTO);
+
+        assertThat(upperLocalRepository.findAll().get(0).getName())
+                .isEqualTo(updateTestName);
     }
 
     @Test
     public void localDelete_검증() {
-        Local testLocal = upperLocalRepository.save(Local.builder()
+        UpperLocal testLocal = upperLocalRepository.save(UpperLocal.builder()
                 .name("test")
                 .build());
 
-        Long testLocalNo = testLocal.getLocalNo();
+        Long testUpperLocalNo = testLocal.getUpperLocalNo();
 
-        localService.localDelete(UpperLocalDeleteRequestDTO.builder()
-                .localNo(testLocalNo)
+        localService.upperLocalDelete(UpperLocalDeleteRequestDTO.builder()
+                .upperLocalNo(testUpperLocalNo)
                 .build());
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> localService.localSelect(
+                .isThrownBy(() -> localService.upperLocalSelect(
                         UpperLocalSelectRequestDTO.builder()
-                                .localNo(testLocalNo)
+                                .upperLocalNo(testUpperLocalNo)
                                 .build()));
     }
 
     @Test
     public void citySelect_검증() {
-        Local testLocal = upperLocalRepository.save(Local.builder()
+        UpperLocal testUpperLocal = upperLocalRepository.save(UpperLocal.builder()
                 .name("test")
                 .build());
 
         LowerLocal testLowerLocal = lowerLocalRepository.save(LowerLocal.builder()
-                .local(testLocal)
+                .upperLocal(testUpperLocal)
                 .name("test")
                 .build());
 
         LowerLocalSelectRequestDTO lowerLocalSelectRequestDTO =
                 LowerLocalSelectRequestDTO.builder()
-                        .cityNo(testLowerLocal.getCityNo())
+                        .lowerLocalNo(testLowerLocal.getLowerLocalNo())
                         .build();
 
-        LowerLocalVO testCityVO = localService.citySelect(lowerLocalSelectRequestDTO);
+        LowerLocalVO testCityVO = localService
+                .lowerLocalSelect(lowerLocalSelectRequestDTO);
 
-        assertThat(testCityVO.getCityNo())
-                .isEqualTo(lowerLocalRepository.findAll().get(0).getCityNo());
+        assertThat(testCityVO.getLowerLocalNo())
+                .isEqualTo(lowerLocalRepository
+                        .findAll().get(0).getLowerLocalNo());
     }
 
     @Test
     public void cityInsert_검증() {
-        Local testLocal = upperLocalRepository.save(Local.builder()
+        UpperLocal testUpperLocal = upperLocalRepository.save(UpperLocal.builder()
                 .name("test")
                 .build());
 
         LowerLocalInsertRequestDTO lowerLocalInsertRequestDTO =
                 LowerLocalInsertRequestDTO.builder()
-                        .local(testLocal)
+                        .upperLocal(testUpperLocal)
                         .name("test")
                         .build();
 
-        Long testCityNo = localService.cityInsert(lowerLocalInsertRequestDTO);
+        Long testCityNo = localService.lowerLocalInsert(lowerLocalInsertRequestDTO);
 
-        assertThat(testCityNo).isEqualTo(lowerLocalRepository.findAll().get(0).getCityNo());
+        assertThat(testCityNo)
+                .isEqualTo(lowerLocalRepository.findAll().get(0).getLowerLocalNo());
     }
 }

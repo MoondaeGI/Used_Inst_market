@@ -135,8 +135,8 @@ public class BoardControllerTest {
         LocalSelect testLocalSelect = localSelectRepository.save(
                 LocalSelect.builder()
                         .post(testPost)
-                        .local(upperLocalRepository.findAll().get(0))
-                        .city(lowerLocalRepository.findAll().get(0))
+                        .upperLocal(upperLocalRepository.findAll().get(0))
+                        .lowerLocal(lowerLocalRepository.findAll().get(0))
                         .build());
 
         ResponseEntity<List<PostVO>> responseEntity = testRestTemplate

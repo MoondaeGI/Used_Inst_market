@@ -145,7 +145,6 @@ public class PostService {
 
         post.update(postUpdateRequestDTO.getTitle(), postUpdateRequestDTO.getContent(),
                 postUpdateRequestDTO.getPrice(), postUpdateRequestDTO.getSoldYN());
-
         categorySelect.update(upperCategory, lowerCategory, brand);
         localSelect.update(upperLocal, lowerLocal);
 
@@ -158,75 +157,5 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         postRepository.delete(post);
-    }
-
-    @Transactional(readOnly = true)
-    public List<PostVO> selectFromUpperCategory(
-            SelectFromUpperRequestDTO selectFromUpperRequestDTO) {
-
-        UpperCategory upperCategory = upperCategoryRepository
-                .findById(selectFromUpperRequestDTO.getUpperCategoryNo())
-                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
-
-        return categorySelectRepository
-                .findByUpperCategory(upperCategory)
-                .stream().map(PostVO::new)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<PostVO> selectFromLowerCategory(
-            SelectFromLowerRequestDTO selectFromLowerRequestDTO) {
-
-        LowerCategory lowerCategory = lowerCategoryRepository
-                .findById(selectFromLowerRequestDTO.getLowerCategoryNo())
-                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
-
-        return categorySelectRepository
-                .findByLowerCategory(lowerCategory)
-                .stream().map(PostVO::new)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<PostVO> selectFromBrand(
-            SelectFromBrandRequestDTO selectFromBrandRequestDTO) {
-
-        Brand brand = brandRepository
-                .findById(selectFromBrandRequestDTO.getBrandNo())
-                .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
-
-        return categorySelectRepository
-                .findByBrand(brand)
-                .stream().map(PostVO::new)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<PostVO> selectFromLocal(
-            SelectFromLocalRequestDTO selectFromLocalRequestDTO) {
-
-        UpperLocal upperLocal = upperLocalRepository
-                .findById(selectFromLocalRequestDTO.getLocalNo())
-                .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
-
-        return localSelectRepository
-                .findByUpperLocal(upperLocal)
-                .stream().map(PostVO::new)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<PostVO> selectFromCity(
-            SelectFromCityRequestDTO selectFromCityRequestDTO) {
-
-        LowerLocal lowerLocal = lowerLocalRepository
-                .findById(selectFromCityRequestDTO.getCityNo())
-                .orElseThrow(() -> new IllegalArgumentException("해당 도시가 없습니다."));
-
-        return localSelectRepository
-                .findByLowerLocal(lowerLocal)
-                .stream().map(PostVO::new)
-                .collect(Collectors.toList());
     }
 }

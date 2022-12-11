@@ -66,11 +66,11 @@ public class LocalService {
     @Transactional
     public void upperLocalDelete(
             UpperLocalDeleteRequestDTO upperLocalDeleteRequestDTO) {
-        UpperLocal uppwerLocal = upperLocalRepository
+        UpperLocal upperLocal = upperLocalRepository
                 .findById(upperLocalDeleteRequestDTO.getUpperLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
 
-        upperLocalRepository.delete(uppwerLocal);
+        upperLocalRepository.delete(upperLocal);
     }
 
     @Transactional(readOnly = true)

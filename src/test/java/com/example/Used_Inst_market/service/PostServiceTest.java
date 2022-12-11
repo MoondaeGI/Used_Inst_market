@@ -20,6 +20,7 @@ import com.example.Used_Inst_market.model.domain.board.post.SoldYN;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import com.example.Used_Inst_market.service.board.PostService;
+import com.example.Used_Inst_market.service.category.CategoryService;
 import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostSelectRequestDTO;
@@ -77,13 +78,13 @@ public class PostServiceTest {
                         .name("test")
                         .build());
 
-        LowerLocal testLowerLocal = lowerLocalRepository.save(
+        lowerLocalRepository.save(
                 LowerLocal.builder()
                         .upperLocal(testUpperLocal)
                         .name("test")
                         .build());
 
-        User testUser = userRepository.save(User.builder()
+        userRepository.save(User.builder()
                 .name("test")
                 .email("test1234@test.com")
                 .phoneNumber("010-0000-0000")
@@ -186,6 +187,10 @@ public class PostServiceTest {
                         .lowerCategoryNo(lowerCategoryRepository
                                 .findAll().get(0).getLowerCategoryNo())
                         .brandNo(brandRepository.findAll().get(0).getBrandNo())
+                        .upperLocalNo(upperLocalRepository
+                                .findAll().get(0).getUpperLocalNo())
+                        .lowerLocalNo(lowerLocalRepository
+                                .findAll().get(0).getLowerLocalNo())
                         .build();
 
         Long testPostNo = postService.insert(postInsertRequestDTO);
@@ -205,81 +210,115 @@ public class PostServiceTest {
         String updateContent = "update content";
         Integer updatePrice = 10;
 
+        Post testPost = postRepository.save(Post.builder()
+                .user(userRepository.findAll().get(0))
+                .title("test")
+                .content("test")
+                .price(1)
+                .build());
+
+        categorySelectRepository.save(
+                CategorySelect.builder()
+                        .post(testPost)
+                        .upperCategory(upperCategoryRepository.findAll().get(0))
+                        .lowerCategory(lowerCategoryRepository.findAll().get(0))
+                        .brand(brandRepository.findAll().get(0))
+                        .build());
+
+        localSelectRepository.save(
+                LocalSelect.builder()
+                        .post(testPost)
+                        .upperLocal(upperLocalRepository.findAll().get(0))
+                        .lowerLocal(lowerLocalRepository.findAll().get(0))
+                        .build());
+
         UpperCategory updateUpperCategory = upperCategoryRepository.save(
                 UpperCategory.builder()
-                        .name("update name")
+                        .name("test")
                         .build());
 
         LowerCategory updateLowerCategory = lowerCategoryRepository.save(
                 LowerCategory.builder()
-                        .upperCategory(updateUpperCategory)
-                        .name("update name")
-                        .build());
+                    .upperCategory(updateUpperCategory)
+                    .name("test")
+                    .build());
 
         Brand updateBrand = brandRepository.save(
                 Brand.builder()
-                        .lowerCategory(updateLowerCategory)
-                        .name("update name")
+                    .lowerCategory(updateLowerCategory)
+                    .name("test")
+                    .build());
+
+        UpperLocal updateUpperLocal = upperLocalRepository.save(
+                UpperLocal.builder()
+                        .name("test")
                         .build());
 
-        Long testPostNo = postService.insert(PostInsertRequestDTO.builder()
-                .title("test")
-                .content("test")
-                .price(1)
-                .userNo(userRepository.findAll().get(0).getUserNo())
-                .upperCategoryNo(upperCategoryRepository
-                        .findAll().get(0).getUpperCategoryNo())
-                .lowerCategoryNo(lowerCategoryRepository
-                        .findAll().get(0).getLowerCategoryNo())
-                .brandNo(brandRepository.findAll().get(0).getBrandNo())
-                .build());
+        LowerLocal updateLowerLocal = lowerLocalRepository.save(
+                LowerLocal.builder()
+                        .upperLocal(updateUpperLocal)
+                        .name("test")
+                        .build());
 
         PostUpdateRequestDTO postUpdateRequestDTO =
                 PostUpdateRequestDTO.builder()
-                        .postNo(testPostNo)
+                        .postNo(testPost.getPostNo())
                         .title(updateTitle)
                         .content(updateContent)
                         .price(updatePrice)
                         .soldYN(SoldYN.SOLD_OUT)
-                        .upperCategoryNo(updateUpperCategory
-                                .getUpperCategoryNo())
-                        .lowerCategoryNo(updateLowerCategory
-                                .getLowerCategoryNo())
+                        .upperCategoryNo(updateUpperCategory.getUpperCategoryNo())
+                        .lowerCategoryNo(updateLowerCategory.getLowerCategoryNo())
                         .brandNo(updateBrand.getBrandNo())
+                        .upperLocalNo(updateUpperLocal.getUpperLocalNo())
+                        .lowerLocalNo(updateLowerLocal.getLowerLocalNo())
                         .build();
 
         Long updatePostNo = postService.update(postUpdateRequestDTO);
 
-        assertThat(updatePostNo).isEqualTo(testPostNo);
-        assertThat(postRepository.findAll().get(0).getTitle()).isEqualTo(updateTitle);
-        assertThat(postRepository.findAll().get(0).getContent()).isEqualTo(updateContent);
-        assertThat(postRepository.findAll().get(0).getPrice()).isEqualTo(updatePrice);
-        assertThat(postRepository.findAll().get(0).getSoldYN()).isEqualTo(SoldYN.SOLD_OUT);
+        assertThat(updatePostNo)
+                .isEqualTo(postRepository.findAll().get(0).getPostNo());
+        assertThat(postRepository.findAll().get(0).getSoldYN())
+                .isEqualTo(SoldYN.SOLD_OUT);
+        assertThat(postRepository.findAll().get(0).getTitle())
+                .isEqualTo(updateTitle);
 
-        assertThat(categorySelectRepository.findAll().get(0)
-                .getUpperCategory().getUpperCategoryNo())
+        assertThat(categorySelectRepository.findAll().get(0).getUpperCategory())
                 .isEqualTo(updateUpperCategory.getUpperCategoryNo());
-        assertThat(categorySelectRepository.findAll().get(0)
-                .getLowerCategory().getLowerCategoryNo())
+        assertThat(categorySelectRepository.findAll().get(0).getLowerCategory())
                 .isEqualTo(updateLowerCategory.getLowerCategoryNo());
-        assertThat(categorySelectRepository.findAll().get(0)
-                .getBrand().getBrandNo())
-                .isEqualTo(updateBrand.getBrandNo());
+
+        assertThat(localSelectRepository.findAll().get(0).getUpperLocal())
+                .isEqualTo(updateUpperLocal.getUpperLocalNo());
+        assertThat(localSelectRepository.findAll().get(0).getLowerLocal())
+                .isEqualTo(updateLowerLocal.getLowerLocalNo());
     }
 
     @Test
     public void delete_검증() {
-        Long testPostNo = postService.insert(PostInsertRequestDTO.builder()
+        Post testPost = postRepository.save(Post.builder()
+                .user(userRepository.findAll().get(0))
                 .title("test")
                 .content("test")
                 .price(1)
-                .userNo(userRepository.findAll().get(0).getUserNo())
-                .upperCategoryNo(upperCategoryRepository
-                        .findAll().get(0).getUpperCategoryNo())
-                .lowerCategoryNo(lowerCategoryRepository
-                        .findAll().get(0).getLowerCategoryNo())
-                .brandNo(brandRepository.findAll().get(0).getBrandNo())
                 .build());
+
+        categorySelectRepository.save(
+                CategorySelect.builder()
+                        .post(testPost)
+                        .upperCategory(upperCategoryRepository.findAll().get(0))
+                        .lowerCategory(lowerCategoryRepository.findAll().get(0))
+                        .brand(brandRepository.findAll().get(0))
+                        .build());
+
+        localSelectRepository.save(
+                LocalSelect.builder()
+                        .post(testPost)
+                        .upperLocal(upperLocalRepository.findAll().get(0))
+                        .lowerLocal(lowerLocalRepository.findAll().get(0))
+                        .build());
+
+        Long testPostNo = postRepository.findAll().get(0).getPostNo();
 
         PostDeleteRequestDTO postDeleteRequestDTO =
                 PostDeleteRequestDTO.builder()
