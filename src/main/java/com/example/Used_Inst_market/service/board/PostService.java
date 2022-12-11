@@ -1,5 +1,7 @@
 package com.example.Used_Inst_market.service.board;
 
+import com.example.Used_Inst_market.model.domain.board.picture.Picture;
+import com.example.Used_Inst_market.model.domain.board.picture.PictureRepository;
 import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
 import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
@@ -18,28 +20,28 @@ import com.example.Used_Inst_market.model.domain.board.post.Post;
 import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
+import com.example.Used_Inst_market.util.filehandler.FileHandler;
 import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostSelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostUpdateRequestDTO;
-import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromBrandRequestDTO;
-import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromLowerRequestDTO;
-import com.example.Used_Inst_market.web.dto.select.categoryselect.SelectFromUpperRequestDTO;
-import com.example.Used_Inst_market.web.dto.select.localselect.SelectFromCityRequestDTO;
-import com.example.Used_Inst_market.web.dto.select.localselect.SelectFromLocalRequestDTO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class PostService {
+    private final FileHandler fileHandler;
+
     private final PostRepository postRepository;
+    private final PictureRepository pictureRepository;
 
     private final CategorySelectRepository categorySelectRepository;
     private final UpperCategoryRepository upperCategoryRepository;
@@ -59,15 +61,9 @@ public class PostService {
         return PostVO.of(post, postSelectRequestDTO.getPictures());
     }
 
-    @Transactional(readOnly = true)
-    public List<PostVO> selectAll() {
-        return postRepository.findAll().stream()
-                .map(PostVO::new)
-                .collect(Collectors.toList());
-    }
-
     @Transactional
-    public Long insert(@NotNull PostInsertRequestDTO postInsertRequestDTO) {
+    public Long insert(@NotNull PostInsertRequestDTO postInsertRequestDTO,
+                       List<MultipartFile> multipartFiles) throws IOException {
         User user = userRepository.findById(postInsertRequestDTO.getUserNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."));
 
@@ -112,6 +108,13 @@ public class PostService {
                         .upperLocal(upperLocal)
                         .lowerLocal(lowerLocal)
                         .build());
+
+        if(!multipartFiles.isEmpty()) {
+            List<Picture> pictures = fileHandler
+                    .parsePictureFileInfo(post, multipartFiles);
+
+            pictureRepository.saveAll(pictures);
+        }
 
         return post.getPostNo();
     }

@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.web.dto.select.categoryselect;
+package com.example.Used_Inst_market.web.dto.board.select.categoryselect;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SelectFromLowerRequestDTO {
+public class SelectFromLowerCtRequestDTO {
     private Long lowerCategoryNo;
 
     @Builder
-    public SelectFromLowerRequestDTO(Long lowerCategoryNo) {
+    public SelectFromLowerCtRequestDTO(Long lowerCategoryNo) {
 
         this.lowerCategoryNo = lowerCategoryNo;
     }
