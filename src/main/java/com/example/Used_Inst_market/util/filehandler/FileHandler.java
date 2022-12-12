@@ -9,6 +9,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,7 +81,7 @@ public class FileHandler {
         return pictureList;
     }
 
-    public List<byte[]> pictureFileToByte(List<PictureVO> pictures)
+    public List<byte[]> imageToByteArray(List<PictureVO> pictures)
             throws IOException {
         List<byte[]> byteList = new ArrayList<>();
 
@@ -92,5 +95,16 @@ public class FileHandler {
         }
 
         return byteList;
+    }
+
+    public void deleteImageFile(List<Picture> pictures) throws IOException {
+        for (Picture picture : pictures) {
+            String imagePath = picture.getPath();
+            Path filePath = Paths.get("images/" + imagePath);
+
+            if(!Files.exists(filePath)) {
+                Files.delete(filePath);
+            }
+        }
     }
 }

@@ -19,7 +19,6 @@ import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
 import com.example.Used_Inst_market.model.domain.board.post.SoldYN;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
-import com.example.Used_Inst_market.model.vo.board.PostWIthPictureVO;
 import com.example.Used_Inst_market.service.board.PostService;
 import com.example.Used_Inst_market.service.category.CategoryService;
 import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
@@ -145,7 +144,7 @@ public class PostServiceTest {
                         .postNo(testPost.getPostNo())
                         .build();
 
-        PostWIthPictureVO testPostVO = postService.select(postSelectRequestDTO);
+        PostVO testPostVO = postService.select(postSelectRequestDTO);
 
         assertThat(testPostVO.getTitle()).isEqualTo(testString);
         assertThat(testPostVO.getContent()).isEqualTo(testString);
@@ -216,7 +215,7 @@ public class PostServiceTest {
         assertThat(localSelectRepository.findAll().get(0).getPost().getPostNo())
                 .isEqualTo(testPostNo);
     }
-*/
+
     @Test
     public void update_검증() {
         String updateTitle = "update title";
@@ -306,9 +305,9 @@ public class PostServiceTest {
         assertThat(localSelectRepository.findAll().get(0).getLowerLocal())
                 .isEqualTo(updateLowerLocal.getLowerLocalNo());
     }
-
+*/
     @Test
-    public void delete_검증() {
+    public void delete_검증() throws IOException {
         Post testPost = postRepository.save(Post.builder()
                 .user(userRepository.findAll().get(0))
                 .title("test")

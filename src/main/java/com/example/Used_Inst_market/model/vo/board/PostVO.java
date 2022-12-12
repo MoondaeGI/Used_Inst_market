@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @EqualsAndHashCode
 @Getter
 @NoArgsConstructor
@@ -17,6 +19,7 @@ public class PostVO {
     private String content;
     private Integer price;
     private SoldYN soldYN;
+    private List<byte[]> imageByteArrays;
 
     public PostVO(Post post) {
         this.postNo = post.getPostNo();
@@ -27,7 +30,20 @@ public class PostVO {
         this.user = UserVO.from(post.getUser());
     }
 
+    public PostVO(Post post, List<byte[]> imageByteArrays) {
+        this.postNo = post.getPostNo();
+        this.title = post.getTitle();
+        this.content = post.getContent();
+        this.price = post.getPrice();
+        this.soldYN = post.getSoldYN();
+        this.user = UserVO.from(post.getUser());
+        this.imageByteArrays = imageByteArrays;
+    }
+
     public static PostVO from(Post post) {
         return new PostVO(post);
+    }
+    public static PostVO of(Post post, List<byte[]> imageByteArrays) {
+        return new PostVO(post, imageByteArrays);
     }
 }

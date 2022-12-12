@@ -26,24 +26,31 @@ public class User extends BaseTimeStamp {
     @Column(name = "EMAIL", nullable = false)
     private String email;
 
-    @Column(name = "PHONE_NUMBER", nullable = false)
-    private String phoneNumber;
+    @Column(name = "PICTURE", nullable = false)
+    private String picture;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ROLE", nullable = false)
     private Role role;
 
     @Builder
-    public User(String name, String email, String phoneNumber) {
+    public User(String name, String email, String picture, Role role) {
         this.name = name;
         this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.role = Role.GUEST;
+        this.picture = picture;
+        this.role = role;
     }
 
     @OneToMany(mappedBy = "user",
             fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Post> posts = new ArrayList<Post>();
+
+    public User update(String name, String picture) {
+        this.name = name;
+        this.picture = picture;
+
+        return this;
+    }
 
     public String getRoleKey() {
         return this.role.getKey();

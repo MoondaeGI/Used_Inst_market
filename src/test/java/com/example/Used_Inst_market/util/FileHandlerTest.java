@@ -52,7 +52,7 @@ public class FileHandlerTest {
                 .findByPost(post).stream()
                 .map(PictureVO::from)
                 .collect(Collectors.toList());
-        List<byte[]> byteList = fileHandler.pictureFileToByte(pictures);
+        List<byte[]> byteList = fileHandler.imageToByteArray(pictures);
 
         for (byte[] byteArray : byteList) {
             System.out.println(Arrays.toString(byteArray));

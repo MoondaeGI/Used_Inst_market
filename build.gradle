@@ -35,11 +35,15 @@ dependencies {
 	//commons-io 의존성 추가
 	implementation 'commons-io:commons-io:2.9.0'
 
+	//oauth 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
 	// lombok 의존성 추가
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {

@@ -21,13 +21,12 @@ import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import com.example.Used_Inst_market.model.vo.board.PictureVO;
-import com.example.Used_Inst_market.model.vo.board.PostWIthPictureVO;
+import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.util.filehandler.FileHandler;
 import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostSelectRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostUpdateRequestDTO;
-import com.example.Used_Inst_market.model.vo.board.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,7 +56,7 @@ public class PostService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public PostWIthPictureVO select(
+    public PostVO select(
             @NotNull PostSelectRequestDTO postSelectRequestDTO) throws IOException {
         Post post = postRepository.findById(postSelectRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
@@ -66,9 +65,9 @@ public class PostService {
                 .map(PictureVO::from)
                 .collect(Collectors.toList());
         List<byte[]> imageByteArrays = fileHandler
-                .pictureFileToByte(pictures);
+                .imageToByteArray(pictures);
 
-        return PostWIthPictureVO.of(post, imageByteArrays);
+        return PostVO.of(post, imageByteArrays);
     }
 
     @Transactional
@@ -165,9 +164,13 @@ public class PostService {
     }
 
     @Transactional
-    public void delete(@NotNull PostDeleteRequestDTO postDeleteRequestDTO) {
+    public void delete(@NotNull PostDeleteRequestDTO postDeleteRequestDTO)
+            throws IOException {
         Post post = postRepository.findById(postDeleteRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        List<Picture> pictures = pictureRepository.findByPost(post);
+
+        fileHandler.deleteImageFile(pictures);
 
         postRepository.delete(post);
     }

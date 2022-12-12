@@ -102,11 +102,6 @@ public class BoardControllerTest {
     }
 */
     @Test
-    public void setup_검증() {
-        System.out.println("test");
-    }
-
-    @Test
     public void select_검증() {
         ResponseEntity<PostVO> responseEntity = testRestTemplate
                 .getForEntity(URL + "?no=18", PostVO.class);
