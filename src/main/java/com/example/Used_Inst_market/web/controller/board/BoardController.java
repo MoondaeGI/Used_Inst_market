@@ -1,5 +1,6 @@
 package com.example.Used_Inst_market.web.controller.board;
 
+import com.example.Used_Inst_market.model.vo.board.PostWIthPictureVO;
 import com.example.Used_Inst_market.service.board.BoardService;
 import com.example.Used_Inst_market.service.board.PostService;
 import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
@@ -25,8 +26,10 @@ public class BoardController {
     private final PostService postService;
     private final BoardService boardService;
 
+    @CrossOrigin
     @GetMapping("/info")
-    public PostVO select(@RequestParam("no") Long postNo) {
+    public PostWIthPictureVO select(
+            @RequestParam("no") Long postNo) throws IOException {
         PostSelectRequestDTO postSelectRequestDTO =
                 PostSelectRequestDTO.builder()
                         .postNo(postNo)

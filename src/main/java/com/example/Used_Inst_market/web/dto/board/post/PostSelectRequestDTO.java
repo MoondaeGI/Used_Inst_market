@@ -11,11 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 public class PostSelectRequestDTO {
     private Long postNo;
-    private List<PictureVO> pictures;
 
     @Builder
-    public PostSelectRequestDTO(Long postNo, List<PictureVO> pictures) {
+    public PostSelectRequestDTO(Long postNo) {
         this.postNo = postNo;
-        this.pictures = pictures;
     }
 }

@@ -19,6 +19,7 @@ import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
 import com.example.Used_Inst_market.model.domain.board.post.SoldYN;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
+import com.example.Used_Inst_market.model.vo.board.PostWIthPictureVO;
 import com.example.Used_Inst_market.service.board.PostService;
 import com.example.Used_Inst_market.service.category.CategoryService;
 import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
@@ -100,7 +101,6 @@ public class PostServiceTest {
         upperLocalRepository.deleteAll();
         upperCategoryRepository.deleteAll();
     }
-*/
     @Test
     public void select_검증2() {
         PostSelectRequestDTO postSelectRequestDTO =
@@ -112,9 +112,9 @@ public class PostServiceTest {
 
         assertThat(resultPost.getPostNo()).isEqualTo(18L);
     }
-
+*/
     @Test
-    public void select_검증() {
+    public void select_검증() throws IOException {
         String testString = "test";
 
         Post testPost = postRepository.save(
@@ -145,7 +145,7 @@ public class PostServiceTest {
                         .postNo(testPost.getPostNo())
                         .build();
 
-        PostVO testPostVO = postService.select(postSelectRequestDTO);
+        PostWIthPictureVO testPostVO = postService.select(postSelectRequestDTO);
 
         assertThat(testPostVO.getTitle()).isEqualTo(testString);
         assertThat(testPostVO.getContent()).isEqualTo(testString);

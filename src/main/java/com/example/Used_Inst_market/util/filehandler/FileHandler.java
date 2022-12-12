@@ -2,6 +2,7 @@ package com.example.Used_Inst_market.util.filehandler;
 
 import com.example.Used_Inst_market.model.domain.board.picture.Picture;
 import com.example.Used_Inst_market.model.domain.board.post.Post;
+import com.example.Used_Inst_market.model.vo.board.PictureVO;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -77,11 +78,11 @@ public class FileHandler {
         return pictureList;
     }
 
-    public List<byte[]> pictureFileToByte(List<Picture> pictures)
+    public List<byte[]> pictureFileToByte(List<PictureVO> pictures)
             throws IOException {
         List<byte[]> byteList = new ArrayList<>();
 
-        for (Picture picture : pictures) {
+        for (PictureVO picture : pictures) {
             String path = picture.getPath();
             InputStream imageStream = new FileInputStream(path);
             byte[] imageByteArray = IOUtils.toByteArray(imageStream);
