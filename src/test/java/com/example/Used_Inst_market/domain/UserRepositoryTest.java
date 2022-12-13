@@ -49,7 +49,7 @@ public class UserRepositoryTest {
                 User.builder()
                         .name(testName)
                         .email("test1234@naver.com")
-                        .phoneNumber("010-0000-0000")
+                        .picture("testPicture")
                         .build());
 
         assertThat(userRepository.findAll().get(0).getUserNo()).isEqualTo(testUser.getUserNo());

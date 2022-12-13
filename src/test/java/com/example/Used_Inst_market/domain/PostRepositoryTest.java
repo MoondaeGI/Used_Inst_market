@@ -68,7 +68,7 @@ public class PostRepositoryTest {
         User testUser = userRepository.save(User.builder()
                 .name("test")
                 .email("test1234@test.com")
-                .phoneNumber("010-0000-0000")
+                .picture("testPicture")
                 .build());
     }
 
