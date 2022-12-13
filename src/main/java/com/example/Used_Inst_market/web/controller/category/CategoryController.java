@@ -16,17 +16,21 @@ import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateRe
 import com.example.Used_Inst_market.model.vo.category.BrandVO;
 import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
 import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(tags = {"카테고리 API"})
 @RequiredArgsConstructor
 @RequestMapping("/category")
 @RestController
 public class CategoryController {
     private final CategoryService categoryService;
 
+    @ApiOperation(value = "상위 카테고리 게시글 조회 API")
     @GetMapping("/upper/info")
     public UpperCategoryVO upperCategorySelect(
             @RequestParam(name = "no") Long upperCategoryNo) {
@@ -38,23 +42,27 @@ public class CategoryController {
         return categoryService.upperCategorySelect(upperCategorySelectRequestDTO);
     }
 
+    @ApiOperation(value = "상위 카테고리 리스트 정보 조회 API")
     @GetMapping("/upper/info/list")
     public List<UpperCategoryVO> upperCategorySelectAll() {
         return categoryService.upperCategorySelectAll();
     }
 
+    @ApiOperation(value = "상위 카테고리 정보 삽입 API")
     @PostMapping("/upper/info")
     public Long upperCategoryInsert(
             @RequestBody UpperCategoryInsertRequestDTO upperCategoryInsertRequestDTO) {
         return categoryService.upperCategoryInsert(upperCategoryInsertRequestDTO);
     }
 
+    @ApiOperation(value = "상위 카테고리 정보 수정 API")
     @PutMapping("/upper/info")
     public Long upperCategoryUpdate(
             @RequestBody UpperCategoryUpdateRequestDTO upperCategoryUpdateRequestDTO) {
         return categoryService.upperCategoryUpdate(upperCategoryUpdateRequestDTO);
     }
 
+    @ApiOperation(value = "상위 카테고리 정보 삭제 API")
     @DeleteMapping("/upper/info")
     public void upperCategoryDelete(
             @RequestParam(name = "no") Long upperCategoryNo) {
@@ -66,6 +74,7 @@ public class CategoryController {
         categoryService.upperCategoryDelete(upperCategoryDeleteRequestDTO);
     }
 
+    @ApiOperation(value = "하위 카테고리 정보 조회 API")
     @GetMapping("/lower/info")
     public LowerCategoryVO lowerCategorySelect(
             @RequestParam(name = "no") Long lowerCategoryNo) {
@@ -77,23 +86,27 @@ public class CategoryController {
         return categoryService.lowerCategorySelect(lowerCategorySelectRequestDTO);
     }
 
+    @ApiOperation(value = "하위 카테고리 리스트 정보 조회 API")
     @GetMapping("/lower/info/list")
     public List<LowerCategoryVO> lowerCategorySelectAll() {
         return categoryService.lowerCategorySelectAll();
     }
 
+    @ApiOperation(value = "하위 카테고리 정보 삽입 API")
     @PostMapping("/lower/info")
     public Long lowerCategoryInsert(
             @RequestBody LowerCategoryInsertRequestDTO lowerCategoryInsertRequestDTO) {
         return categoryService.lowerCategoryInsert(lowerCategoryInsertRequestDTO);
     }
 
+    @ApiOperation(value = "하위 카테고리 정보 수정 API")
     @PutMapping("/lower/info")
     public Long lowerCategoryUpdate(
             @RequestBody LowerCategoryUpdateRequestDTO lowerCategoryUpdateRequestDTO) {
         return categoryService.lowerCategoryUpdate(lowerCategoryUpdateRequestDTO);
     }
 
+    @ApiOperation(value = "하위 카테고리 정보 삭제 API")
     @DeleteMapping("/lower/info")
     public void lowerCategoryDelete(
             @RequestParam(name = "no") Long lowerCategoryNo) {
@@ -105,6 +118,7 @@ public class CategoryController {
         categoryService.lowerCategoryDelete(lowerCategoryDeleteRequestDTO);
     }
 
+    @ApiOperation(value = "브랜드 정보 조회 API")
     @GetMapping("/brand/info")
     public BrandVO brandSelect(@RequestParam(name = "no") Long brandNo) {
         BrandSelectRequestDTO brandSelectRequestDTO =
@@ -115,21 +129,25 @@ public class CategoryController {
         return categoryService.brandSelect(brandSelectRequestDTO);
     }
 
+    @ApiOperation(value = "브랜드 리스트 정보 조회 API")
     @GetMapping("/brand/info/list")
     public List<BrandVO> brandSelectAll() {
         return categoryService.brandSelectAll();
     }
 
+    @ApiOperation(value = "브랜드 정보 삽입 API")
     @PostMapping("/brand/info")
     public Long insert(@RequestBody BrandInsertRequestDTO brandInsertRequestDTO) {
         return categoryService.brandInsert(brandInsertRequestDTO);
     }
 
+    @ApiOperation(value = "브랜드 정보 수정 API")
     @PutMapping("/brand/info")
     public Long brandUpdate(@RequestBody BrandUpdateRequestDTO brandUpdateRequestDTO) {
         return categoryService.brandUpdate(brandUpdateRequestDTO);
     }
 
+    @ApiOperation(value = "브랜드 정보 삭제 API")
     @DeleteMapping("/brand/info")
     public void delete(@RequestParam(name = "no") Long brandNo) {
         BrandDeleteRequestDTO brandDeleteRequestDTO =

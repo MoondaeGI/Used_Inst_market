@@ -100,13 +100,13 @@ public class LocalService {
     @Transactional
     public Long lowerLocalUpdate(LowerLocalUpdateRequestDTO lowerLocalUpdateRequestDTO) {
         LowerLocal lowerLocal = lowerLocalRepository
-                .findById(lowerLocalUpdateRequestDTO.getCityNo())
+                .findById(lowerLocalUpdateRequestDTO.getLowerLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
 
         lowerLocal.update(lowerLocalUpdateRequestDTO.getName(),
                 lowerLocalUpdateRequestDTO.getUpperLocal());
 
-        return lowerLocalUpdateRequestDTO.getCityNo();
+        return lowerLocalUpdateRequestDTO.getLowerLocalNo();
     }
 
     @Transactional
