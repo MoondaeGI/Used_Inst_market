@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.web.controller;
+package com.example.Used_Inst_market.web;
 
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategoryRepository;

@@ -1,7 +1,7 @@
-package com.example.Used_Inst_market.config.auth;
+package com.example.Used_Inst_market.util.config.auth;
 
-import com.example.Used_Inst_market.config.auth.dto.OAuthAttributes;
-import com.example.Used_Inst_market.config.auth.dto.SessionUser;
+import com.example.Used_Inst_market.util.config.auth.dto.OAuthAttributes;
+import com.example.Used_Inst_market.util.config.auth.dto.SessionUser;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;

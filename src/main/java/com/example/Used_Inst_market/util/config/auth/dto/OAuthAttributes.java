@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.config.auth.dto;
+package com.example.Used_Inst_market.util.config.auth.dto;
 
 import com.example.Used_Inst_market.model.domain.user.Role;
 import com.example.Used_Inst_market.model.domain.user.User;

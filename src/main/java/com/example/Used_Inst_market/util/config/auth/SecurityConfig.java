@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.config.auth;
+package com.example.Used_Inst_market.util.config.auth;
 
 import com.example.Used_Inst_market.model.domain.user.Role;
 import lombok.RequiredArgsConstructor;
