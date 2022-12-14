@@ -13,8 +13,8 @@ import com.example.Used_Inst_market.web.dto.board.select.localselect.SelectFromL
 import com.example.Used_Inst_market.web.dto.board.select.localselect.SelectFromUpperLoRequestDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +30,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @ApiOperation(value = "게시글 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
     @CrossOrigin
     @GetMapping("/info")
     public PostVO select(
@@ -43,6 +44,7 @@ public class BoardController {
     }
 
     @ApiOperation(value = "게시글 정보 삽입 API")
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/info")
     public Long insert(
             @RequestPart(value = "images") List<MultipartFile> multipartFiles,
@@ -52,6 +54,7 @@ public class BoardController {
     }
 
     @ApiOperation(value = "게시글 정보 삭제 API")
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/info")
     public void delete(@RequestParam(name = "no") Long postNo)
             throws IOException {
@@ -64,12 +67,14 @@ public class BoardController {
     }
 
     @ApiOperation(value = "게시글 리스트 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/info/list")
     public List<PostVO> selectAll() {
         return boardService.selectAll();
     }
 
     @ApiOperation(value = "상위 카테고리로 게시글 리스트 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/category/upper")
     public List<PostVO> upperCategorySelect(
             @RequestParam("no") Long upperCategoryNo) {
@@ -83,6 +88,7 @@ public class BoardController {
     }
 
     @ApiOperation(value = "하위 카테고리로 게시글 리스트 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/category/lower")
     public List<PostVO> lowerCategorySelect(
             @RequestParam("no") Long localCategoryNo) {
@@ -96,6 +102,7 @@ public class BoardController {
     }
 
     @ApiOperation(value = "브랜드로 게시글 리스트 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/category/brand")
     public List<PostVO> brandSelect(
             @RequestParam("no") Long brandNo) {
@@ -108,6 +115,7 @@ public class BoardController {
     }
 
     @ApiOperation(value = "상위 지역으로 게시글 리스트 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/local/upper")
     public List<PostVO> upperLocalSelect(
             @RequestParam("no") Long upperLocalNo) {
@@ -121,6 +129,7 @@ public class BoardController {
     }
 
     @ApiOperation(value = "하위 지역으로 게시글 리스트 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/local/lower")
     public List<PostVO> lowerLocalSelect(
             @RequestParam("no") Long lowerLocalNo) {

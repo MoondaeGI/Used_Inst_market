@@ -14,6 +14,7 @@ import com.example.Used_Inst_market.model.vo.local.UpperLocalVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class LocalController {
     private final LocalService localService;
 
     @ApiOperation(value = "상위 지역 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(value = "/upper/info")
     public UpperLocalVO upperLocalSelect(
             @RequestParam(name = "no") Long upperLocalNo) {
@@ -38,12 +40,14 @@ public class LocalController {
     }
 
     @ApiOperation(value = "상위 지역 리스트 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(value = "/upper/info/list")
     public List<UpperLocalVO> upperLocalSelectAll() {
         return localService.upperLocalSelectAll();
     }
 
     @ApiOperation(value = "상위 지역 정보 삽입 API")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/info")
     public Long upperLocalInsert(
             @RequestBody UpperLocalInsertRequestDTO upperLocalInsertRequestDTO) {
@@ -51,6 +55,7 @@ public class LocalController {
     }
 
     @ApiOperation(value = "상위 지역 정보 수정 API")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/upper/info")
     public Long upperLocalUpdate(
             @RequestBody UpperLocalUpdateRequestDTO upperLocalUpdateRequestDTO) {
@@ -58,6 +63,7 @@ public class LocalController {
     }
 
     @ApiOperation(value = "상위 지역 삭제 API")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/upper/info")
     public void upperLocalDelete(@RequestParam(name = "no") Long upperLocalNo) {
         UpperLocalDeleteRequestDTO upperLocalDeleteRequestDTO =
@@ -69,6 +75,7 @@ public class LocalController {
     }
 
     @ApiOperation(value = "하위 지역 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/lower/info")
     public LowerLocalVO lowerLocalSelect(@RequestParam("no") Long lowerLocalNo) {
         LowerLocalSelectRequestDTO lowerLocalSelectRequestDTO =
@@ -80,12 +87,14 @@ public class LocalController {
     }
 
     @ApiOperation(value = "하위 지역 리스트 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/lower/info/list")
     public List<LowerLocalVO> lowerLocalSelectAll() {
         return localService.lowerLocalSelectAll();
     }
 
     @ApiOperation(value = "하위 지역 정보 삽입 API")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/lower/info")
     public Long lowerLocalInsert(
             @RequestBody LowerLocalInsertRequestDTO lowerLocalInsertRequestDTO) {
@@ -93,6 +102,7 @@ public class LocalController {
     }
 
     @ApiOperation(value = "하위 지역 정보 수정 API")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/lower/info")
     public Long lowerLocalUpdate(
             @RequestBody LowerLocalUpdateRequestDTO lowerLocalUpdateRequestDTO) {
@@ -100,6 +110,7 @@ public class LocalController {
     }
 
     @ApiOperation(value = "하위 지역 정보 삭제 API")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/lower/info")
     public void lowerLocalDelete(@RequestParam("no") Long lowerLocalNo) {
         LowerLocalDeleteRequestDTO lowerLocalDeleteRequestDTO =
