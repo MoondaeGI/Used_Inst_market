@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PostInsertRequestDTO {
-    @ApiParam(name = "유저 번호", required = true,
-            value = "userNo", example = "1")
+    @ApiParam()
     private Long userNo;
     @ApiParam(name = "게시글 제목", required = true,
             value = "title", example = "example")
@@ -35,7 +34,6 @@ public class PostInsertRequestDTO {
     @ApiParam(name = "하위 지역 번호", required = true,
             value = "lowerLocalNo", example = "1")
     private Long lowerLocalNo;
-
     @Builder
     public PostInsertRequestDTO(
             Long userNo, String title, String content, Integer price,

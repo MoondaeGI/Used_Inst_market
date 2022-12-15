@@ -23,10 +23,7 @@ import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import com.example.Used_Inst_market.model.vo.board.PictureVO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.util.filehandler.FileHandler;
-import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.post.PostInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.post.PostSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.post.PostUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,18 +58,11 @@ public class PostService {
         Post post = postRepository.findById(postSelectRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
-        List<PictureVO> pictures = pictureRepository.findByPost(post).stream()
-                .map(PictureVO::from)
-                .collect(Collectors.toList());
-        List<byte[]> imageByteArrays = fileHandler
-                .imageToByteArray(pictures);
-
-        return PostVO.of(post, imageByteArrays);
+        return PostVO.from(post);
     }
 
     @Transactional
-    public Long insert(@NotNull PostInsertRequestDTO postInsertRequestDTO,
-                       List<MultipartFile> multipartFiles) throws IOException {
+    public Long insert(@NotNull PostInsertRequestDTO postInsertRequestDTO) {
         User user = userRepository.findById(postInsertRequestDTO.getUserNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."));
 
@@ -118,13 +108,6 @@ public class PostService {
                         .lowerLocal(lowerLocal)
                         .build());
 
-        if(!multipartFiles.isEmpty()) {
-            List<Picture> pictures = fileHandler
-                    .parsePictureFileInfo(post, multipartFiles);
-
-            pictureRepository.saveAll(pictures);
-        }
-
         return post.getPostNo();
     }
 
@@ -168,8 +151,8 @@ public class PostService {
             throws IOException {
         Post post = postRepository.findById(postDeleteRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
-        List<Picture> pictures = pictureRepository.findByPost(post);
 
+        List<Picture> pictures = pictureRepository.findByPost(post);
         fileHandler.deleteImageFile(pictures);
 
         postRepository.delete(post);

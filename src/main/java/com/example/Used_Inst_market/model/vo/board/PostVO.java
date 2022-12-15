@@ -31,9 +31,6 @@ public class PostVO {
     @ApiParam(name = "판매 여부", required = true,
             value = "soldYN", example = "SALE")
     private SoldYN soldYN;
-    @ApiParam(name = "이미지 바이트 리스트", required = true,
-            value = "imageByteArrays", example = "[1, 1, 1, 1]")
-    private List<byte[]> imageByteArrays;
 
     public PostVO(Post post) {
         this.postNo = post.getPostNo();
@@ -44,20 +41,7 @@ public class PostVO {
         this.user = UserVO.from(post.getUser());
     }
 
-    public PostVO(Post post, List<byte[]> imageByteArrays) {
-        this.postNo = post.getPostNo();
-        this.title = post.getTitle();
-        this.content = post.getContent();
-        this.price = post.getPrice();
-        this.soldYN = post.getSoldYN();
-        this.user = UserVO.from(post.getUser());
-        this.imageByteArrays = imageByteArrays;
-    }
-
     public static PostVO from(Post post) {
         return new PostVO(post);
-    }
-    public static PostVO of(Post post, List<byte[]> imageByteArrays) {
-        return new PostVO(post, imageByteArrays);
     }
 }

@@ -81,20 +81,14 @@ public class FileHandler {
         return pictureList;
     }
 
-    public List<byte[]> imageToByteArray(List<PictureVO> pictures)
-            throws IOException {
-        List<byte[]> byteList = new ArrayList<>();
+    public byte[] imageToByteArray(Picture picture) throws IOException {
+        String path = picture.getPath();
+        InputStream imageStream = new FileInputStream(path);
 
-        for (PictureVO picture : pictures) {
-            String path = picture.getPath();
-            InputStream imageStream = new FileInputStream(path);
-            byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-            imageStream.close();
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
 
-            byteList.add(imageByteArray);
-        }
-
-        return byteList;
+        return imageByteArray;
     }
 
     public void deleteImageFile(List<Picture> pictures) throws IOException {

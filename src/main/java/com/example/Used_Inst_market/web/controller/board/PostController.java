@@ -1,11 +1,15 @@
 package com.example.Used_Inst_market.web.controller.board;
 
 import com.example.Used_Inst_market.service.board.BoardService;
+import com.example.Used_Inst_market.service.board.PictureService;
 import com.example.Used_Inst_market.service.board.PostService;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureInsertRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureUpdateRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostInsertRequestDTO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.web.dto.board.post.PostSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostUpdateRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.select.categoryselect.SelectFromBrandRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.select.categoryselect.SelectFromLowerCtRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.select.categoryselect.SelectFromUpperCtRequestDTO;
@@ -23,15 +27,15 @@ import java.util.List;
 
 @Api(tags = {"게시판 API"})
 @RequiredArgsConstructor
-@RequestMapping("/board")
+@RequestMapping("/post")
 @RestController
-public class BoardController {
+public class PostController {
     private final PostService postService;
+    private final PictureService pictureService;
     private final BoardService boardService;
 
     @ApiOperation(value = "게시글 정보 조회 API")
     @PreAuthorize("hasRole('USER')")
-    @CrossOrigin
     @GetMapping("/info")
     public PostVO select(
             @RequestParam("no") Long postNo) throws IOException {
@@ -50,7 +54,29 @@ public class BoardController {
             @RequestPart(value = "images") List<MultipartFile> multipartFiles,
             @RequestPart(value = "dto") PostInsertRequestDTO postInsertRequestDTO)
             throws IOException {
-        return postService.insert(postInsertRequestDTO, multipartFiles);
+        Long postNo = postService.insert(postInsertRequestDTO);
+
+        PictureInsertRequestDTO pictureInsertRequestDTO =
+                PictureInsertRequestDTO.builder()
+                        .postNo(postNo)
+                        .multipartFiles(multipartFiles)
+                        .build();
+
+        return pictureService.insert(pictureInsertRequestDTO);
+    }
+
+    public Long update(
+            @RequestPart(value = "images") List<MultipartFile> multipartFiles,
+            @RequestPart(value = "dto") PostUpdateRequestDTO postUpdateRequestDTO)
+            throws IOException {
+        PictureUpdateRequestDTO pictureUpdateRequestDTO =
+                PictureUpdateRequestDTO.builder()
+                        .postNO(postUpdateRequestDTO.getPostNo())
+                        .multipartFiles(multipartFiles)
+                        .build();
+        pictureService.update(pictureUpdateRequestDTO);
+
+        return postService.update(postUpdateRequestDTO);
     }
 
     @ApiOperation(value = "게시글 정보 삭제 API")

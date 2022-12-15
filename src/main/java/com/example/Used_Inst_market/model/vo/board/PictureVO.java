@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @EqualsAndHashCode
 @Getter
 @NoArgsConstructor
@@ -20,24 +22,29 @@ public class PictureVO {
             value = "originalFileName", example = "example.jpg")
     private String originalFileName;
     @ApiParam(name = "이미지 이름", required = true,
-            value = "name", example = "/example20221214.jpg")
+            value = "name", example = "/example.jpg")
     private String name;
     @ApiParam(name = "이미지 경로", required = true)
     private String path;
-    @ApiParam(name = "이미지 크기", required = false,
+    @ApiParam(name = "이미지 크기", required = true,
             value = "size", example = "1")
     private Long size;
+    @ApiParam(name = "이미지 바이트 리스트", required = true,
+            value = "imageByteArray", example = "[1, 1, 1, 1]")
+    private byte[] imageByteArray;
 
-    public PictureVO(Picture picture) {
+    public PictureVO(Picture picture, byte[] imageByteArray) {
         this.pictureNo = picture.getPictureNo();
         this.post = picture.getPost();
         this.originalFileName = picture.getOriginalFileName();
         this.name = picture.getName();
         this.path = picture.getPath();
         this.size = picture.getSize();
+
+        this.imageByteArray = imageByteArray;
     }
 
-    public static PictureVO from(Picture picture) {
-        return new PictureVO(picture);
+    public static PictureVO of(Picture picture, byte[] imageByteArray) {
+        return new PictureVO(picture, imageByteArray);
     }
 }

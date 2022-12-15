@@ -21,9 +21,6 @@ public class PostUpdateRequestDTO {
     @ApiParam(name = "상품 가격", required = true,
             value = "price", example = "1")
     private Integer price;
-    @ApiParam(name = "판매 여부", required = true,
-            value = "soldYN", example = "SALE")
-    private SoldYN soldYN;
     @ApiParam(name = "상위 카테고리 번호", required = true,
             value = "upperCategoryNo", example = "1")
     private Long upperCategoryNo;
@@ -39,6 +36,9 @@ public class PostUpdateRequestDTO {
     @ApiParam(name = "하위 지역 번호", required = true,
             value = "lowerLocalNo", example = "1")
     private Long lowerLocalNo;
+    @ApiParam(name = "판매 완료 여부", required = true,
+            value = "soldYN", example = "SALE")
+    private SoldYN soldYN;
 
     @Builder
     public PostUpdateRequestDTO(Long postNo, String title, String content,
