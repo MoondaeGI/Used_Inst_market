@@ -6,10 +6,7 @@ import com.example.Used_Inst_market.model.domain.board.post.Post;
 import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
 import com.example.Used_Inst_market.model.vo.board.PictureVO;
 import com.example.Used_Inst_market.util.filehandler.FileHandler;
-import com.example.Used_Inst_market.web.dto.board.picture.PictureInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.picture.PictureSelectByPostRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.picture.PictureSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.picture.PictureUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.picture.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +69,8 @@ public class PictureService {
     }
 
     @Transactional
-    public void update(PictureUpdateRequestDTO pictureUpdateRequestDTO) throws IOException {
+    public void update(
+            PictureUpdateRequestDTO pictureUpdateRequestDTO) throws IOException {
         List<MultipartFile> multipartFiles = pictureUpdateRequestDTO.getMultipartFiles();
         List<String> multipartFileNames = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
@@ -115,5 +113,15 @@ public class PictureService {
 
         pictureRepository.saveAll(updatePictures);
         pictureRepository.deleteAll(deleteFileList);
+    }
+
+    @Transactional
+    public void delete(
+            PictureDeleteRequestDTO pictureDeleteRequestDTO) throws IOException {
+        Post post = postRepository.findById(pictureDeleteRequestDTO.getPostNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+
+        List<Picture> pictures = pictureRepository.findByPost(post);
+        fileHandler.deleteImageFile(pictures);
     }
 }

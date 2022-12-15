@@ -37,8 +37,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class PostService {
-    private final FileHandler fileHandler;
-
     private final PostRepository postRepository;
     private final PictureRepository pictureRepository;
 
@@ -147,13 +145,9 @@ public class PostService {
     }
 
     @Transactional
-    public void delete(@NotNull PostDeleteRequestDTO postDeleteRequestDTO)
-            throws IOException {
+    public void delete(@NotNull PostDeleteRequestDTO postDeleteRequestDTO) {
         Post post = postRepository.findById(postDeleteRequestDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
-
-        List<Picture> pictures = pictureRepository.findByPost(post);
-        fileHandler.deleteImageFile(pictures);
 
         postRepository.delete(post);
     }

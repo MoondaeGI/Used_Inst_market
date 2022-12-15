@@ -3,6 +3,7 @@ package com.example.Used_Inst_market.web.controller.board;
 import com.example.Used_Inst_market.service.board.BoardService;
 import com.example.Used_Inst_market.service.board.PictureService;
 import com.example.Used_Inst_market.service.board.PostService;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureDeleteRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.picture.PictureInsertRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.picture.PictureUpdateRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.PostDeleteRequestDTO;
@@ -95,6 +96,12 @@ public class PostController {
                         .postNo(postNo)
                         .build();
 
+        PictureDeleteRequestDTO pictureDeleteRequestDTO =
+                PictureDeleteRequestDTO.builder()
+                        .postNo(postNo)
+                        .build();
+
+        pictureService.delete(pictureDeleteRequestDTO);
         postService.delete(postDeleteRequestDTO);
     }
 
