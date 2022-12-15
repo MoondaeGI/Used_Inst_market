@@ -69,15 +69,18 @@ public class PostController {
     @PreAuthorize("hasRole('USER')")
     @PutMapping("/info")
     public Long update(
-            @RequestPart(value = "images") List<MultipartFile> multipartFiles,
+            @RequestPart(value = "images", required = false)
+            List<MultipartFile> multipartFiles,
             @RequestPart(value = "dto") PostUpdateRequestDTO postUpdateRequestDTO)
             throws IOException {
-        PictureUpdateRequestDTO pictureUpdateRequestDTO =
-                PictureUpdateRequestDTO.builder()
-                        .postNO(postUpdateRequestDTO.getPostNo())
-                        .multipartFiles(multipartFiles)
-                        .build();
-        pictureService.update(pictureUpdateRequestDTO);
+        if(!multipartFiles.isEmpty()) {
+            PictureUpdateRequestDTO pictureUpdateRequestDTO =
+                    PictureUpdateRequestDTO.builder()
+                            .postNO(postUpdateRequestDTO.getPostNo())
+                            .multipartFiles(multipartFiles)
+                            .build();
+            pictureService.update(pictureUpdateRequestDTO);
+        }
 
         return postService.update(postUpdateRequestDTO);
     }
