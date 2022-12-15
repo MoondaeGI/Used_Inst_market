@@ -65,6 +65,9 @@ public class PostController {
         return pictureService.insert(pictureInsertRequestDTO);
     }
 
+    @ApiOperation(value = "게시글 정보 수정 API")
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("/info")
     public Long update(
             @RequestPart(value = "images") List<MultipartFile> multipartFiles,
             @RequestPart(value = "dto") PostUpdateRequestDTO postUpdateRequestDTO)
