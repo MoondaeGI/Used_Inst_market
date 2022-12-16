@@ -8,4 +8,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByTitleContaining(String keyWord);
     List<Post> findByContentContaining(String keyWord);
     List<Post> findByTitleContainingOrContentContaining(String keyWord);
+    List<Post> findByPriceLessThanEqualAndPriceGreaterThanEqual(
+            Integer lessPrice, Integer greaterPrice);
 }

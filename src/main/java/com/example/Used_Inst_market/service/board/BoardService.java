@@ -15,6 +15,7 @@ import com.example.Used_Inst_market.model.domain.select.categoryselect.CategoryS
 import com.example.Used_Inst_market.model.domain.select.localselect.LocalSelectRepository;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.web.dto.board.post.SelectFromContentRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.SelectFromPriceRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.SelectFromTitleOrContentRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.SelectFromTitleRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.select.categoryselect.SelectFromBrandRequestDTO;
@@ -76,6 +77,20 @@ public class BoardService {
         return postRepository
                 .findByTitleContainingOrContentContaining(
                         selectFromTitleOrContentRequestDTO.getKeyword())
+                .stream()
+                .map(PostVO::from)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostVO> selectFromPrice(
+            SelectFromPriceRequestDTO selectFromPriceRequestDTO) {
+        Integer lessPrice = selectFromPriceRequestDTO.getLessPrice() * 10000;
+        Integer greaterPrice = selectFromPriceRequestDTO.getGreaterPrice() * 10000;
+
+        return postRepository
+                .findByPriceLessThanEqualAndPriceGreaterThanEqual(
+                        lessPrice, greaterPrice)
                 .stream()
                 .map(PostVO::from)
                 .collect(Collectors.toList());

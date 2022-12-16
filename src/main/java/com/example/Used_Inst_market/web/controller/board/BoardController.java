@@ -3,6 +3,7 @@ package com.example.Used_Inst_market.web.controller.board;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.service.board.BoardService;
 import com.example.Used_Inst_market.web.dto.board.post.SelectFromContentRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.SelectFromPriceRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.SelectFromTitleOrContentRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.post.SelectFromTitleRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.select.categoryselect.SelectFromBrandRequestDTO;
@@ -14,10 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -70,6 +68,14 @@ public class BoardController {
 
         return boardService
                 .selectFromTitleOrContent(selectFromTitleOrContentRequestDTO);
+    }
+
+    @ApiOperation(value = "가격으로 게시글 리스트 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/info/list/price")
+    public List<PostVO> selectFromPrice(
+            SelectFromPriceRequestDTO selectFromPriceRequestDTO) {
+        return boardService.selectFromPrice(selectFromPriceRequestDTO);
     }
 
     @ApiOperation(value = "상위 카테고리로 게시글 리스트 정보 조회 API")
