@@ -14,6 +14,9 @@ import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepositor
 import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelectRepository;
 import com.example.Used_Inst_market.model.domain.select.localselect.LocalSelectRepository;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
+import com.example.Used_Inst_market.web.dto.board.post.SelectFromContentRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.SelectFromTitleOrContentRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.SelectFromTitleRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.select.categoryselect.SelectFromBrandRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.select.categoryselect.SelectFromLowerCtRequestDTO;
 import com.example.Used_Inst_market.web.dto.board.select.categoryselect.SelectFromUpperCtRequestDTO;
@@ -44,6 +47,37 @@ public class BoardService {
     public List<PostVO> selectAll() {
         return postRepository.findAll().stream()
                 .map(PostVO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostVO> selectFromTitle(
+            SelectFromTitleRequestDTO selectFromTitleRequestDTO) {
+        return postRepository
+                .findByTitleContaining(selectFromTitleRequestDTO.getKeyword())
+                .stream()
+                .map(PostVO::from)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostVO> selectFromContent(
+            SelectFromContentRequestDTO selectFromContentRequestDTO) {
+        return postRepository
+                .findByContentContaining(selectFromContentRequestDTO.getKeyword())
+                .stream()
+                .map(PostVO::from)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostVO> selectFromTitleOrContent(
+            SelectFromTitleOrContentRequestDTO selectFromTitleOrContentRequestDTO) {
+        return postRepository
+                .findByTitleContainingOrContentContaining(
+                        selectFromTitleOrContentRequestDTO.getKeyword())
+                .stream()
+                .map(PostVO::from)
                 .collect(Collectors.toList());
     }
 
