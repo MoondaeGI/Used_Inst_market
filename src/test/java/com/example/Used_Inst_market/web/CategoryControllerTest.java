@@ -4,10 +4,10 @@ import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategoryRepository;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategoryRepository;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryUpdateRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertDTO;
+import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryUpdateDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateDTO;
 import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
 import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
 import org.junit.After;
@@ -86,14 +86,14 @@ public class CategoryControllerTest {
 
     @Test
     public void upperCategoryInsert_검증() {
-        UpperCategoryInsertRequestDTO upperCategoryInsertRequestDTO =
-                UpperCategoryInsertRequestDTO.builder()
+        UpperCategoryInsertDTO upperCategoryInsertDTO =
+                UpperCategoryInsertDTO.builder()
                         .name("test")
                         .build();
 
         ResponseEntity<Long> responseEntity = testRestTemplate
                 .postForEntity(UPPER_CATEGORY_URL,
-                        upperCategoryInsertRequestDTO, Long.class);
+                        upperCategoryInsertDTO, Long.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody())
@@ -107,15 +107,15 @@ public class CategoryControllerTest {
                         .name("test")
                         .build());
 
-        UpperCategoryUpdateRequestDTO upperCategoryUpdateRequestDTO =
-                UpperCategoryUpdateRequestDTO.builder()
+        UpperCategoryUpdateDTO upperCategoryUpdateDTO =
+                UpperCategoryUpdateDTO.builder()
                         .upperCategoryNo(testUpperCategory.getUpperCategoryNo())
                         .name("update test")
                         .build();
 
         ResponseEntity<Long> responseEntity = testRestTemplate
                 .exchange(UPPER_CATEGORY_URL, HttpMethod.PUT,
-                        new HttpEntity<>(upperCategoryUpdateRequestDTO), Long.class);
+                        new HttpEntity<>(upperCategoryUpdateDTO), Long.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody())
@@ -197,15 +197,15 @@ public class CategoryControllerTest {
                         .name("test")
                         .build());
 
-        LowerCategoryInsertRequestDTO lowerCategoryInsertRequestDTO =
-                LowerCategoryInsertRequestDTO.builder()
+        LowerCategoryInsertDTO lowerCategoryInsertDTO =
+                LowerCategoryInsertDTO.builder()
                         .upperCategory(testUpperCategory)
                         .name("test")
                         .build();
 
         ResponseEntity<Long> responseEntity = testRestTemplate
                 .postForEntity(LOWER_CATEGORY_URL,
-                        lowerCategoryInsertRequestDTO, Long.class);
+                        lowerCategoryInsertDTO, Long.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody())
@@ -225,8 +225,8 @@ public class CategoryControllerTest {
                         .name("test")
                         .build());
 
-        LowerCategoryUpdateRequestDTO lowerCategoryUpdateRequestDTO =
-                LowerCategoryUpdateRequestDTO.builder()
+        LowerCategoryUpdateDTO lowerCategoryUpdateDTO =
+                LowerCategoryUpdateDTO.builder()
                         .lowerCategoryNo(testLowerCategory.getLowerCategoryNo())
                         .upperCategory(testUpperCategory)
                         .name("update test")
@@ -234,7 +234,7 @@ public class CategoryControllerTest {
 
         ResponseEntity<Long> responseEntity = testRestTemplate
                 .exchange(LOWER_CATEGORY_URL, HttpMethod.PUT,
-                        new HttpEntity<>(lowerCategoryUpdateRequestDTO), Long.class);
+                        new HttpEntity<>(lowerCategoryUpdateDTO), Long.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody())

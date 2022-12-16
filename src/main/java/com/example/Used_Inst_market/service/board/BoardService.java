@@ -14,15 +14,15 @@ import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepositor
 import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelectRepository;
 import com.example.Used_Inst_market.model.domain.select.localselect.LocalSelectRepository;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
-import com.example.Used_Inst_market.web.dto.board.post.SelectFromContentRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.post.SelectFromPriceRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.post.SelectFromTitleOrContentRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.post.SelectFromTitleRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.select.categoryselect.SelectFromBrandRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.select.categoryselect.SelectFromLowerCtRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.select.categoryselect.SelectFromUpperCtRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.select.localselect.SelectFromLowerLoRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.select.localselect.SelectFromUpperLoRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostSelectFromContentDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostSelectFromPriceDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostSelectFromTitleOrContentDTO;
+import com.example.Used_Inst_market.web.dto.board.post.PostSelectFromTitleDTO;
+import com.example.Used_Inst_market.web.dto.board.select.categoryselect.PostSelectFromBrandDTO;
+import com.example.Used_Inst_market.web.dto.board.select.categoryselect.PostSelectFromLoCategoryDTO;
+import com.example.Used_Inst_market.web.dto.board.select.categoryselect.PostSelectFromUpCategoryDTO;
+import com.example.Used_Inst_market.web.dto.board.select.localselect.PostSelectFromLoLocalDTO;
+import com.example.Used_Inst_market.web.dto.board.select.localselect.SelectFromUpLocalDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,9 +53,9 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> selectFromTitle(
-            SelectFromTitleRequestDTO selectFromTitleRequestDTO) {
+            PostSelectFromTitleDTO postSelectFromTitleDTO) {
         return postRepository
-                .findByTitleContaining(selectFromTitleRequestDTO.getKeyword())
+                .findByTitleContaining(postSelectFromTitleDTO.getKeyword())
                 .stream()
                 .map(PostVO::from)
                 .collect(Collectors.toList());
@@ -63,9 +63,9 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> selectFromContent(
-            SelectFromContentRequestDTO selectFromContentRequestDTO) {
+            PostSelectFromContentDTO postSelectFromContentDTO) {
         return postRepository
-                .findByContentContaining(selectFromContentRequestDTO.getKeyword())
+                .findByContentContaining(postSelectFromContentDTO.getKeyword())
                 .stream()
                 .map(PostVO::from)
                 .collect(Collectors.toList());
@@ -73,10 +73,10 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> selectFromTitleOrContent(
-            SelectFromTitleOrContentRequestDTO selectFromTitleOrContentRequestDTO) {
+            PostSelectFromTitleOrContentDTO postSelectFromTitleOrContentDTO) {
         return postRepository
                 .findByTitleOrContent(
-                        selectFromTitleOrContentRequestDTO.getKeyword())
+                        postSelectFromTitleOrContentDTO.getKeyword())
                 .stream()
                 .map(PostVO::from)
                 .collect(Collectors.toList());
@@ -84,9 +84,9 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> selectFromPrice(
-            SelectFromPriceRequestDTO selectFromPriceRequestDTO) {
-        Integer lessPrice = selectFromPriceRequestDTO.getLessPrice() * 10000;
-        Integer greaterPrice = selectFromPriceRequestDTO.getGreaterPrice() * 10000;
+            PostSelectFromPriceDTO postSelectFromPriceDTO) {
+        Integer lessPrice = postSelectFromPriceDTO.getLessPrice() * 10000;
+        Integer greaterPrice = postSelectFromPriceDTO.getGreaterPrice() * 10000;
 
         return postRepository
                 .findByPriceLessThanEqualAndPriceGreaterThanEqual(
@@ -98,9 +98,9 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> upperCategorySelect(
-            SelectFromUpperCtRequestDTO selectFromUpperCtRequestDTO) {
+            PostSelectFromUpCategoryDTO postSelectFromUpCategoryDTO) {
         UpperCategory upperCategory = upperCategoryRepository
-                .findById(selectFromUpperCtRequestDTO.getUpperCategoryNo())
+                .findById(postSelectFromUpCategoryDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
         return categorySelectRepository
@@ -111,7 +111,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> lowerCategorySelect(
-            SelectFromLowerCtRequestDTO selectFromLowerCtRequestDTO) {
+            PostSelectFromLoCategoryDTO selectFromLowerCtRequestDTO) {
         LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(selectFromLowerCtRequestDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
@@ -124,9 +124,9 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> brandSelect(
-            SelectFromBrandRequestDTO selectFromBrandRequestDTO) {
+            PostSelectFromBrandDTO postSelectFromBrandDTO) {
         Brand brand = brandRepository
-                .findById(selectFromBrandRequestDTO.getBrandNo())
+                .findById(postSelectFromBrandDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
 
         return categorySelectRepository.findByBrand(brand).stream()
@@ -136,9 +136,9 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> upperLocalSelect(
-            SelectFromUpperLoRequestDTO selectFromUpperLoRequestDTO) {
+            SelectFromUpLocalDTO selectFromUpLocalDTO) {
         UpperLocal upperLocal = upperLocalRepository
-                .findById(selectFromUpperLoRequestDTO.getUpperLocalNo())
+                .findById(selectFromUpLocalDTO.getUpperLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
 
         return localSelectRepository
@@ -149,9 +149,9 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> lowerLocalSelect(
-            SelectFromLowerLoRequestDTO selectFromLowerLoRequestDTO) {
+            PostSelectFromLoLocalDTO postSelectFromLoLocalDTO) {
         LowerLocal lowerLocal = lowerLocalRepository
-                .findById(selectFromLowerLoRequestDTO.getLowerLocalNo())
+                .findById(postSelectFromLoLocalDTO.getLowerLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
 
         return localSelectRepository

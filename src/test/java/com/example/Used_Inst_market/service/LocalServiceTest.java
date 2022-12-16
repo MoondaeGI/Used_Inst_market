@@ -5,12 +5,12 @@ import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepositor
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
 import com.example.Used_Inst_market.service.local.LocalService;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalInsertDTO;
+import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalSelectDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalDeleteDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalInsertDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalSelectDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalUpdateDTO;
 import com.example.Used_Inst_market.model.vo.local.LowerLocalVO;
 import com.example.Used_Inst_market.model.vo.local.UpperLocalVO;
 import org.junit.After;
@@ -45,10 +45,10 @@ public class LocalServiceTest {
                 .name(testName)
                 .build());
 
-        UpperLocalSelectRequestDTO upperLocalSelectRequestDTO =
-                new UpperLocalSelectRequestDTO(testLocal.getUpperLocalNo());
+        UpperLocalSelectDTO upperLocalSelectDTO =
+                new UpperLocalSelectDTO(testLocal.getUpperLocalNo());
         UpperLocalVO selectedLocal =
-                localService.upperLocalSelect(upperLocalSelectRequestDTO);
+                localService.upperLocalSelect(upperLocalSelectDTO);
 
         List<UpperLocal> locals = upperLocalRepository.findAll();
 
@@ -73,10 +73,10 @@ public class LocalServiceTest {
     @Test
     public void localInsert_검증() {
         String testName = "test";
-        UpperLocalInsertRequestDTO upperLocalInsertRequestDTO =
-                new UpperLocalInsertRequestDTO(testName);
+        UpperLocalInsertDTO upperLocalInsertDTO =
+                new UpperLocalInsertDTO(testName);
 
-        localService.upperLocalInsert(upperLocalInsertRequestDTO);
+        localService.upperLocalInsert(upperLocalInsertDTO);
         List<UpperLocal> upperLocals = upperLocalRepository.findAll();
 
         assertThat(upperLocals.get(0).getName()).isEqualTo(testName);
@@ -92,13 +92,13 @@ public class LocalServiceTest {
                 .build());
         UpperLocal testUpperLocal = upperLocalRepository.findAll().get(0);
 
-        UpperLocalUpdateRequestDTO upperLocalUpdateRequestDTO =
-                UpperLocalUpdateRequestDTO.builder()
+        UpperLocalUpdateDTO upperLocalUpdateDTO =
+                UpperLocalUpdateDTO.builder()
                         .upperLocalNo(testUpperLocal.getUpperLocalNo())
                         .name(updateTestName)
                         .build();
 
-        localService.upperLocalUpdate(upperLocalUpdateRequestDTO);
+        localService.upperLocalUpdate(upperLocalUpdateDTO);
 
         assertThat(upperLocalRepository.findAll().get(0).getName())
                 .isEqualTo(updateTestName);
@@ -112,13 +112,13 @@ public class LocalServiceTest {
 
         Long testUpperLocalNo = testLocal.getUpperLocalNo();
 
-        localService.upperLocalDelete(UpperLocalDeleteRequestDTO.builder()
+        localService.upperLocalDelete(UpperLocalDeleteDTO.builder()
                 .upperLocalNo(testUpperLocalNo)
                 .build());
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> localService.upperLocalSelect(
-                        UpperLocalSelectRequestDTO.builder()
+                        UpperLocalSelectDTO.builder()
                                 .upperLocalNo(testUpperLocalNo)
                                 .build()));
     }
@@ -134,13 +134,13 @@ public class LocalServiceTest {
                 .name("test")
                 .build());
 
-        LowerLocalSelectRequestDTO lowerLocalSelectRequestDTO =
-                LowerLocalSelectRequestDTO.builder()
+        LowerLocalSelectDTO lowerLocalSelectDTO =
+                LowerLocalSelectDTO.builder()
                         .lowerLocalNo(testLowerLocal.getLowerLocalNo())
                         .build();
 
         LowerLocalVO testCityVO = localService
-                .lowerLocalSelect(lowerLocalSelectRequestDTO);
+                .lowerLocalSelect(lowerLocalSelectDTO);
 
         assertThat(testCityVO.getLowerLocalNo())
                 .isEqualTo(lowerLocalRepository
@@ -153,13 +153,13 @@ public class LocalServiceTest {
                 .name("test")
                 .build());
 
-        LowerLocalInsertRequestDTO lowerLocalInsertRequestDTO =
-                LowerLocalInsertRequestDTO.builder()
+        LowerLocalInsertDTO lowerLocalInsertDTO =
+                LowerLocalInsertDTO.builder()
                         .upperLocal(testUpperLocal)
                         .name("test")
                         .build();
 
-        Long testCityNo = localService.lowerLocalInsert(lowerLocalInsertRequestDTO);
+        Long testCityNo = localService.lowerLocalInsert(lowerLocalInsertDTO);
 
         assertThat(testCityNo)
                 .isEqualTo(lowerLocalRepository.findAll().get(0).getLowerLocalNo());

@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -26,10 +25,10 @@ public class PictureService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public PictureVO select(PictureSelectRequestDTO pictureSelectRequestDTO)
+    public PictureVO select(PictureSelectDTO pictureSelectDTO)
             throws IOException {
         Picture picture = pictureRepository
-                .findById(pictureSelectRequestDTO.getPictureNo())
+                .findById(pictureSelectDTO.getPictureNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
         byte[] imageByteArrays = fileHandler.imageToByteArray(picture);
 
@@ -38,10 +37,10 @@ public class PictureService {
 
     @Transactional(readOnly = true)
     public List<PictureVO> selectByPost(
-            PictureSelectByPostRequestDTO pictureSelectByPostRequestDTO) throws IOException {
+            PictureSelectByPostDTO pictureSelectByPostDTO) throws IOException {
         List<PictureVO> selectResult = new ArrayList<>();
 
-        Post post = postRepository.findById(pictureSelectByPostRequestDTO.getPostNo())
+        Post post = postRepository.findById(pictureSelectByPostDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
         List<Picture> pictures = pictureRepository.findByPost(post);
 
@@ -54,10 +53,10 @@ public class PictureService {
     }
 
     @Transactional
-    public Long insert(PictureInsertRequestDTO pictureInsertRequestDTO) throws IOException {
-        Post post = postRepository.findById(pictureInsertRequestDTO.getPostNo())
+    public Long insert(PictureInsertDTO pictureInsertDTO) throws IOException {
+        Post post = postRepository.findById(pictureInsertDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
-        List<MultipartFile> multipartFiles = pictureInsertRequestDTO.getMultipartFiles();
+        List<MultipartFile> multipartFiles = pictureInsertDTO.getMultipartFiles();
 
         if(!multipartFiles.isEmpty()) {
             List<Picture> pictures = fileHandler
@@ -65,13 +64,13 @@ public class PictureService {
             pictureRepository.saveAll(pictures);
         }
 
-        return pictureInsertRequestDTO.getPostNo();
+        return pictureInsertDTO.getPostNo();
     }
 
     @Transactional
     public void update(
-            PictureUpdateRequestDTO pictureUpdateRequestDTO) throws IOException {
-        List<MultipartFile> multipartFiles = pictureUpdateRequestDTO.getMultipartFiles();
+            PictureUpdateDTO pictureUpdateDTO) throws IOException {
+        List<MultipartFile> multipartFiles = pictureUpdateDTO.getMultipartFiles();
         List<String> multipartFileNames = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             multipartFileNames.add(multipartFile.getOriginalFilename());
@@ -80,7 +79,7 @@ public class PictureService {
         List<MultipartFile> updateFileList = new ArrayList<>();
         List<Picture> deleteFileList = new ArrayList<>();
 
-        Post post = postRepository.findById(pictureUpdateRequestDTO.getPostNo())
+        Post post = postRepository.findById(pictureUpdateDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         List<Picture> pictures = pictureRepository.findByPost(post);
@@ -117,8 +116,8 @@ public class PictureService {
 
     @Transactional
     public void delete(
-            PictureDeleteRequestDTO pictureDeleteRequestDTO) throws IOException {
-        Post post = postRepository.findById(pictureDeleteRequestDTO.getPostNo())
+            PictureDeleteDTO pictureDeleteDTO) throws IOException {
+        Post post = postRepository.findById(pictureDeleteDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         List<Picture> pictures = pictureRepository.findByPost(post);

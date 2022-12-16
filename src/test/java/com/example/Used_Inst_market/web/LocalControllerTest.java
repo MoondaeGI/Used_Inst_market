@@ -2,8 +2,8 @@ package com.example.Used_Inst_market.web;
 
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalInsertDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalUpdateDTO;
 import com.example.Used_Inst_market.model.vo.local.UpperLocalVO;
 import org.junit.After;
 import org.junit.Test;
@@ -72,13 +72,13 @@ public class LocalControllerTest {
 
     @Test
     public void localInsert_검증() {
-        UpperLocalInsertRequestDTO upperLocalInsertRequestDTO =
-                UpperLocalInsertRequestDTO.builder()
+        UpperLocalInsertDTO upperLocalInsertDTO =
+                UpperLocalInsertDTO.builder()
                         .name("test")
                         .build();
 
         ResponseEntity<Long> responseEntity = testRestTemplate
-                .postForEntity(URL, upperLocalInsertRequestDTO, Long.class);
+                .postForEntity(URL, upperLocalInsertDTO, Long.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody())
@@ -92,15 +92,15 @@ public class LocalControllerTest {
                         .name("test")
                         .build());
 
-        UpperLocalUpdateRequestDTO upperLocalUpdateRequestDTO =
-                UpperLocalUpdateRequestDTO.builder()
+        UpperLocalUpdateDTO upperLocalUpdateDTO =
+                UpperLocalUpdateDTO.builder()
                         .upperLocalNo(testLocal.getUpperLocalNo())
                         .name("updateTestName")
                         .build();
 
         ResponseEntity<Long> responseEntity = testRestTemplate
                 .exchange(URL, HttpMethod.PUT,
-                        new HttpEntity<>(upperLocalUpdateRequestDTO),
+                        new HttpEntity<>(upperLocalUpdateDTO),
                         Long.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);

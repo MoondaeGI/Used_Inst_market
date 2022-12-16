@@ -1,18 +1,18 @@
 package com.example.Used_Inst_market.web.controller.category;
 
 import com.example.Used_Inst_market.service.category.CategoryService;
-import com.example.Used_Inst_market.web.dto.category.brand.BrandDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.brand.BrandInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.brand.BrandSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.brand.BrandUpdateRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategorySelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryUpdateRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategorySelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandDeleteDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandInsertDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandSelectDTO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandUpdateDTO;
+import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryDeleteDTO;
+import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertDTO;
+import com.example.Used_Inst_market.web.dto.category.lower.LowerCategorySelectDTO;
+import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryUpdateDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryDeleteDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategorySelectDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateDTO;
 import com.example.Used_Inst_market.model.vo.category.BrandVO;
 import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
 import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
@@ -36,12 +36,12 @@ public class CategoryController {
     @GetMapping("/upper/info")
     public UpperCategoryVO upperCategorySelect(
             @RequestParam(name = "no") Long upperCategoryNo) {
-        UpperCategorySelectRequestDTO upperCategorySelectRequestDTO =
-                UpperCategorySelectRequestDTO.builder()
+        UpperCategorySelectDTO upperCategorySelectDTO =
+                UpperCategorySelectDTO.builder()
                         .upperCategoryNo(upperCategoryNo)
                         .build();
 
-        return categoryService.upperCategorySelect(upperCategorySelectRequestDTO);
+        return categoryService.upperCategorySelect(upperCategorySelectDTO);
     }
 
     @ApiOperation(value = "상위 카테고리 리스트 정보 조회 API")
@@ -55,16 +55,16 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/upper/info")
     public Long upperCategoryInsert(
-            @RequestBody UpperCategoryInsertRequestDTO upperCategoryInsertRequestDTO) {
-        return categoryService.upperCategoryInsert(upperCategoryInsertRequestDTO);
+            @RequestBody UpperCategoryInsertDTO upperCategoryInsertDTO) {
+        return categoryService.upperCategoryInsert(upperCategoryInsertDTO);
     }
 
     @ApiOperation(value = "상위 카테고리 정보 수정 API")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/upper/info")
     public Long upperCategoryUpdate(
-            @RequestBody UpperCategoryUpdateRequestDTO upperCategoryUpdateRequestDTO) {
-        return categoryService.upperCategoryUpdate(upperCategoryUpdateRequestDTO);
+            @RequestBody UpperCategoryUpdateDTO upperCategoryUpdateDTO) {
+        return categoryService.upperCategoryUpdate(upperCategoryUpdateDTO);
     }
 
     @ApiOperation(value = "상위 카테고리 정보 삭제 API")
@@ -72,12 +72,12 @@ public class CategoryController {
     @DeleteMapping("/upper/info")
     public void upperCategoryDelete(
             @RequestParam(name = "no") Long upperCategoryNo) {
-        UpperCategoryDeleteRequestDTO upperCategoryDeleteRequestDTO =
-                UpperCategoryDeleteRequestDTO.builder()
+        UpperCategoryDeleteDTO upperCategoryDeleteDTO =
+                UpperCategoryDeleteDTO.builder()
                         .upperCategoryNo(upperCategoryNo)
                         .build();
 
-        categoryService.upperCategoryDelete(upperCategoryDeleteRequestDTO);
+        categoryService.upperCategoryDelete(upperCategoryDeleteDTO);
     }
 
     @ApiOperation(value = "하위 카테고리 정보 조회 API")
@@ -85,12 +85,12 @@ public class CategoryController {
     @GetMapping("/lower/info")
     public LowerCategoryVO lowerCategorySelect(
             @RequestParam(name = "no") Long lowerCategoryNo) {
-        LowerCategorySelectRequestDTO lowerCategorySelectRequestDTO =
-                LowerCategorySelectRequestDTO.builder()
+        LowerCategorySelectDTO lowerCategorySelectDTO =
+                LowerCategorySelectDTO.builder()
                         .lowerCategoryNo(lowerCategoryNo)
                         .build();
 
-        return categoryService.lowerCategorySelect(lowerCategorySelectRequestDTO);
+        return categoryService.lowerCategorySelect(lowerCategorySelectDTO);
     }
 
     @ApiOperation(value = "하위 카테고리 리스트 정보 조회 API")
@@ -104,16 +104,16 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/lower/info")
     public Long lowerCategoryInsert(
-            @RequestBody LowerCategoryInsertRequestDTO lowerCategoryInsertRequestDTO) {
-        return categoryService.lowerCategoryInsert(lowerCategoryInsertRequestDTO);
+            @RequestBody LowerCategoryInsertDTO lowerCategoryInsertDTO) {
+        return categoryService.lowerCategoryInsert(lowerCategoryInsertDTO);
     }
 
     @ApiOperation(value = "하위 카테고리 정보 수정 API")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/lower/info")
     public Long lowerCategoryUpdate(
-            @RequestBody LowerCategoryUpdateRequestDTO lowerCategoryUpdateRequestDTO) {
-        return categoryService.lowerCategoryUpdate(lowerCategoryUpdateRequestDTO);
+            @RequestBody LowerCategoryUpdateDTO lowerCategoryUpdateDTO) {
+        return categoryService.lowerCategoryUpdate(lowerCategoryUpdateDTO);
     }
 
     @ApiOperation(value = "하위 카테고리 정보 삭제 API")
@@ -121,24 +121,24 @@ public class CategoryController {
     @DeleteMapping("/lower/info")
     public void lowerCategoryDelete(
             @RequestParam(name = "no") Long lowerCategoryNo) {
-        LowerCategoryDeleteRequestDTO lowerCategoryDeleteRequestDTO =
-                LowerCategoryDeleteRequestDTO.builder()
+        LowerCategoryDeleteDTO lowerCategoryDeleteDTO =
+                LowerCategoryDeleteDTO.builder()
                         .lowerCategoryNo(lowerCategoryNo)
                         .build();
 
-        categoryService.lowerCategoryDelete(lowerCategoryDeleteRequestDTO);
+        categoryService.lowerCategoryDelete(lowerCategoryDeleteDTO);
     }
 
     @ApiOperation(value = "브랜드 정보 조회 API")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/brand/info")
     public BrandVO brandSelect(@RequestParam(name = "no") Long brandNo) {
-        BrandSelectRequestDTO brandSelectRequestDTO =
-                BrandSelectRequestDTO.builder()
+        BrandSelectDTO brandSelectDTO =
+                BrandSelectDTO.builder()
                         .brandNo(brandNo)
                         .build();
 
-        return categoryService.brandSelect(brandSelectRequestDTO);
+        return categoryService.brandSelect(brandSelectDTO);
     }
 
     @ApiOperation(value = "브랜드 리스트 정보 조회 API")
@@ -151,26 +151,26 @@ public class CategoryController {
     @ApiOperation(value = "브랜드 정보 삽입 API")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/brand/info")
-    public Long insert(@RequestBody BrandInsertRequestDTO brandInsertRequestDTO) {
-        return categoryService.brandInsert(brandInsertRequestDTO);
+    public Long insert(@RequestBody BrandInsertDTO brandInsertDTO) {
+        return categoryService.brandInsert(brandInsertDTO);
     }
 
     @ApiOperation(value = "브랜드 정보 수정 API")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/brand/info")
-    public Long brandUpdate(@RequestBody BrandUpdateRequestDTO brandUpdateRequestDTO) {
-        return categoryService.brandUpdate(brandUpdateRequestDTO);
+    public Long brandUpdate(@RequestBody BrandUpdateDTO brandUpdateDTO) {
+        return categoryService.brandUpdate(brandUpdateDTO);
     }
 
     @ApiOperation(value = "브랜드 정보 삭제 API")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/brand/info")
     public void delete(@RequestParam(name = "no") Long brandNo) {
-        BrandDeleteRequestDTO brandDeleteRequestDTO =
-                BrandDeleteRequestDTO.builder()
+        BrandDeleteDTO brandDeleteDTO =
+                BrandDeleteDTO.builder()
                         .brandNo(brandNo)
                         .build();
 
-        categoryService.brandDelete(brandDeleteRequestDTO);
+        categoryService.brandDelete(brandDeleteDTO);
     }
 }

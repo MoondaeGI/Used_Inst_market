@@ -2,8 +2,8 @@ package com.example.Used_Inst_market.web.controller.board;
 
 import com.example.Used_Inst_market.model.vo.board.PictureVO;
 import com.example.Used_Inst_market.service.board.PictureService;
-import com.example.Used_Inst_market.web.dto.board.picture.PictureSelectByPostRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.picture.PictureSelectRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureSelectByPostDTO;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureSelectDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +26,12 @@ public class PictureController {
     @GetMapping("/info")
     public PictureVO select(
             @RequestParam("no") Long pictureNo) throws IOException {
-        PictureSelectRequestDTO pictureSelectRequestDTO =
-                PictureSelectRequestDTO.builder()
+        PictureSelectDTO pictureSelectDTO =
+                PictureSelectDTO.builder()
                         .pictureNo(pictureNo)
                         .build();
 
-        return pictureService.select(pictureSelectRequestDTO);
+        return pictureService.select(pictureSelectDTO);
     }
 
     @ApiOperation(value = "게시글의 모든 이미지 정보 조회 API")
@@ -40,12 +40,12 @@ public class PictureController {
     @GetMapping("info/post")
     public List<PictureVO> selectByPost(
             @RequestParam("no") Long postNo) throws IOException {
-        PictureSelectByPostRequestDTO pictureSelectByPostRequestDTO =
-                PictureSelectByPostRequestDTO.builder()
+        PictureSelectByPostDTO pictureSelectByPostDTO =
+                PictureSelectByPostDTO.builder()
                         .postNo(postNo)
                         .build();
 
         return pictureService
-                .selectByPost(pictureSelectByPostRequestDTO);
+                .selectByPost(pictureSelectByPostDTO);
     }
 }

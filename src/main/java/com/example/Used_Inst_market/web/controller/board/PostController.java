@@ -1,11 +1,10 @@
 package com.example.Used_Inst_market.web.controller.board;
 
-import com.example.Used_Inst_market.service.board.BoardService;
 import com.example.Used_Inst_market.service.board.PictureService;
 import com.example.Used_Inst_market.service.board.PostService;
-import com.example.Used_Inst_market.web.dto.board.picture.PictureDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.picture.PictureInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.board.picture.PictureUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureDeleteDTO;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureInsertDTO;
+import com.example.Used_Inst_market.web.dto.board.picture.PictureUpdateDTO;
 import com.example.Used_Inst_market.web.dto.board.post.*;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import io.swagger.annotations.Api;
@@ -31,12 +30,12 @@ public class PostController {
     @GetMapping("/info")
     public PostVO select(
             @RequestParam("no") Long postNo) throws IOException {
-        PostSelectRequestDTO postSelectRequestDTO =
-                PostSelectRequestDTO.builder()
+        PostSelectDTO postSelectDTO =
+                PostSelectDTO.builder()
                         .postNo(postNo)
                         .build();
 
-        return postService.select(postSelectRequestDTO);
+        return postService.select(postSelectDTO);
     }
 
     @ApiOperation(value = "게시글 정보 삽입 API")
@@ -44,17 +43,17 @@ public class PostController {
     @PostMapping("/info")
     public Long insert(
             @RequestPart(value = "images") List<MultipartFile> multipartFiles,
-            @RequestPart(value = "dto") PostInsertRequestDTO postInsertRequestDTO)
+            @RequestPart(value = "dto") PostInsertDTO postInsertDTO)
             throws IOException {
-        Long postNo = postService.insert(postInsertRequestDTO);
+        Long postNo = postService.insert(postInsertDTO);
 
-        PictureInsertRequestDTO pictureInsertRequestDTO =
-                PictureInsertRequestDTO.builder()
+        PictureInsertDTO pictureInsertDTO =
+                PictureInsertDTO.builder()
                         .postNo(postNo)
                         .multipartFiles(multipartFiles)
                         .build();
 
-        return pictureService.insert(pictureInsertRequestDTO);
+        return pictureService.insert(pictureInsertDTO);
     }
 
     @ApiOperation(value = "게시글 정보 수정 API")
@@ -63,18 +62,18 @@ public class PostController {
     public Long update(
             @RequestPart(value = "images", required = false)
             List<MultipartFile> multipartFiles,
-            @RequestPart(value = "dto") PostUpdateRequestDTO postUpdateRequestDTO)
+            @RequestPart(value = "dto") PostUpdateDTO postUpdateDTO)
             throws IOException {
         if(!multipartFiles.isEmpty()) {
-            PictureUpdateRequestDTO pictureUpdateRequestDTO =
-                    PictureUpdateRequestDTO.builder()
-                            .postNO(postUpdateRequestDTO.getPostNo())
+            PictureUpdateDTO pictureUpdateDTO =
+                    PictureUpdateDTO.builder()
+                            .postNO(postUpdateDTO.getPostNo())
                             .multipartFiles(multipartFiles)
                             .build();
-            pictureService.update(pictureUpdateRequestDTO);
+            pictureService.update(pictureUpdateDTO);
         }
 
-        return postService.update(postUpdateRequestDTO);
+        return postService.update(postUpdateDTO);
     }
 
     @ApiOperation(value = "게시글 정보 삭제 API")
@@ -82,17 +81,17 @@ public class PostController {
     @DeleteMapping("/info")
     public void delete(@RequestParam(name = "no") Long postNo)
             throws IOException {
-        PostDeleteRequestDTO postDeleteRequestDTO =
-                PostDeleteRequestDTO.builder()
+        PostDeleteDTO postDeleteDTO =
+                PostDeleteDTO.builder()
                         .postNo(postNo)
                         .build();
 
-        PictureDeleteRequestDTO pictureDeleteRequestDTO =
-                PictureDeleteRequestDTO.builder()
+        PictureDeleteDTO pictureDeleteDTO =
+                PictureDeleteDTO.builder()
                         .postNo(postNo)
                         .build();
 
-        pictureService.delete(pictureDeleteRequestDTO);
-        postService.delete(postDeleteRequestDTO);
+        pictureService.delete(pictureDeleteDTO);
+        postService.delete(postDeleteDTO);
     }
 }

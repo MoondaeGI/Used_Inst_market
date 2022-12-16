@@ -1,14 +1,14 @@
 package com.example.Used_Inst_market.web.controller.local;
 
 import com.example.Used_Inst_market.service.local.LocalService;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalUpdateRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalDeleteRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalInsertRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalSelectRequestDTO;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalUpdateRequestDTO;
+import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalDeleteDTO;
+import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalInsertDTO;
+import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalSelectDTO;
+import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalUpdateDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalDeleteDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalInsertDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalSelectDTO;
+import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalUpdateDTO;
 import com.example.Used_Inst_market.model.vo.local.LowerLocalVO;
 import com.example.Used_Inst_market.model.vo.local.UpperLocalVO;
 import io.swagger.annotations.Api;
@@ -31,12 +31,12 @@ public class LocalController {
     @GetMapping(value = "/upper/info")
     public UpperLocalVO upperLocalSelect(
             @RequestParam(name = "no") Long upperLocalNo) {
-        UpperLocalSelectRequestDTO upperLocalSelectRequestDTO =
-                UpperLocalSelectRequestDTO.builder()
+        UpperLocalSelectDTO upperLocalSelectDTO =
+                UpperLocalSelectDTO.builder()
                         .upperLocalNo(upperLocalNo)
                         .build();
 
-        return localService.upperLocalSelect(upperLocalSelectRequestDTO);
+        return localService.upperLocalSelect(upperLocalSelectDTO);
     }
 
     @ApiOperation(value = "상위 지역 리스트 정보 조회 API")
@@ -50,40 +50,40 @@ public class LocalController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/info")
     public Long upperLocalInsert(
-            @RequestBody UpperLocalInsertRequestDTO upperLocalInsertRequestDTO) {
-        return localService.upperLocalInsert(upperLocalInsertRequestDTO);
+            @RequestBody UpperLocalInsertDTO upperLocalInsertDTO) {
+        return localService.upperLocalInsert(upperLocalInsertDTO);
     }
 
     @ApiOperation(value = "상위 지역 정보 수정 API")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/upper/info")
     public Long upperLocalUpdate(
-            @RequestBody UpperLocalUpdateRequestDTO upperLocalUpdateRequestDTO) {
-        return localService.upperLocalUpdate(upperLocalUpdateRequestDTO);
+            @RequestBody UpperLocalUpdateDTO upperLocalUpdateDTO) {
+        return localService.upperLocalUpdate(upperLocalUpdateDTO);
     }
 
     @ApiOperation(value = "상위 지역 삭제 API")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/upper/info")
     public void upperLocalDelete(@RequestParam(name = "no") Long upperLocalNo) {
-        UpperLocalDeleteRequestDTO upperLocalDeleteRequestDTO =
-                UpperLocalDeleteRequestDTO.builder()
+        UpperLocalDeleteDTO upperLocalDeleteDTO =
+                UpperLocalDeleteDTO.builder()
                         .upperLocalNo(upperLocalNo)
                         .build();
 
-        localService.upperLocalDelete(upperLocalDeleteRequestDTO);
+        localService.upperLocalDelete(upperLocalDeleteDTO);
     }
 
     @ApiOperation(value = "하위 지역 정보 조회 API")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/lower/info")
     public LowerLocalVO lowerLocalSelect(@RequestParam("no") Long lowerLocalNo) {
-        LowerLocalSelectRequestDTO lowerLocalSelectRequestDTO =
-                LowerLocalSelectRequestDTO.builder()
+        LowerLocalSelectDTO lowerLocalSelectDTO =
+                LowerLocalSelectDTO.builder()
                         .lowerLocalNo(lowerLocalNo)
                         .build();
 
-        return localService.lowerLocalSelect(lowerLocalSelectRequestDTO);
+        return localService.lowerLocalSelect(lowerLocalSelectDTO);
     }
 
     @ApiOperation(value = "하위 지역 리스트 정보 조회 API")
@@ -97,27 +97,27 @@ public class LocalController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/lower/info")
     public Long lowerLocalInsert(
-            @RequestBody LowerLocalInsertRequestDTO lowerLocalInsertRequestDTO) {
-        return localService.lowerLocalInsert(lowerLocalInsertRequestDTO);
+            @RequestBody LowerLocalInsertDTO lowerLocalInsertDTO) {
+        return localService.lowerLocalInsert(lowerLocalInsertDTO);
     }
 
     @ApiOperation(value = "하위 지역 정보 수정 API")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/lower/info")
     public Long lowerLocalUpdate(
-            @RequestBody LowerLocalUpdateRequestDTO lowerLocalUpdateRequestDTO) {
-        return localService.lowerLocalUpdate(lowerLocalUpdateRequestDTO);
+            @RequestBody LowerLocalUpdateDTO lowerLocalUpdateDTO) {
+        return localService.lowerLocalUpdate(lowerLocalUpdateDTO);
     }
 
     @ApiOperation(value = "하위 지역 정보 삭제 API")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/lower/info")
     public void lowerLocalDelete(@RequestParam("no") Long lowerLocalNo) {
-        LowerLocalDeleteRequestDTO lowerLocalDeleteRequestDTO =
-                LowerLocalDeleteRequestDTO.builder()
+        LowerLocalDeleteDTO lowerLocalDeleteDTO =
+                LowerLocalDeleteDTO.builder()
                         .lowerLocalNo(lowerLocalNo)
                         .build();
 
-        localService.lowerLocalDelete(lowerLocalDeleteRequestDTO);
+        localService.lowerLocalDelete(lowerLocalDeleteDTO);
     }
 }
