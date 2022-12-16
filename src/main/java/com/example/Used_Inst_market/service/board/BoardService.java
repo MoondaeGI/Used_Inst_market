@@ -75,7 +75,7 @@ public class BoardService {
     public List<PostVO> selectFromTitleOrContent(
             SelectFromTitleOrContentRequestDTO selectFromTitleOrContentRequestDTO) {
         return postRepository
-                .findByTitleContainingOrContentContaining(
+                .findByTitleOrContent(
                         selectFromTitleOrContentRequestDTO.getKeyword())
                 .stream()
                 .map(PostVO::from)
