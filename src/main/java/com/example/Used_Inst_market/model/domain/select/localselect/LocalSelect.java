@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor
@@ -19,14 +20,17 @@ public class LocalSelect {
     @Column(name = "LOCAL_SELECT_NO")
     private Long localSelectNo;
 
+    @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "POST_NO")
     private Post post;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "LOCAL_NO")
     private UpperLocal upperLocal;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CITY_NO")
     private LowerLocal lowerLocal;

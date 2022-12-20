@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class PostController {
     @PostMapping("/info")
     public Long insert(
             @RequestPart(value = "images") List<MultipartFile> multipartFiles,
-            @RequestPart(value = "dto") PostInsertDTO postInsertDTO)
+            @RequestPart(value = "dto") @Valid PostInsertDTO postInsertDTO)
             throws IOException {
         Long postNo = postService.insert(postInsertDTO);
 
@@ -62,7 +63,7 @@ public class PostController {
     public Long update(
             @RequestPart(value = "images", required = false)
             List<MultipartFile> multipartFiles,
-            @RequestPart(value = "dto") PostUpdateDTO postUpdateDTO)
+            @RequestPart(value = "dto") @Valid PostUpdateDTO postUpdateDTO)
             throws IOException {
         if(!multipartFiles.isEmpty()) {
             PictureUpdateDTO pictureUpdateDTO =

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor
@@ -17,10 +19,12 @@ public class LowerLocal {
     @Column(name = "LOWER_LO_NO")
     private Long lowerLocalNo;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UPPER_LO_NO", nullable = false)
     private UpperLocal upperLocal;
 
+    @NotBlank
     @Column(name = "NAME", nullable = false)
     private String name;
 

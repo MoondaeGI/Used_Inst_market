@@ -10,6 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,19 +25,25 @@ public class Post extends BaseTimeStamp {
     @Column(name = "POST_NO")
     private Long postNo;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "USER_NO")
     private User user;
 
+    @NotBlank
     @Column(name = "TITLE", nullable = false)
     private String title;
 
+    @NotBlank
     @Column(name = "CONTENT", nullable = false)
     private String content;
 
+    @NotNull
+    @Min(0)
     @Column(name = "PRICE", nullable = false)
     private Integer price;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "SOLD_YN", nullable = false)
     private SoldYN soldYN;

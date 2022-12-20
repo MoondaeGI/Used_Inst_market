@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = {"카테고리 API"})
@@ -55,7 +56,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/upper/info")
     public Long upperCategoryInsert(
-            @RequestBody UpperCategoryInsertDTO upperCategoryInsertDTO) {
+            @RequestBody @Valid UpperCategoryInsertDTO upperCategoryInsertDTO) {
         return categoryService.upperCategoryInsert(upperCategoryInsertDTO);
     }
 
@@ -63,7 +64,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/upper/info")
     public Long upperCategoryUpdate(
-            @RequestBody UpperCategoryUpdateDTO upperCategoryUpdateDTO) {
+            @RequestBody @Valid UpperCategoryUpdateDTO upperCategoryUpdateDTO) {
         return categoryService.upperCategoryUpdate(upperCategoryUpdateDTO);
     }
 
@@ -104,7 +105,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/lower/info")
     public Long lowerCategoryInsert(
-            @RequestBody LowerCategoryInsertDTO lowerCategoryInsertDTO) {
+            @RequestBody @Valid LowerCategoryInsertDTO lowerCategoryInsertDTO) {
         return categoryService.lowerCategoryInsert(lowerCategoryInsertDTO);
     }
 
@@ -112,7 +113,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/lower/info")
     public Long lowerCategoryUpdate(
-            @RequestBody LowerCategoryUpdateDTO lowerCategoryUpdateDTO) {
+            @RequestBody @Valid LowerCategoryUpdateDTO lowerCategoryUpdateDTO) {
         return categoryService.lowerCategoryUpdate(lowerCategoryUpdateDTO);
     }
 
@@ -151,14 +152,14 @@ public class CategoryController {
     @ApiOperation(value = "브랜드 정보 삽입 API")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/brand/info")
-    public Long insert(@RequestBody BrandInsertDTO brandInsertDTO) {
+    public Long insert(@RequestBody @Valid BrandInsertDTO brandInsertDTO) {
         return categoryService.brandInsert(brandInsertDTO);
     }
 
     @ApiOperation(value = "브랜드 정보 수정 API")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/brand/info")
-    public Long brandUpdate(@RequestBody BrandUpdateDTO brandUpdateDTO) {
+    public Long brandUpdate(@RequestBody @Valid BrandUpdateDTO brandUpdateDTO) {
         return categoryService.brandUpdate(brandUpdateDTO);
     }
 

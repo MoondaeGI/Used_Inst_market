@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = {"지역 API"})
@@ -50,7 +51,7 @@ public class LocalController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/info")
     public Long upperLocalInsert(
-            @RequestBody UpperLocalInsertDTO upperLocalInsertDTO) {
+            @RequestBody @Valid UpperLocalInsertDTO upperLocalInsertDTO) {
         return localService.upperLocalInsert(upperLocalInsertDTO);
     }
 
@@ -58,7 +59,7 @@ public class LocalController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/upper/info")
     public Long upperLocalUpdate(
-            @RequestBody UpperLocalUpdateDTO upperLocalUpdateDTO) {
+            @RequestBody @Valid UpperLocalUpdateDTO upperLocalUpdateDTO) {
         return localService.upperLocalUpdate(upperLocalUpdateDTO);
     }
 
@@ -97,7 +98,7 @@ public class LocalController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/lower/info")
     public Long lowerLocalInsert(
-            @RequestBody LowerLocalInsertDTO lowerLocalInsertDTO) {
+            @RequestBody @Valid LowerLocalInsertDTO lowerLocalInsertDTO) {
         return localService.lowerLocalInsert(lowerLocalInsertDTO);
     }
 
@@ -105,7 +106,7 @@ public class LocalController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/lower/info")
     public Long lowerLocalUpdate(
-            @RequestBody LowerLocalUpdateDTO lowerLocalUpdateDTO) {
+            @RequestBody @Valid LowerLocalUpdateDTO lowerLocalUpdateDTO) {
         return localService.lowerLocalUpdate(lowerLocalUpdateDTO);
     }
 

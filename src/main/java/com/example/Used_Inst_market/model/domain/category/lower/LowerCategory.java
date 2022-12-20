@@ -4,12 +4,13 @@ import com.example.Used_Inst_market.model.domain.category.brand.Brand;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.model.domain.util.BaseTimeStamp;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +24,12 @@ public class LowerCategory extends BaseTimeStamp {
     @Column(name = "PD_LOWER_CT_NO")
     private Long lowerCategoryNo;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PD_UPPER_CT_NO", nullable = false)
     private UpperCategory upperCategory;
 
+    @NotBlank
     @Column(name = "NAME", nullable = false)
     private String name;
 
@@ -39,7 +42,6 @@ public class LowerCategory extends BaseTimeStamp {
     @OneToMany(mappedBy = "lowerCategory", orphanRemoval = true)
     private List<Brand> brands = new ArrayList<>();
 
-    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "lowerCategory", orphanRemoval = true)
     private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
 

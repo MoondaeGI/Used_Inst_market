@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +24,12 @@ public class Brand extends BaseTimeStamp {
     @Column(name = "BRAND_NO")
     private Long brandNo;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PD_LOWER_CT_NO", nullable = false)
     private LowerCategory lowerCategory;
 
+    @NotBlank
     @Column(name = "NAME", nullable = false)
     private String name;
 

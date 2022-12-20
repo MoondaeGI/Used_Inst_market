@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor
@@ -20,18 +21,22 @@ public class CategorySelect {
     @Column(name = "PD_CT_SELECT_NO")
     private Long categorySelectNo;
 
+    @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "POST_NO")
     private Post post;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PD_UPPER_CT_NO")
     private UpperCategory upperCategory;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PD_LOWER_CT_NO")
     private LowerCategory lowerCategory;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "BRAND_NO")
     private Brand brand;

@@ -3,12 +3,12 @@ package com.example.Used_Inst_market.model.domain.category.upper;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.model.domain.util.BaseTimeStamp;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +22,7 @@ public class UpperCategory extends BaseTimeStamp {
     @Column(name = "PD_UPPER_CT_NO")
     private Long upperCategoryNo;
 
+    @NotBlank
     @Column(name = "NAME", nullable = false)
     private String name;
 
@@ -30,11 +31,9 @@ public class UpperCategory extends BaseTimeStamp {
         this.name = name;
     }
 
-    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "upperCategory", orphanRemoval = true)
     private List<LowerCategory> lowerCategories = new ArrayList<LowerCategory>();
 
-    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "upperCategory", orphanRemoval = true)
     private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
 
