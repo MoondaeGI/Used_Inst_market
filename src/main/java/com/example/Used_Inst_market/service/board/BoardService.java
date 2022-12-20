@@ -53,7 +53,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> selectFromTitle(
-            PostSelectFromTitleDTO postSelectFromTitleDTO) {
+            final PostSelectFromTitleDTO postSelectFromTitleDTO) {
         return postRepository
                 .findByTitleContaining(postSelectFromTitleDTO.getKeyword())
                 .stream()
@@ -63,7 +63,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> selectFromContent(
-            PostSelectFromContentDTO postSelectFromContentDTO) {
+            final PostSelectFromContentDTO postSelectFromContentDTO) {
         return postRepository
                 .findByContentContaining(postSelectFromContentDTO.getKeyword())
                 .stream()
@@ -73,7 +73,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> selectFromTitleOrContent(
-            PostSelectFromTitleOrContentDTO postSelectFromTitleOrContentDTO) {
+            final PostSelectFromTitleOrContentDTO postSelectFromTitleOrContentDTO) {
         return postRepository
                 .findByTitleOrContent(
                         postSelectFromTitleOrContentDTO.getKeyword())
@@ -84,7 +84,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> selectFromPrice(
-            PostSelectFromPriceDTO postSelectFromPriceDTO) {
+            final PostSelectFromPriceDTO postSelectFromPriceDTO) {
         Integer lessPrice = postSelectFromPriceDTO.getLessPrice() * 10000;
         Integer greaterPrice = postSelectFromPriceDTO.getGreaterPrice() * 10000;
 
@@ -98,7 +98,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> upperCategorySelect(
-            PostSelectFromUpCategoryDTO postSelectFromUpCategoryDTO) {
+            final PostSelectFromUpCategoryDTO postSelectFromUpCategoryDTO) {
         UpperCategory upperCategory = upperCategoryRepository
                 .findById(postSelectFromUpCategoryDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
@@ -111,7 +111,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> lowerCategorySelect(
-            PostSelectFromLoCategoryDTO selectFromLowerCtRequestDTO) {
+            final PostSelectFromLoCategoryDTO selectFromLowerCtRequestDTO) {
         LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(selectFromLowerCtRequestDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
@@ -124,7 +124,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> brandSelect(
-            PostSelectFromBrandDTO postSelectFromBrandDTO) {
+            final PostSelectFromBrandDTO postSelectFromBrandDTO) {
         Brand brand = brandRepository
                 .findById(postSelectFromBrandDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
@@ -136,7 +136,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> upperLocalSelect(
-            SelectFromUpLocalDTO selectFromUpLocalDTO) {
+            final SelectFromUpLocalDTO selectFromUpLocalDTO) {
         UpperLocal upperLocal = upperLocalRepository
                 .findById(selectFromUpLocalDTO.getUpperLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
@@ -149,7 +149,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<PostVO> lowerLocalSelect(
-            PostSelectFromLoLocalDTO postSelectFromLoLocalDTO) {
+            final PostSelectFromLoLocalDTO postSelectFromLoLocalDTO) {
         LowerLocal lowerLocal = lowerLocalRepository
                 .findById(postSelectFromLoLocalDTO.getLowerLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));

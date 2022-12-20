@@ -36,7 +36,6 @@ public class Picture {
     @Column(name = "PATH", nullable = false)
     private String path;
 
-    @NotNull
     @Min(0)
     @Column(name = "SIZE", nullable = false)
     private Long size;

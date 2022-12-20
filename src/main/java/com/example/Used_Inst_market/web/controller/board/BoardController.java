@@ -14,6 +14,7 @@ import com.example.Used_Inst_market.web.dto.board.select.localselect.SelectFromU
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 

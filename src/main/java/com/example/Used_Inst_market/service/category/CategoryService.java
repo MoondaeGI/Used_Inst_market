@@ -38,7 +38,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public UpperCategoryVO upperCategorySelect(
             UpperCategorySelectDTO upperCategorySelectDTO) {
-        UpperCategory upperCategory = upperCategoryRepository
+        final UpperCategory upperCategory = upperCategoryRepository
                 .findById(upperCategorySelectDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
@@ -63,7 +63,7 @@ public class CategoryService {
     @Transactional
     public Long upperCategoryUpdate(
             UpperCategoryUpdateDTO upperCategoryUpdateDTO) {
-        UpperCategory upperCategory = upperCategoryRepository
+        final UpperCategory upperCategory = upperCategoryRepository
                 .findById(upperCategoryUpdateDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
@@ -75,9 +75,9 @@ public class CategoryService {
     @Transactional
     public void upperCategoryDelete(
             UpperCategoryDeleteDTO upperCategoryDeleteDTO) {
-        UpperCategory upperCategory = upperCategoryRepository
+        final UpperCategory upperCategory = upperCategoryRepository
                 .findById(upperCategoryDeleteDTO.getUpperCategoryNo())
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
         upperCategoryRepository.delete(upperCategory);
     }
@@ -85,7 +85,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public LowerCategoryVO lowerCategorySelect(
             LowerCategorySelectDTO lowerCategorySelectDTO) {
-        LowerCategory lowerCategory = lowerCategoryRepository
+        final LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(lowerCategorySelectDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
@@ -111,7 +111,7 @@ public class CategoryService {
     public Long lowerCategoryUpdate(
             LowerCategoryUpdateDTO lowerCategoryUpdateDTO)
             throws IllegalArgumentException {
-        LowerCategory lowerCategory = lowerCategoryRepository
+        final LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(lowerCategoryUpdateDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
@@ -124,7 +124,7 @@ public class CategoryService {
     @Transactional
     public void lowerCategoryDelete(
             LowerCategoryDeleteDTO lowerCategoryDeleteDTO) {
-        LowerCategory lowerCategory = lowerCategoryRepository
+        final LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(lowerCategoryDeleteDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
@@ -133,7 +133,7 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public BrandVO brandSelect(BrandSelectDTO brandSelectDTO) {
-        Brand brand = brandRepository.findById(brandSelectDTO.getBrandNo())
+        final Brand brand = brandRepository.findById(brandSelectDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
 
         return BrandVO.from(brand);
@@ -153,7 +153,7 @@ public class CategoryService {
 
     @Transactional
     public Long brandUpdate(BrandUpdateDTO brandUpdateDTO) {
-        Brand brand = brandRepository.findById(brandUpdateDTO.getBrandNo())
+        final Brand brand = brandRepository.findById(brandUpdateDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
 
         brand.update(brandUpdateDTO.getLowerCategory(), brandUpdateDTO.getName());
@@ -163,7 +163,7 @@ public class CategoryService {
 
     @Transactional
     public void brandDelete(BrandDeleteDTO brandDeleteDTO) {
-        Brand brand = brandRepository.findById(brandDeleteDTO.getBrandNo())
+        final Brand brand = brandRepository.findById(brandDeleteDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브렌드가 없습니다."));
 
         brandRepository.delete(brand);

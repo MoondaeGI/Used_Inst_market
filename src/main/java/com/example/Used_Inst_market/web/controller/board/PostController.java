@@ -77,6 +77,14 @@ public class PostController {
         return postService.update(postUpdateDTO);
     }
 
+    @ApiOperation(value = "게시글 판매 여부 수정 API")
+    @PreAuthorize("hasRole('USER')")
+    @PatchMapping("/info")
+    public Long updateSoldYN(
+            @RequestParam @Valid PostUpdateSoldYNDTO postUpdateSoldYNDTO) {
+        return postService.updateSoldYN(postUpdateSoldYNDTO);
+    }
+
     @ApiOperation(value = "게시글 정보 삭제 API")
     @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/info")

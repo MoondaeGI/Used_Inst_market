@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,11 +17,13 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseTimeStamp {
+    @PastOrPresent
     @CreationTimestamp
     @Column(name = "REG_DT", nullable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL")
     private LocalDateTime regDt;
 
+    @PastOrPresent
     @UpdateTimestamp
     @Column(name = "MOD_DT", nullable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL")

@@ -38,7 +38,6 @@ public class Post extends BaseTimeStamp {
     @Column(name = "CONTENT", nullable = false)
     private String content;
 
-    @NotNull
     @Min(0)
     @Column(name = "PRICE", nullable = false)
     private Integer price;
@@ -70,6 +69,10 @@ public class Post extends BaseTimeStamp {
         this.title = title;
         this.content = content;
         this.price = price;
+        this.soldYN = soldYN;
+    }
+
+    public void updateSoldYN(SoldYN soldYN) {
         this.soldYN = soldYN;
     }
 }

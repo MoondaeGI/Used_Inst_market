@@ -1,6 +1,6 @@
 package com.example.Used_Inst_market.service.board;
 
-import com.example.Used_Inst_market.model.domain.board.picture.PictureRepository;
+import com.example.Used_Inst_market.model.domain.board.post.SoldYN;
 import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
 import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
@@ -24,7 +24,6 @@ import com.example.Used_Inst_market.web.dto.board.post.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
@@ -32,13 +31,10 @@ import java.io.IOException;
 @Service
 public class PostService {
     private final PostRepository postRepository;
-    private final PictureRepository pictureRepository;
-
     private final CategorySelectRepository categorySelectRepository;
     private final UpperCategoryRepository upperCategoryRepository;
     private final LowerCategoryRepository lowerCategoryRepository;
     private final BrandRepository brandRepository;
-
     private final LocalSelectRepository localSelectRepository;
     private final UpperLocalRepository upperLocalRepository;
     private final LowerLocalRepository lowerLocalRepository;
@@ -46,34 +42,34 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public PostVO select(
-            @NotNull PostSelectDTO postSelectDTO) throws IOException {
-        Post post = postRepository.findById(postSelectDTO.getPostNo())
+            final PostSelectDTO postSelectDTO) throws IOException {
+        final Post post = postRepository.findById(postSelectDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         return PostVO.from(post);
     }
 
     @Transactional
-    public Long insert(@NotNull PostInsertDTO postInsertDTO) {
-        User user = userRepository.findById(postInsertDTO.getUserNo())
+    public Long insert(final PostInsertDTO postInsertDTO) {
+        final User user = userRepository.findById(postInsertDTO.getUserNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."));
 
-        UpperCategory upperCategory = upperCategoryRepository
+        final UpperCategory upperCategory = upperCategoryRepository
                 .findById(postInsertDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
-        LowerCategory lowerCategory = lowerCategoryRepository
+        final LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(postInsertDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
-        Brand brand = brandRepository.findById(postInsertDTO.getBrandNo())
+        final Brand brand = brandRepository.findById(postInsertDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브렌드가 없습니다."));
 
-        UpperLocal upperLocal = upperLocalRepository
+        final UpperLocal upperLocal = upperLocalRepository
                 .findById(postInsertDTO.getUpperLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
 
-        LowerLocal lowerLocal = lowerLocalRepository
+        final LowerLocal lowerLocal = lowerLocalRepository
                 .findById(postInsertDTO.getLowerLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
 
@@ -104,31 +100,31 @@ public class PostService {
     }
 
     @Transactional
-    public Long update(@NotNull PostUpdateDTO postUpdateDTO) {
-        Post post = postRepository.findById(postUpdateDTO.getPostNo())
+    public Long update(final PostUpdateDTO postUpdateDTO) {
+        final Post post = postRepository.findById(postUpdateDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
-        UpperCategory upperCategory = upperCategoryRepository
+        final UpperCategory upperCategory = upperCategoryRepository
                 .findById(postUpdateDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
-        LowerCategory lowerCategory = lowerCategoryRepository
+        final LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(postUpdateDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
-        Brand brand = brandRepository.findById(postUpdateDTO.getBrandNo())
+        final Brand brand = brandRepository.findById(postUpdateDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브렌드가 없습니다."));
 
-        UpperLocal upperLocal = upperLocalRepository
+        final UpperLocal upperLocal = upperLocalRepository
                 .findById(postUpdateDTO.getUpperLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
 
-        LowerLocal lowerLocal = lowerLocalRepository
+        final LowerLocal lowerLocal = lowerLocalRepository
                 .findById(postUpdateDTO.getLowerLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
 
-        CategorySelect categorySelect = categorySelectRepository.findByPost(post);
-        LocalSelect localSelect = localSelectRepository.findByPost(post);
+        final CategorySelect categorySelect = categorySelectRepository.findByPost(post);
+        final LocalSelect localSelect = localSelectRepository.findByPost(post);
 
         post.update(postUpdateDTO.getTitle(), postUpdateDTO.getContent(),
                 postUpdateDTO.getPrice(), postUpdateDTO.getSoldYN());
@@ -139,8 +135,22 @@ public class PostService {
     }
 
     @Transactional
-    public void delete(@NotNull PostDeleteDTO postDeleteDTO) {
-        Post post = postRepository.findById(postDeleteDTO.getPostNo())
+    public Long updateSoldYN(final PostUpdateSoldYNDTO postUpdateSoldYNDTO) {
+        final Post post = postRepository.findById(postUpdateSoldYNDTO.getPostNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+
+        if(postUpdateSoldYNDTO.getSoldYN() == SoldYN.SALE) {
+            post.updateSoldYN(SoldYN.SOLD_OUT);
+        } else {
+            post.updateSoldYN(SoldYN.SALE);
+        }
+
+        return postUpdateSoldYNDTO.getPostNo();
+    }
+
+    @Transactional
+    public void delete(final PostDeleteDTO postDeleteDTO) {
+        final Post post = postRepository.findById(postDeleteDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         postRepository.delete(post);
