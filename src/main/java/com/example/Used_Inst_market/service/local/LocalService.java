@@ -91,10 +91,17 @@ public class LocalService {
     }
 
     @Transactional
-    public Long lowerLocalInsert(
-            final LowerLocalInsertDTO lowerLocalInsertDTO) {
-        return lowerLocalRepository
-                .save(lowerLocalInsertDTO.toEntity()).getLowerLocalNo();
+    public Long lowerLocalInsert(final LowerLocalInsertDTO lowerLocalInsertDTO) {
+        final UpperLocal upperLocal = upperLocalRepository
+                .findById(lowerLocalInsertDTO.getUpperLocalNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
+
+        return lowerLocalRepository.save(
+                LowerLocal.builder()
+                        .upperLocal(upperLocal)
+                        .name(lowerLocalInsertDTO.getName())
+                        .build())
+                .getLowerLocalNo();
     }
 
     @Transactional

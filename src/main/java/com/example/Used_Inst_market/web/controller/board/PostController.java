@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
-@Api(tags = {"게시판 API"})
+@Api(tags = {"게시글 API"})
 @RequiredArgsConstructor
 @RequestMapping("/post")
 @RestController
@@ -31,10 +31,9 @@ public class PostController {
     @GetMapping("/info")
     public PostVO select(
             @RequestParam("no") Long postNo) throws IOException {
-        PostSelectDTO postSelectDTO =
-                PostSelectDTO.builder()
-                        .postNo(postNo)
-                        .build();
+        PostSelectDTO postSelectDTO = PostSelectDTO.builder()
+                .postNo(postNo)
+                .build();
 
         return postService.select(postSelectDTO);
     }
@@ -48,11 +47,10 @@ public class PostController {
             throws IOException {
         Long postNo = postService.insert(postInsertDTO);
 
-        PictureInsertDTO pictureInsertDTO =
-                PictureInsertDTO.builder()
-                        .postNo(postNo)
-                        .multipartFiles(multipartFiles)
-                        .build();
+        PictureInsertDTO pictureInsertDTO = PictureInsertDTO.builder()
+                .postNo(postNo)
+                .multipartFiles(multipartFiles)
+                .build();
 
         return pictureService.insert(pictureInsertDTO);
     }
@@ -63,14 +61,12 @@ public class PostController {
     public Long update(
             @RequestPart(value = "images", required = false)
             List<MultipartFile> multipartFiles,
-            @RequestPart(value = "dto") @Valid PostUpdateDTO postUpdateDTO)
-            throws IOException {
+            @RequestPart(value = "dto") @Valid PostUpdateDTO postUpdateDTO) throws IOException {
         if(!multipartFiles.isEmpty()) {
-            PictureUpdateDTO pictureUpdateDTO =
-                    PictureUpdateDTO.builder()
-                            .postNO(postUpdateDTO.getPostNo())
-                            .multipartFiles(multipartFiles)
-                            .build();
+            PictureUpdateDTO pictureUpdateDTO = PictureUpdateDTO.builder()
+                    .postNO(postUpdateDTO.getPostNo())
+                    .multipartFiles(multipartFiles)
+                    .build();
             pictureService.update(pictureUpdateDTO);
         }
 
@@ -90,15 +86,13 @@ public class PostController {
     @DeleteMapping("/info")
     public void delete(@RequestParam(name = "no") Long postNo)
             throws IOException {
-        PostDeleteDTO postDeleteDTO =
-                PostDeleteDTO.builder()
-                        .postNo(postNo)
-                        .build();
+        PostDeleteDTO postDeleteDTO = PostDeleteDTO.builder()
+                .postNo(postNo)
+                .build();
 
-        PictureDeleteDTO pictureDeleteDTO =
-                PictureDeleteDTO.builder()
-                        .postNo(postNo)
-                        .build();
+        PictureDeleteDTO pictureDeleteDTO = PictureDeleteDTO.builder()
+                .postNo(postNo)
+                .build();
 
         pictureService.delete(pictureDeleteDTO);
         postService.delete(postDeleteDTO);

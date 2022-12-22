@@ -34,12 +34,10 @@ import java.util.stream.Collectors;
 @Service
 public class BoardService {
     private final PostRepository postRepository;
-
     private final CategorySelectRepository categorySelectRepository;
     private final UpperCategoryRepository upperCategoryRepository;
     private final LowerCategoryRepository lowerCategoryRepository;
     private final BrandRepository brandRepository;
-
     private final LocalSelectRepository localSelectRepository;
     private final UpperLocalRepository upperLocalRepository;
     private final LowerLocalRepository lowerLocalRepository;

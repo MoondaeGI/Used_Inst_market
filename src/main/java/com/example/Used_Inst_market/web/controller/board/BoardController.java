@@ -14,7 +14,6 @@ import com.example.Used_Inst_market.web.dto.board.select.localselect.SelectFromU
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,10 +37,9 @@ public class BoardController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/info/list/title")
     public List<PostVO> selectFromTitle(String keyword) {
-        PostSelectFromTitleDTO postSelectFromTitleDTO =
-                PostSelectFromTitleDTO.builder()
-                        .keyword(keyword)
-                        .build();
+        PostSelectFromTitleDTO postSelectFromTitleDTO = PostSelectFromTitleDTO.builder()
+                .keyword(keyword)
+                .build();
 
         return boardService.selectFromTitle(postSelectFromTitleDTO);
     }
@@ -112,10 +110,9 @@ public class BoardController {
     @GetMapping("/category/brand")
     public List<PostVO> brandSelect(
             @RequestParam("no") Long brandNo) {
-        PostSelectFromBrandDTO postSelectFromBrandDTO =
-                PostSelectFromBrandDTO.builder()
-                        .brandNo(brandNo)
-                        .build();
+        PostSelectFromBrandDTO postSelectFromBrandDTO = PostSelectFromBrandDTO.builder()
+                .brandNo(brandNo)
+                .build();
 
         return boardService.brandSelect(postSelectFromBrandDTO);
     }
@@ -125,13 +122,11 @@ public class BoardController {
     @GetMapping("/local/upper")
     public List<PostVO> upperLocalSelect(
             @RequestParam("no") Long upperLocalNo) {
-        SelectFromUpLocalDTO selectFromUpLocalDTO =
-                SelectFromUpLocalDTO.builder()
-                        .upperLocalNo(upperLocalNo)
-                        .build();
+        SelectFromUpLocalDTO selectFromUpLocalDTO = SelectFromUpLocalDTO.builder()
+                .upperLocalNo(upperLocalNo)
+                .build();
 
-        return boardService
-                .upperLocalSelect(selectFromUpLocalDTO);
+        return boardService.upperLocalSelect(selectFromUpLocalDTO);
     }
 
     @ApiOperation(value = "하위 지역으로 게시글 리스트 정보 조회 API")
@@ -139,12 +134,10 @@ public class BoardController {
     @GetMapping("/local/lower")
     public List<PostVO> lowerLocalSelect(
             @RequestParam("no") Long lowerLocalNo) {
-        PostSelectFromLoLocalDTO postSelectFromLoLocalDTO =
-                PostSelectFromLoLocalDTO.builder()
-                        .lowerLocalNo(lowerLocalNo)
-                        .build();
+        PostSelectFromLoLocalDTO postSelectFromLoLocalDTO = PostSelectFromLoLocalDTO.builder()
+                .lowerLocalNo(lowerLocalNo)
+                .build();
 
-        return boardService
-                .lowerLocalSelect(postSelectFromLoLocalDTO);
+        return boardService.lowerLocalSelect(postSelectFromLoLocalDTO);
     }
 }

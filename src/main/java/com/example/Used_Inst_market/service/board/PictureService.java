@@ -25,8 +25,7 @@ public class PictureService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public PictureVO select(final PictureSelectDTO pictureSelectDTO)
-            throws IOException {
+    public PictureVO select(final PictureSelectDTO pictureSelectDTO) throws IOException {
         final Picture picture = pictureRepository
                 .findById(pictureSelectDTO.getPictureNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
@@ -36,8 +35,8 @@ public class PictureService {
     }
 
     @Transactional(readOnly = true)
-    public List<PictureVO> selectByPost(
-            final PictureSelectByPostDTO pictureSelectByPostDTO) throws IOException {
+    public List<PictureVO> selectByPost(final PictureSelectByPostDTO pictureSelectByPostDTO)
+            throws IOException {
         List<PictureVO> selectResult = new ArrayList<>();
 
         final Post post = postRepository.findById(pictureSelectByPostDTO.getPostNo())
@@ -68,8 +67,7 @@ public class PictureService {
     }
 
     @Transactional
-    public void update(
-            final PictureUpdateDTO pictureUpdateDTO) throws IOException {
+    public void update(final PictureUpdateDTO pictureUpdateDTO) throws IOException {
         List<MultipartFile> multipartFiles = pictureUpdateDTO.getMultipartFiles();
         List<String> multipartFileNames = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
@@ -114,8 +112,7 @@ public class PictureService {
     }
 
     @Transactional
-    public void delete(
-            final PictureDeleteDTO pictureDeleteDTO) throws IOException {
+    public void delete(final PictureDeleteDTO pictureDeleteDTO) throws IOException {
         final Post post = postRepository.findById(pictureDeleteDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 

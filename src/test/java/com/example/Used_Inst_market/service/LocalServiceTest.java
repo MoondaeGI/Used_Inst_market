@@ -155,7 +155,7 @@ public class LocalServiceTest {
 
         LowerLocalInsertDTO lowerLocalInsertDTO =
                 LowerLocalInsertDTO.builder()
-                        .upperLocal(testUpperLocal)
+                        .upperLocalNo(testUpperLocal.getUpperLocalNo())
                         .name("test")
                         .build();
 

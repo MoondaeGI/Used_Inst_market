@@ -37,10 +37,9 @@ public class CategoryController {
     @GetMapping("/upper/info")
     public UpperCategoryVO upperCategorySelect(
             @RequestParam(name = "no") Long upperCategoryNo) {
-        UpperCategorySelectDTO upperCategorySelectDTO =
-                UpperCategorySelectDTO.builder()
-                        .upperCategoryNo(upperCategoryNo)
-                        .build();
+        UpperCategorySelectDTO upperCategorySelectDTO = UpperCategorySelectDTO.builder()
+                .upperCategoryNo(upperCategoryNo)
+                .build();
 
         return categoryService.upperCategorySelect(upperCategorySelectDTO);
     }
@@ -73,10 +72,9 @@ public class CategoryController {
     @DeleteMapping("/upper/info")
     public void upperCategoryDelete(
             @RequestParam(name = "no") Long upperCategoryNo) {
-        UpperCategoryDeleteDTO upperCategoryDeleteDTO =
-                UpperCategoryDeleteDTO.builder()
-                        .upperCategoryNo(upperCategoryNo)
-                        .build();
+        UpperCategoryDeleteDTO upperCategoryDeleteDTO = UpperCategoryDeleteDTO.builder()
+                .upperCategoryNo(upperCategoryNo)
+                .build();
 
         categoryService.upperCategoryDelete(upperCategoryDeleteDTO);
     }
@@ -86,10 +84,9 @@ public class CategoryController {
     @GetMapping("/lower/info")
     public LowerCategoryVO lowerCategorySelect(
             @RequestParam(name = "no") Long lowerCategoryNo) {
-        LowerCategorySelectDTO lowerCategorySelectDTO =
-                LowerCategorySelectDTO.builder()
-                        .lowerCategoryNo(lowerCategoryNo)
-                        .build();
+        LowerCategorySelectDTO lowerCategorySelectDTO = LowerCategorySelectDTO.builder()
+                .lowerCategoryNo(lowerCategoryNo)
+                .build();
 
         return categoryService.lowerCategorySelect(lowerCategorySelectDTO);
     }
@@ -122,10 +119,9 @@ public class CategoryController {
     @DeleteMapping("/lower/info")
     public void lowerCategoryDelete(
             @RequestParam(name = "no") Long lowerCategoryNo) {
-        LowerCategoryDeleteDTO lowerCategoryDeleteDTO =
-                LowerCategoryDeleteDTO.builder()
-                        .lowerCategoryNo(lowerCategoryNo)
-                        .build();
+        LowerCategoryDeleteDTO lowerCategoryDeleteDTO = LowerCategoryDeleteDTO.builder()
+                .lowerCategoryNo(lowerCategoryNo)
+                .build();
 
         categoryService.lowerCategoryDelete(lowerCategoryDeleteDTO);
     }
@@ -134,10 +130,9 @@ public class CategoryController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/brand/info")
     public BrandVO brandSelect(@RequestParam(name = "no") Long brandNo) {
-        BrandSelectDTO brandSelectDTO =
-                BrandSelectDTO.builder()
-                        .brandNo(brandNo)
-                        .build();
+        BrandSelectDTO brandSelectDTO = BrandSelectDTO.builder()
+                .brandNo(brandNo)
+                .build();
 
         return categoryService.brandSelect(brandSelectDTO);
     }
@@ -167,10 +162,9 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/brand/info")
     public void delete(@RequestParam(name = "no") Long brandNo) {
-        BrandDeleteDTO brandDeleteDTO =
-                BrandDeleteDTO.builder()
-                        .brandNo(brandNo)
-                        .build();
+        BrandDeleteDTO brandDeleteDTO = BrandDeleteDTO.builder()
+                .brandNo(brandNo)
+                .build();
 
         categoryService.brandDelete(brandDeleteDTO);
     }

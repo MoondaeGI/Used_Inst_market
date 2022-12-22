@@ -100,10 +100,16 @@ public class CategoryService {
     }
 
     @Transactional
-    public Long lowerCategoryInsert(
-            LowerCategoryInsertDTO lowerCategoryInsertDTO) {
-        return lowerCategoryRepository
-                .save(lowerCategoryInsertDTO.toEntity())
+    public Long lowerCategoryInsert(final LowerCategoryInsertDTO lowerCategoryInsertDTO) {
+        final UpperCategory upperCategory = upperCategoryRepository
+                .findById(lowerCategoryInsertDTO.getUpperCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
+
+        return lowerCategoryRepository.save(
+                LowerCategory.builder()
+                        .upperCategory(upperCategory)
+                        .name(lowerCategoryInsertDTO.getName())
+                        .build())
                 .getLowerCategoryNo();
     }
 
@@ -142,13 +148,22 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public List<BrandVO> brandSelectAll() {
         return brandRepository.findAll().stream()
-                .map(BrandVO::new)
+                .map(BrandVO::from)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public Long brandInsert(BrandInsertDTO brandInsertDTO) {
-        return brandRepository.save(brandInsertDTO.toEntity()).getBrandNo();
+    public Long brandInsert(final BrandInsertDTO brandInsertDTO) {
+        final LowerCategory lowerCategory = lowerCategoryRepository
+                .findById(brandInsertDTO.getLowerCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
+
+        return brandRepository.save(
+                Brand.builder()
+                        .lowerCategory(lowerCategory)
+                        .name(brandInsertDTO.getName())
+                        .build())
+                .getBrandNo();
     }
 
     @Transactional

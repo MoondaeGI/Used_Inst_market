@@ -26,10 +26,9 @@ public class PictureController {
     @GetMapping("/info")
     public PictureVO select(
             @RequestParam("no") Long pictureNo) throws IOException {
-        PictureSelectDTO pictureSelectDTO =
-                PictureSelectDTO.builder()
-                        .pictureNo(pictureNo)
-                        .build();
+        PictureSelectDTO pictureSelectDTO = PictureSelectDTO.builder()
+                .pictureNo(pictureNo)
+                .build();
 
         return pictureService.select(pictureSelectDTO);
     }
@@ -40,12 +39,10 @@ public class PictureController {
     @GetMapping("info/post")
     public List<PictureVO> selectByPost(
             @RequestParam("no") Long postNo) throws IOException {
-        PictureSelectByPostDTO pictureSelectByPostDTO =
-                PictureSelectByPostDTO.builder()
-                        .postNo(postNo)
-                        .build();
+        PictureSelectByPostDTO pictureSelectByPostDTO = PictureSelectByPostDTO.builder()
+                .postNo(postNo)
+                .build();
 
-        return pictureService
-                .selectByPost(pictureSelectByPostDTO);
+        return pictureService.selectByPost(pictureSelectByPostDTO);
     }
 }

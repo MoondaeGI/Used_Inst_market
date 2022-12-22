@@ -41,8 +41,7 @@ public class Picture {
     private Long size;
 
     @Builder
-    public Picture(Post post, String originalFileName,
-                   String name, String path, Long size) {
+    public Picture(Post post, String originalFileName, String name, String path, Long size) {
         this.post = post;
         this.originalFileName = originalFileName;
         this.name = name;
@@ -50,8 +49,7 @@ public class Picture {
         this.size = size;
     }
 
-    public void update(String originalFileName, String name,
-                       String path, Long size) {
+    public void update(String originalFileName, String name, String path, Long size) {
         this.originalFileName = originalFileName;
         this.name = name;
         this.path = path;

@@ -32,10 +32,9 @@ public class LocalController {
     @GetMapping(value = "/upper/info")
     public UpperLocalVO upperLocalSelect(
             @RequestParam(name = "no") Long upperLocalNo) {
-        UpperLocalSelectDTO upperLocalSelectDTO =
-                UpperLocalSelectDTO.builder()
-                        .upperLocalNo(upperLocalNo)
-                        .build();
+        UpperLocalSelectDTO upperLocalSelectDTO = UpperLocalSelectDTO.builder()
+                .upperLocalNo(upperLocalNo)
+                .build();
 
         return localService.upperLocalSelect(upperLocalSelectDTO);
     }
@@ -67,10 +66,9 @@ public class LocalController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/upper/info")
     public void upperLocalDelete(@RequestParam(name = "no") Long upperLocalNo) {
-        UpperLocalDeleteDTO upperLocalDeleteDTO =
-                UpperLocalDeleteDTO.builder()
-                        .upperLocalNo(upperLocalNo)
-                        .build();
+        UpperLocalDeleteDTO upperLocalDeleteDTO = UpperLocalDeleteDTO.builder()
+                .upperLocalNo(upperLocalNo)
+                .build();
 
         localService.upperLocalDelete(upperLocalDeleteDTO);
     }
@@ -79,10 +77,9 @@ public class LocalController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/lower/info")
     public LowerLocalVO lowerLocalSelect(@RequestParam("no") Long lowerLocalNo) {
-        LowerLocalSelectDTO lowerLocalSelectDTO =
-                LowerLocalSelectDTO.builder()
-                        .lowerLocalNo(lowerLocalNo)
-                        .build();
+        LowerLocalSelectDTO lowerLocalSelectDTO = LowerLocalSelectDTO.builder()
+                .lowerLocalNo(lowerLocalNo)
+                .build();
 
         return localService.lowerLocalSelect(lowerLocalSelectDTO);
     }
@@ -114,10 +111,9 @@ public class LocalController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/lower/info")
     public void lowerLocalDelete(@RequestParam("no") Long lowerLocalNo) {
-        LowerLocalDeleteDTO lowerLocalDeleteDTO =
-                LowerLocalDeleteDTO.builder()
-                        .lowerLocalNo(lowerLocalNo)
-                        .build();
+        LowerLocalDeleteDTO lowerLocalDeleteDTO = LowerLocalDeleteDTO.builder()
+                .lowerLocalNo(lowerLocalNo)
+                .build();
 
         localService.lowerLocalDelete(lowerLocalDeleteDTO);
     }
