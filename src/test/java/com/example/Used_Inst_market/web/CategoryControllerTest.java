@@ -1,267 +1,145 @@
 package com.example.Used_Inst_market.web;
 
+import com.example.Used_Inst_market.model.domain.category.brand.Brand;
+import com.example.Used_Inst_market.model.domain.category.brand.BrandRepository;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategoryRepository;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategoryRepository;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryUpdateDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateDTO;
+import com.example.Used_Inst_market.model.vo.category.BrandVO;
 import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
 import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
+import com.example.Used_Inst_market.web.dto.category.brand.BrandInsertDTO;
+import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertDTO;
+import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CategoryControllerTest {
     private static final String UPPER_CATEGORY_URL = "/category/upper/info";
-    private static final String LOWER_CATEGORY_URL = "/category/lower/info";
 
-    @Autowired
-    private UpperCategoryRepository upperCategoryRepository;
+    @Autowired private WebApplicationContext webApplicationContext;
+    @Autowired private UpperCategoryRepository upperCategoryRepository;
+    @Autowired private LowerCategoryRepository lowerCategoryRepository;
+    @Autowired private BrandRepository brandRepository;
 
-    @Autowired
-    private LowerCategoryRepository lowerCategoryRepository;
+    private MockMvc mockMvc;
 
-    @Autowired
-    private TestRestTemplate testRestTemplate;
+    @Before
+    public void setup() {
+        mockMvc = MockMvcBuilders
+                        .webAppContextSetup(webApplicationContext)
+                        .apply(springSecurity())
+                .build();
+
+        UpperCategory upperCategory = upperCategoryRepository.save(
+                UpperCategory.builder()
+                        .name("test")
+                        .build());
+
+        LowerCategory lowerCategory = lowerCategoryRepository.save(
+                LowerCategory.builder()
+                        .name("test")
+                        .upperCategory(upperCategory)
+                        .build());
+
+        brandRepository.save(
+                Brand.builder()
+                        .name("test")
+                        .lowerCategory(lowerCategory)
+                        .build());
+    }
 
     @After
     public void teardown() {
-        lowerCategoryRepository.deleteAll();
         upperCategoryRepository.deleteAll();
     }
 
+    @WithMockUser(roles = "USER")
     @Test
-    public void upperCategorySelect_검증() {
-        Long testUpperCategoryNo = upperCategoryRepository.save(
-                UpperCategory.builder()
-                        .name("test")
-                        .build()).getUpperCategoryNo();
+    public void upperCategorySelect_검증() throws Exception {
+        final Long upperCategoryNo = upperCategoryRepository.findAll().get(0)
+                .getUpperCategoryNo();
 
-        ResponseEntity<UpperCategoryVO> responseEntity = testRestTemplate
-                .getForEntity(UPPER_CATEGORY_URL + "?no=" + testUpperCategoryNo,
-                        UpperCategoryVO.class);
-
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody().getUpperCategoryNo())
-                .isEqualTo(testUpperCategoryNo);
+        mockMvc.perform(get(UPPER_CATEGORY_URL + "?no=" + upperCategoryNo))
+                .andExpect(status().isOk());
     }
 
+    @WithMockUser(roles = "ADMIN")
     @Test
-    public void upperCategorySelectAll_검증() {
-        List<UpperCategory> testUpperCategoryList = new ArrayList<>();
-        testUpperCategoryList.add(UpperCategory.builder().name("test1").build());
-        testUpperCategoryList.add(UpperCategory.builder().name("test2").build());
+    public void upperCategoryInsert_검증() throws Exception {
+        String testName = "insert test";
 
-        upperCategoryRepository.saveAll(testUpperCategoryList);
+        UpperCategoryInsertDTO upperCategoryInsertDTO = UpperCategoryInsertDTO.builder()
+                .name(testName)
+                .build();
 
-        ResponseEntity<List<UpperCategoryVO>> responseEntity = testRestTemplate
-                .exchange(UPPER_CATEGORY_URL + "/list", HttpMethod.GET, null,
-                        new ParameterizedTypeReference<List<UpperCategoryVO>>() {});
+        mockMvc.perform(post(UPPER_CATEGORY_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(upperCategoryInsertDTO)))
+                .andExpect(status().isOk());
 
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody().get(0).getUpperCategoryNo())
-                .isEqualTo(testUpperCategoryList.get(0).getUpperCategoryNo());
-        assertThat(responseEntity.getBody().get(1).getUpperCategoryNo())
-                .isEqualTo(testUpperCategoryList.get(1).getUpperCategoryNo());
+        assertThat(upperCategoryRepository.findAll().get(1).getName())
+                .isEqualTo(testName);
     }
 
+    @WithAnonymousUser
     @Test
-    public void upperCategoryInsert_검증() {
-        UpperCategoryInsertDTO upperCategoryInsertDTO =
-                UpperCategoryInsertDTO.builder()
-                        .name("test")
-                        .build();
+    public void upperCategoryInsert_권한실패검증() throws Exception {
+        UpperCategoryInsertDTO upperCategoryInsertDTO = UpperCategoryInsertDTO.builder()
+                .name("insert test")
+                .build();
 
-        ResponseEntity<Long> responseEntity = testRestTemplate
-                .postForEntity(UPPER_CATEGORY_URL,
-                        upperCategoryInsertDTO, Long.class);
-
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody())
-                .isEqualTo(upperCategoryRepository.findAll().get(0).getUpperCategoryNo());
+        mockMvc.perform(post(UPPER_CATEGORY_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(upperCategoryInsertDTO)))
+                .andExpect(status().is(302));
     }
 
+    @WithMockUser(roles = "ADMIN")
     @Test
-    public void upperCategoryUpdate_검증() {
-        UpperCategory testUpperCategory = upperCategoryRepository.save(
-                UpperCategory.builder()
-                        .name("test")
-                        .build());
+    public void upperCategoryUpdate_검증() throws Exception {
+        String updateName = "update test";
+        final Long upperCategoryNo = upperCategoryRepository.findAll().get(0)
+                .getUpperCategoryNo();
 
-        UpperCategoryUpdateDTO upperCategoryUpdateDTO =
-                UpperCategoryUpdateDTO.builder()
-                        .upperCategoryNo(testUpperCategory.getUpperCategoryNo())
-                        .name("update test")
-                        .build();
+        UpperCategoryUpdateDTO upperCategoryUpdateDTO = UpperCategoryUpdateDTO.builder()
+                .upperCategoryNo(upperCategoryNo)
+                .name(updateName)
+                .build();
 
-        ResponseEntity<Long> responseEntity = testRestTemplate
-                .exchange(UPPER_CATEGORY_URL, HttpMethod.PUT,
-                        new HttpEntity<>(upperCategoryUpdateDTO), Long.class);
+        mockMvc.perform(put(UPPER_CATEGORY_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(upperCategoryUpdateDTO)))
+                .andExpect(status().isOk());
 
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody())
-                .isEqualTo(testUpperCategory.getUpperCategoryNo());
         assertThat(upperCategoryRepository.findAll().get(0).getName())
-                .isNotEqualTo(testUpperCategory.getName());
-    }
-
-    @Test
-    public void upperCategoryDelete_검증() {
-        Long testUpperCategoryNo = upperCategoryRepository.save(
-                UpperCategory.builder()
-                        .name("test")
-                        .build()).getUpperCategoryNo();
-
-        ResponseEntity<Void> responseEntity = testRestTemplate
-                .exchange(UPPER_CATEGORY_URL + "?no=" + testUpperCategoryNo,
-                        HttpMethod.DELETE, new HttpEntity<>(testUpperCategoryNo), Void.class);
-
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isNull();
-        assertThat(upperCategoryRepository.findById(testUpperCategoryNo)).isEmpty();
-    }
-
-    @Test
-    public void lowerCategorySelect_검증() {
-        UpperCategory testUpperCategory = upperCategoryRepository.save(
-                UpperCategory.builder()
-                        .name("test")
-                        .build());
-
-        Long testLowerCategoryNo = lowerCategoryRepository.save(
-                LowerCategory.builder()
-                        .name("test")
-                        .upperCategory(testUpperCategory)
-                        .build()).getLowerCategoryNo();
-
-        ResponseEntity<LowerCategoryVO> responseEntity = testRestTemplate
-                .getForEntity(LOWER_CATEGORY_URL + "?no=" + testLowerCategoryNo,
-                        LowerCategoryVO.class);
-
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody().getLowerCategoryNo())
-                .isEqualTo(testLowerCategoryNo);
-        assertThat(responseEntity.getBody().getName())
-                .isEqualTo(lowerCategoryRepository.findAll().get(0).getName());
-    }
-
-    @Test
-    public void lowerCategorySelectAll_검증() {
-        UpperCategory testUpperCategory = upperCategoryRepository.save(
-                UpperCategory.builder()
-                        .name("test")
-                        .build());
-
-        List<LowerCategory> testLowerCategoryList = new ArrayList<>();
-        testLowerCategoryList.add(LowerCategory.builder()
-                .upperCategory(testUpperCategory).name("test1").build());
-        testLowerCategoryList.add(LowerCategory.builder()
-                .upperCategory(testUpperCategory).name("test2").build());
-
-        lowerCategoryRepository.saveAll(testLowerCategoryList);
-
-        ResponseEntity<List<LowerCategoryVO>> responseEntity = testRestTemplate
-                .exchange(LOWER_CATEGORY_URL + "/list", HttpMethod.GET, null,
-                        new ParameterizedTypeReference<List<LowerCategoryVO>>() {});
-
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody().get(0).getLowerCategoryNo())
-                .isEqualTo(testLowerCategoryList.get(0).getLowerCategoryNo());
-        assertThat(responseEntity.getBody().get(1).getLowerCategoryNo())
-                .isEqualTo(testLowerCategoryList.get(1).getLowerCategoryNo());
-    }
-
-    @Test
-    public void lowerCategoryInsert_검증() {
-        UpperCategory testUpperCategory = upperCategoryRepository.save(
-                UpperCategory.builder()
-                        .name("test")
-                        .build());
-
-        LowerCategoryInsertDTO lowerCategoryInsertDTO =
-                LowerCategoryInsertDTO.builder()
-                        .upperCategory(testUpperCategory)
-                        .name("test")
-                        .build();
-
-        ResponseEntity<Long> responseEntity = testRestTemplate
-                .postForEntity(LOWER_CATEGORY_URL,
-                        lowerCategoryInsertDTO, Long.class);
-
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody())
-                .isEqualTo(lowerCategoryRepository.findAll().get(0).getLowerCategoryNo());
-    }
-
-    @Test
-    public void lowerCategoryUpdate_검증() {
-        UpperCategory testUpperCategory = upperCategoryRepository.save(
-                UpperCategory.builder()
-                        .name("test")
-                        .build());
-
-        LowerCategory testLowerCategory = lowerCategoryRepository.save(
-                LowerCategory.builder()
-                        .upperCategory(testUpperCategory)
-                        .name("test")
-                        .build());
-
-        LowerCategoryUpdateDTO lowerCategoryUpdateDTO =
-                LowerCategoryUpdateDTO.builder()
-                        .lowerCategoryNo(testLowerCategory.getLowerCategoryNo())
-                        .upperCategory(testUpperCategory)
-                        .name("update test")
-                        .build();
-
-        ResponseEntity<Long> responseEntity = testRestTemplate
-                .exchange(LOWER_CATEGORY_URL, HttpMethod.PUT,
-                        new HttpEntity<>(lowerCategoryUpdateDTO), Long.class);
-
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody())
-                .isEqualTo(testLowerCategory.getLowerCategoryNo());
-        assertThat(lowerCategoryRepository.findAll().get(0).getName())
-                .isNotEqualTo(testLowerCategory.getName());
-    }
-
-    @Test
-    public void lowerCategoryDelete_검증() {
-        UpperCategory testUpperCategory = upperCategoryRepository.save(
-                UpperCategory.builder()
-                        .name("test")
-                        .build());
-
-        Long testLowerCategoryNo = lowerCategoryRepository.save(
-                LowerCategory.builder()
-                        .upperCategory(testUpperCategory)
-                        .name("test")
-                        .build()).getLowerCategoryNo();
-
-        ResponseEntity<Void> responseEntity = testRestTemplate
-                .exchange(LOWER_CATEGORY_URL + "?no=" + testLowerCategoryNo,
-                        HttpMethod.DELETE, new HttpEntity<>(testLowerCategoryNo), Void.class);
-
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isNull();
-        assertThat(lowerCategoryRepository.findById(testLowerCategoryNo)).isEmpty();
+                .isEqualTo(updateName);
     }
 }
