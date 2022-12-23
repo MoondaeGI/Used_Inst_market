@@ -1,18 +1,16 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
-import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
-import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
-import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
+import com.example.Used_Inst_market.model.domain.user.Role;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.validation.ConstraintViolationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,25 +18,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class UserRepositoryTest {
     @Autowired private UserRepository userRepository;
-    @Autowired private UpperLocalRepository upperLocalRepository;
-    @Autowired private LowerLocalRepository lowerLocalRepository;
-
-    @Before
-    public void setup() {
-        UpperLocal testUpperLocal = upperLocalRepository.save(
-                UpperLocal.builder().name("test").build());
-
-        LowerLocal testLowerLocal = lowerLocalRepository.save(
-                LowerLocal.builder()
-                        .upperLocal(testUpperLocal)
-                        .name("test")
-                        .build());
-    }
 
     @After
     public void teardown() {
         userRepository.deleteAll();
-        upperLocalRepository.deleteAll();
     }
 
     @Test
@@ -49,10 +32,24 @@ public class UserRepositoryTest {
                 User.builder()
                         .name(testName)
                         .email("test1234@naver.com")
-                        .picture("testPicture")
+                        .picture("test_picture")
+                        .role(Role.ADMIN)
                         .build());
 
         assertThat(userRepository.findAll().get(0).getUserNo()).isEqualTo(testUser.getUserNo());
         assertThat(userRepository.findAll().get(0).getName()).isEqualTo(testName);
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void email_검증() {
+        String testEmail = "not email";
+
+        userRepository.save(
+                User.builder()
+                        .name("test")
+                        .email(testEmail)
+                        .picture("test_picture")
+                        .role(Role.ADMIN)
+                        .build());
     }
 }

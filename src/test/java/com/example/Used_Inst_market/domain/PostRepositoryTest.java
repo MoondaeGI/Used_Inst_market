@@ -12,6 +12,7 @@ import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategoryRepository;
 import com.example.Used_Inst_market.model.domain.board.post.Post;
 import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
+import com.example.Used_Inst_market.model.domain.user.Role;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import org.junit.After;
@@ -21,6 +22,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import javax.validation.ConstraintViolationException;
+import java.net.BindException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -69,21 +74,16 @@ public class PostRepositoryTest {
                 .name("test")
                 .email("test1234@test.com")
                 .picture("testPicture")
+                .role(Role.ADMIN)
                 .build());
     }
 
     @After
     public void teardown() {
         postRepository.deleteAll();
-
         userRepository.deleteAll();
         upperLocalRepository.deleteAll();
         upperCategoryRepository.deleteAll();
-    }
-
-    @Test
-    public void setup_검증() {
-        System.out.println("test");
     }
 
     @Test
@@ -96,10 +96,38 @@ public class PostRepositoryTest {
                         .content("test")
                         .price(1)
                         .user(userRepository.findAll().get(0))
-                        .build()).getPostNo();
+                        .build())
+                .getPostNo();
 
         assertThat(postRepository.findAll().get(0).getPostNo())
                 .isEqualTo(testPostNo);
         assertThat(postRepository.findAll().get(0).getTitle()).isEqualTo(testTitle);
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void price_예외값_검증() {
+        Integer testPrice = -1;
+
+        postRepository.save(
+                Post.builder()
+                        .title("test")
+                        .content("test")
+                        .price(testPrice)
+                        .user(userRepository.findAll().get(0))
+                        .build());
+    }
+
+    @Test
+    public void findByTitleOrContent_검증() {
+        postRepository.save(
+                Post.builder()
+                        .title("test")
+                        .content("test")
+                        .price(1)
+                        .user(userRepository.findAll().get(0))
+                        .build());
+
+        assertThat(postRepository.findByTitleContaining("test").get(0).getTitle())
+                .isEqualTo("test");
     }
 }
