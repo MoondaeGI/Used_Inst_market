@@ -19,7 +19,7 @@ import java.util.List;
 
 @Component
 public class FileHandler {
-    public List<Picture> parsePictureFileInfo(
+    public List<Picture> parseImageFileInfo(
             Post post, List<MultipartFile> multipartFiles) throws IOException {
         List<Picture> pictureList = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public class FileHandler {
 
     public byte[] imageToByteArray(Picture picture) throws IOException {
         String path = picture.getPath();
-        InputStream imageStream = new FileInputStream(path);
+        InputStream imageStream = Files.newInputStream(Paths.get(path));
 
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();

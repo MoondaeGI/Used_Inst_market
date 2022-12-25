@@ -6,14 +6,8 @@ import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategoryRepository;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategoryRepository;
-import com.example.Used_Inst_market.model.vo.category.BrandVO;
-import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
-import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
-import com.example.Used_Inst_market.web.dto.category.brand.BrandInsertDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
@@ -21,10 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -34,9 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)

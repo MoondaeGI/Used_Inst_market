@@ -3,11 +3,12 @@ package com.example.Used_Inst_market.web.controller.page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@Api(tags = {"화면 API"})
-@RestController
+@Api(tags = {"페이지 API"})
+@Controller
 public class PageController {
     @ApiOperation(value = "메인 페이지 조회 API")
     @PreAuthorize("hasRole('USER')")

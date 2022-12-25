@@ -38,14 +38,4 @@ public class BaseTimeStampTest {
         assertThat(locals.get(0).getRegDt()).isAfter(testDate);
         assertThat(locals.get(0).getModDt()).isAfter(testDate);
     }
-
-    @Test
-    public void modDt_검증() {
-        LocalDateTime testDate =
-                LocalDateTime.of(2022, 11, 30, 0, 0, 0);
-
-        upperLocalRepository.save(UpperLocal.builder()
-                .name("test")
-                .build());
-    }
 }

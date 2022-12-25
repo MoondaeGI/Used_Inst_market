@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class User extends BaseTimeStamp {
     @Column(name = "NAME", nullable = false)
     private String name;
 
-    @NotBlank
+    @Email
     @Column(name = "EMAIL", nullable = false)
     private String email;
 

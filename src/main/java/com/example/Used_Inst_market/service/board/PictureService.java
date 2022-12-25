@@ -59,7 +59,7 @@ public class PictureService {
 
         if(!multipartFiles.isEmpty()) {
             final List<Picture> pictures = fileHandler
-                    .parsePictureFileInfo(post, multipartFiles);
+                    .parseImageFileInfo(post, multipartFiles);
             pictureRepository.saveAll(pictures);
         }
 
@@ -105,7 +105,7 @@ public class PictureService {
 
         fileHandler.deleteImageFile(deleteFileList);
         List<Picture> updatePictures = pictureRepository.saveAll(
-                fileHandler.parsePictureFileInfo(post, updateFileList));
+                fileHandler.parseImageFileInfo(post, updateFileList));
 
         pictureRepository.saveAll(updatePictures);
         pictureRepository.deleteAll(deleteFileList);
