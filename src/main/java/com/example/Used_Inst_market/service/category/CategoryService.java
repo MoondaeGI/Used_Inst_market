@@ -6,21 +6,15 @@ import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategoryRepository;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategoryRepository;
-import com.example.Used_Inst_market.web.dto.category.brand.BrandDeleteDTO;
-import com.example.Used_Inst_market.web.dto.category.brand.BrandInsertDTO;
-import com.example.Used_Inst_market.web.dto.category.brand.BrandSelectDTO;
-import com.example.Used_Inst_market.web.dto.category.brand.BrandUpdateDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryDeleteDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryInsertDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategorySelectDTO;
-import com.example.Used_Inst_market.web.dto.category.lower.LowerCategoryUpdateDTO;
+import com.example.Used_Inst_market.model.vo.category.BrandVO;
+import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
+import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
+import com.example.Used_Inst_market.web.dto.category.brand.*;
+import com.example.Used_Inst_market.web.dto.category.lower.*;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryDeleteDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategorySelectDTO;
 import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateDTO;
-import com.example.Used_Inst_market.model.vo.category.BrandVO;
-import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
-import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,6 +87,18 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
+    public List<LowerCategoryVO> lowerCategorySelectFromUpperCategory(
+            LowerCategorySelectFromUpperDTO lowerCategorySelectFromUpperDTO) {
+        final UpperCategory upperCategory = upperCategoryRepository
+                .findById(lowerCategorySelectFromUpperDTO.getUpperCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
+
+        return lowerCategoryRepository.findByUpperCategory(upperCategory).stream()
+                .map(LowerCategoryVO::from)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public List<LowerCategoryVO> lowerCategorySelectAll() {
         return lowerCategoryRepository.findAll().stream()
                 .map(LowerCategoryVO::new)
@@ -115,8 +121,7 @@ public class CategoryService {
 
     @Transactional
     public Long lowerCategoryUpdate(
-            LowerCategoryUpdateDTO lowerCategoryUpdateDTO)
-            throws IllegalArgumentException {
+            LowerCategoryUpdateDTO lowerCategoryUpdateDTO) throws IllegalArgumentException {
         final LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(lowerCategoryUpdateDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
@@ -143,6 +148,18 @@ public class CategoryService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
 
         return BrandVO.from(brand);
+    }
+
+    @Transactional(readOnly = true)
+    public List<BrandVO> brandSelectFromLowerCategory(
+            BrandSelectFromLowerDTO brandSelectFromLowerDTO) {
+        final LowerCategory lowerCategory = lowerCategoryRepository
+                .findById(brandSelectFromLowerDTO.getLowerCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
+
+        return brandRepository.findByLowerCategory(lowerCategory).stream()
+                .map(BrandVO::from)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
