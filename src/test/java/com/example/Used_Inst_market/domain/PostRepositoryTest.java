@@ -1,17 +1,17 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
-import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
-import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
-import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
+import com.example.Used_Inst_market.model.domain.board.post.Post;
+import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
 import com.example.Used_Inst_market.model.domain.category.brand.Brand;
 import com.example.Used_Inst_market.model.domain.category.brand.BrandRepository;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategoryRepository;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategoryRepository;
-import com.example.Used_Inst_market.model.domain.board.post.Post;
-import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
+import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
+import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
 import com.example.Used_Inst_market.model.domain.user.Role;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
@@ -22,60 +22,59 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.ConstraintViolationException;
-import java.net.BindException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class PostRepositoryTest {
-    @Autowired
-    private PostRepository postRepository;
-
+    @Autowired private PostRepository postRepository;
     @Autowired private UpperCategoryRepository upperCategoryRepository;
     @Autowired private LowerCategoryRepository lowerCategoryRepository;
     @Autowired private BrandRepository brandRepository;
-
     @Autowired private UserRepository userRepository;
     @Autowired private UpperLocalRepository upperLocalRepository;
     @Autowired private LowerLocalRepository lowerLocalRepository;
 
     @Before
     public void setup() {
-        UpperCategory testUpperCategory = upperCategoryRepository
-                .save(UpperCategory.builder().name("test").build());
+        UpperCategory testUpperCategory = upperCategoryRepository.save(
+                UpperCategory.builder()
+                        .name("test")
+                        .build());
 
-        LowerCategory testLowerCategory = lowerCategoryRepository
-                .save(LowerCategory.builder()
+        LowerCategory testLowerCategory = lowerCategoryRepository.save(
+                LowerCategory.builder()
                         .upperCategory(testUpperCategory)
                         .name("test")
                         .build());
 
-        brandRepository.save(Brand.builder()
-                .lowerCategory(testLowerCategory)
-                .name("test")
-                .build());
+        brandRepository.save(
+                Brand.builder()
+                        .lowerCategory(testLowerCategory)
+                        .name("test")
+                        .build());
 
         UpperLocal testUpperLocal = upperLocalRepository.save(
                 UpperLocal.builder()
                         .name("test")
                         .build());
 
-        LowerLocal testLowerLocal = lowerLocalRepository.save(
+        lowerLocalRepository.save(
                 LowerLocal.builder()
                         .upperLocal(testUpperLocal)
                         .name("test")
                         .build());
 
-        User testUser = userRepository.save(User.builder()
-                .name("test")
-                .email("test1234@test.com")
-                .picture("testPicture")
-                .role(Role.ADMIN)
-                .build());
+        userRepository.save(
+                User.builder()
+                        .name("test")
+                        .email("test1234@test.com")
+                        .picture("testPicture")
+                        .role(Role.ADMIN)
+                        .build());
     }
 
     @After
@@ -99,8 +98,7 @@ public class PostRepositoryTest {
                         .build())
                 .getPostNo();
 
-        assertThat(postRepository.findAll().get(0).getPostNo())
-                .isEqualTo(testPostNo);
+        assertThat(postRepository.findAll().get(0).getPostNo()).isEqualTo(testPostNo);
         assertThat(postRepository.findAll().get(0).getTitle()).isEqualTo(testTitle);
     }
 
