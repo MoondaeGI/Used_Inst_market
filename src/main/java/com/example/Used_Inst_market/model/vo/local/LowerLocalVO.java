@@ -17,14 +17,10 @@ public class LowerLocalVO {
     @ApiParam(name = "하위 지역 이름", required = true,
             value = "name", example = "example")
     private String name;
-    @ApiParam(name = "상위 지역", required = true)
-    private UpperLocal upperLocal;
 
     public LowerLocalVO(LowerLocal lowerLocal) {
         this.lowerLocalNo = lowerLocal.getLowerLocalNo();
         this.name = lowerLocal.getName();
-        this.upperLocal = lowerLocal.getUpperLocal();
-
     }
 
     public static LowerLocalVO from(LowerLocal lowerLocal) {

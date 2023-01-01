@@ -12,19 +12,11 @@
             <form>
                 <select id="upper-category">
                     {{#upper-category}}
-                        <option>{{name}}</option>
+                        <option value={{upperCategoryNo}}>{{name}}</option>
                     {{/upper-category}}
                 </select>
-                <select id="lower-category">
-                    {{#lower-category}}
-                        <option>{{name}}</option>
-                    {{/lower-category}}
-                </select>
-                <select id="brand">
-                    {{#brand}}
-                        <option>{{name}}</option>
-                    {{/brand}}
-                </select>
+                <select id="lower-category"></select>
+                <select id="brand"></select>
             </form>
         </div>
         <div class="form-group">
@@ -35,11 +27,7 @@
                         <option>{{name}}</option>
                     {{/upper-local}}
                 </select>
-                <select id="lower-local">
-                    {{#lower-local}}
-                        <option>{{name}}</option>
-                    {{/lower-local}}
-                </select>
+                <select id="lower-local"></select>
             </form>
         </div>
         <div class="form-group">

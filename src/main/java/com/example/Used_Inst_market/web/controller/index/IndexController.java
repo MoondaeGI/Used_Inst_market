@@ -53,12 +53,8 @@ public class IndexController {
         if (user != null) {
             model.addAttribute("user", user.getName());
         }
-
         model.addAttribute("upper-category", categoryService.upperCategorySelectAll());
-        model.addAttribute("lower-category", categoryService.lowerCategorySelectAll());
-        model.addAttribute("brand", categoryService.brandSelectAll());
         model.addAttribute("upper-local", localService.upperLocalSelectAll());
-        model.addAttribute("lower-local", localService.lowerLocalSelectAll());
 
         return "post-save";
     }

@@ -17,13 +17,10 @@ public class BrandVO {
     @ApiParam(name = "브랜드 이름", required = true,
             value = "name", example = "example")
     private String name;
-    @ApiParam(name = "하위 카테고리", required = true)
-    private LowerCategory lowerCategory;
 
     public BrandVO(Brand brand) {
         this.brandNo = brand.getBrandNo();
         this.name = brand.getName();
-        this.lowerCategory = brand.getLowerCategory();
     }
 
     public static BrandVO from(Brand brand) {
