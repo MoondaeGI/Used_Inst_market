@@ -24,7 +24,7 @@
             <form>
                 <select id="upper-local">
                     {{#upper-local}}
-                        <option>{{name}}</option>
+                        <option value="{{upperLocalNo}}">{{name}}</option>
                     {{/upper-local}}
                 </select>
                 <select id="lower-local"></select>
@@ -32,7 +32,9 @@
         </div>
         <div class="form-group">
             <label for="user">작성자</label>
-            <input type="text" class="form-control" id="user" value="{{user}}" readonly>
+            {{#user}}
+                <input type="text" class="form-control" id="user" value="{{name}}" name="{{userNo}}" readonly>
+            {{/user}}
         </div>
         <div class="form-group">
             <label for="price">가격</label>

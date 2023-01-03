@@ -1,10 +1,7 @@
 package com.example.Used_Inst_market.web.controller.local;
 
 import com.example.Used_Inst_market.service.local.LocalService;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalDeleteDTO;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalInsertDTO;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalSelectDTO;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalUpdateDTO;
+import com.example.Used_Inst_market.web.dto.local.lower.*;
 import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalDeleteDTO;
 import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalInsertDTO;
 import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalSelectDTO;
@@ -82,6 +79,18 @@ public class LocalController {
                 .build();
 
         return localService.lowerLocalSelect(lowerLocalSelectDTO);
+    }
+
+    @ApiOperation(value = "상위 지역으로 하위 지역 리스트 정보 조회 API")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/lower/info/upper")
+    public List<LowerLocalVO> lowerLocalSelectFromUpperLocal(@RequestParam("no") Long upperLocalNo) {
+        LowerLocalSelectFromUpperDTO lowerLocalSelectFromUpperDTO =
+                LowerLocalSelectFromUpperDTO.builder()
+                        .upperLocalNo(upperLocalNo)
+                        .build();
+
+        return localService.lowerLocalSelectFromUpperLocal(lowerLocalSelectFromUpperDTO);
     }
 
     @ApiOperation(value = "하위 지역 리스트 정보 조회 API")

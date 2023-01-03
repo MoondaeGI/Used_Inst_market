@@ -39,24 +39,27 @@ public class PostController {
 
     @ApiOperation(value = "게시글 정보 삽입 API")
     @PreAuthorize("hasRole('USER')")
-    @PostMapping("/info")
+    @PostMapping("/save/info")
     public Long insert(
-            @RequestPart(value = "images") List<MultipartFile> multipartFiles,
+            @RequestPart(value = "images", required = false) List<MultipartFile> multipartFiles,
             @RequestPart(value = "dto") @Valid PostInsertDTO postInsertDTO)
             throws IOException {
         Long postNo = postService.insert(postInsertDTO);
 
-        PictureInsertDTO pictureInsertDTO = PictureInsertDTO.builder()
-                .postNo(postNo)
-                .multipartFiles(multipartFiles)
-                .build();
+        if(!multipartFiles.isEmpty()) {
+            PictureInsertDTO pictureInsertDTO = PictureInsertDTO.builder()
+                    .postNo(postNo)
+                    .multipartFiles(multipartFiles)
+                    .build();
+            pictureService.insert(pictureInsertDTO);
+        }
 
-        return pictureService.insert(pictureInsertDTO);
+        return postNo;
     }
 
     @ApiOperation(value = "게시글 정보 수정 API")
     @PreAuthorize("hasRole('USER')")
-    @PutMapping("/info")
+    @PutMapping("/update/info")
     public Long update(
             @RequestPart(value = "images", required = false)
             List<MultipartFile> multipartFiles,
@@ -74,7 +77,7 @@ public class PostController {
 
     @ApiOperation(value = "게시글 판매 여부 수정 API")
     @PreAuthorize("hasRole('USER')")
-    @PatchMapping("/info")
+    @PatchMapping("/soldYN/change")
     public Long updateSoldYN(
             @RequestParam @Valid PostUpdateSoldYNDTO postUpdateSoldYNDTO) {
         return postService.updateSoldYN(postUpdateSoldYNDTO);
@@ -82,7 +85,7 @@ public class PostController {
 
     @ApiOperation(value = "게시글 정보 삭제 API")
     @PreAuthorize("hasRole('USER')")
-    @DeleteMapping("/info")
+    @DeleteMapping("/delete/info")
     public void delete(@RequestParam(name = "no") Long postNo) throws IOException {
         PostDeleteDTO postDeleteDTO = PostDeleteDTO.builder()
                 .postNo(postNo)

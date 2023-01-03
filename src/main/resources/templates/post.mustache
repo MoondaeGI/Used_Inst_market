@@ -1,0 +1,29 @@
+{{>layout/header}}
+<body>
+<h1>게시글</h1>
+<div class="col-md-12">
+    <form>
+        {{#post}}
+            <div class="form-control">
+                <h2>{{title}}</h2>
+            </div>
+            <div class="form-control">
+                <label for="postNo">게시글 번호: {{postNo}}</label>
+                <label for="user">작성자: {{userName}}</label>
+                <label for="regDt">등록 일자: {{regDt}}</label>
+            </div>
+            <div class="form-control">
+                <label for="price">{{price}}</label>
+                <label for="soldYN">{{soldYN}}</label>
+            </div>
+            <div class="form-control">
+                <label for="content">내용</label>
+                <p>{{content}}</p>
+            </div>
+        {{/post}}
+    </form>
+    <button type="button" class="btn btn-secondary" id="btn-update">수정</button>
+    <button type="button" class="btn btn-secondary" id="btn-delete">삭제</button>
+    <a href="/" role="button" class="btn btn-primary">뒤로가기</a>
+</div>
+{{>layout/footer}}

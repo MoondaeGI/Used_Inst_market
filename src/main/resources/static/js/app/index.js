@@ -6,6 +6,18 @@ const main = {
             _this.save();
         });
 
+        $('#btn-update').on('click', function () {
+            _this.update();
+        });
+
+        $('#btn-delete').on('click', function () {
+            _this.delete();
+        })
+
+        $('#btn-search').on('click', function () {
+            _this.search();
+        })
+
         $('#upper-category').on('change', function() {
             _this.categorySelect('upper-category', 'lower-category');
         });
@@ -21,25 +33,29 @@ const main = {
 
     save : function () {
         const dto = {
-            userNo : $('#user').getParameter("userNo"),
+            userNo : parseInt($('#user').attr("name")),
             title : $('#title').val(),
-            price : $('#price').val(),
             content : $('#content').val(),
-            upperCategoryNo : $('#upper-category option:selected').val(),
-            lowerCategoryNo : $('#lower-category option:selected').val(),
-            brandNo : $('#brand option:selected').val(),
-            upperLocalNo : $('#upper-local option:selected').val(),
-            lowerLocalNo : $('#lower-local option:selected').val()
+            price : parseInt($('#price').val()),
+            upperCategoryNo : parseInt($('#upper-category option:selected').val()),
+            lowerCategoryNo : parseInt($('#lower-category option:selected').val()),
+            brandNo : parseInt($('#brand option:selected').val()),
+            upperLocalNo : parseInt($('#upper-local option:selected').val()),
+            lowerLocalNo : parseInt($('#lower-local option:selected').val())
         };
+        const jsonDTO = JSON.stringify(dto);
+        const blob = new Blob([jsonDTO], {type: "application/json"});
+
+        const images = $('#images');
 
         const formData = new FormData();
-        formData.append("dto", JSON.stringify(dto));
-        formData.append("images", $('#images').files);
+        formData.append("dto", blob);
+        formData.append("images", images);
 
         $.ajax({
             type: 'POST',
-            dataType: 'json',
-            url: '/post/info',
+            url: '/post/save/info',
+            enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
             data: formData
@@ -51,11 +67,33 @@ const main = {
         });
     },
 
-    update : function () {
-        const dto = {}
+    update : function () {},
+
+    delete : function () {
+        const postNo = $('#postNo').val();
+
+        $.ajax({
+            type: 'DELETE',
+            url: '/post/delete?no=' + postNo,
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8'
+        }).done(function() {
+            alert('글이 삭제되었습니다.');
+            window.location.href = '/';
+        }).fail(function (error) {
+            alert(JSON.stringify(error))
+        });
     },
 
-    delete : function () {},
+    search : function () {
+        const dto = {
+            upperCategoryNo: $('#upper-category option:selected').val(),
+            lowerCategoryNo: $('#lower-category option:selected').val(),
+            brandNo: $('#brand option:selected').val(),
+            upperLocalNo: $('#upper-local option:selected').val(),
+            lowerLocalNo: $('#lower-local option:selected').val()
+        }
+    },
 
     categorySelect : function (mainBoxId, subBoxId) {
         const index = $(`#${mainBoxId} option:selected`).val();
@@ -73,7 +111,6 @@ const main = {
                 break;
         }
         url += `?no=${index}`;
-        console.log(url);
 
         $.ajax({
             type: 'GET',

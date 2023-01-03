@@ -22,8 +22,7 @@ public class SecurityConfig {
                     .headers().frameOptions().disable()
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/", "/css/**", "/images/**",
-                            "/js/**", "/h2-console/**").permitAll()
+                    .antMatchers("/", "/css/**", "/images/**", "/js/**").permitAll()
                     .antMatchers("/").hasRole(Role.USER.name())
                     .anyRequest().authenticated()
                 .and()
@@ -49,8 +48,7 @@ public class SecurityConfig {
 
     @Bean
     public DefaultWebSecurityExpressionHandler webSecurityExpressionHandler() {
-        DefaultWebSecurityExpressionHandler expressionHandler =
-                new DefaultWebSecurityExpressionHandler();
+        DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
         expressionHandler.setRoleHierarchy(roleHierarchy());
 
         return expressionHandler;

@@ -1,9 +1,9 @@
 package com.example.Used_Inst_market.util.config.auth;
 
-import com.example.Used_Inst_market.util.config.auth.dto.OAuthAttributes;
-import com.example.Used_Inst_market.util.config.auth.dto.SessionUser;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
+import com.example.Used_Inst_market.model.vo.user.UserVO;
+import com.example.Used_Inst_market.util.config.auth.dto.OAuthAttributes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -19,16 +19,14 @@ import java.util.Collections;
 
 @RequiredArgsConstructor
 @Service
-public class CustomOAuth2UserService
-        implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final UserRepository userRepository;
     private final HttpSession httpSession;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest)
             throws OAuth2AuthenticationException {
-        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate =
-                new DefaultOAuth2UserService();
+        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
         String registrationId = userRequest
@@ -39,10 +37,10 @@ public class CustomOAuth2UserService
                 .getUserNameAttributeName();
 
         OAuthAttributes attributes = OAuthAttributes
-                .of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+                .of(userNameAttributeName, oAuth2User.getAttributes());
 
         User user = saveOrUpdate(attributes);
-        httpSession.setAttribute("user", new SessionUser(user));
+        httpSession.setAttribute("user", UserVO.from(user));
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),

@@ -4,10 +4,7 @@ import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
 import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalDeleteDTO;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalInsertDTO;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalSelectDTO;
-import com.example.Used_Inst_market.web.dto.local.lower.LowerLocalUpdateDTO;
+import com.example.Used_Inst_market.web.dto.local.lower.*;
 import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalDeleteDTO;
 import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalInsertDTO;
 import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalSelectDTO;
@@ -84,9 +81,21 @@ public class LocalService {
     }
 
     @Transactional(readOnly = true)
+    public List<LowerLocalVO> lowerLocalSelectFromUpperLocal(
+            final LowerLocalSelectFromUpperDTO lowerLocalSelectFromUpperDTO) {
+        final UpperLocal upperLocal = upperLocalRepository
+                .findById(lowerLocalSelectFromUpperDTO.getUpperLocalNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
+
+        return lowerLocalRepository.findByUpperLocal(upperLocal).stream()
+                .map(LowerLocalVO::from)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public List<LowerLocalVO> lowerLocalSelectAll() {
         return lowerLocalRepository.findAll().stream()
-                .map(LowerLocalVO::new)
+                .map(LowerLocalVO::from)
                 .collect(Collectors.toList());
     }
 
