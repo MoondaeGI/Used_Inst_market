@@ -3,7 +3,6 @@ package com.example.Used_Inst_market.util.config.auth;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import com.example.Used_Inst_market.model.vo.user.UserVO;
-import com.example.Used_Inst_market.util.config.auth.dto.OAuthAttributes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

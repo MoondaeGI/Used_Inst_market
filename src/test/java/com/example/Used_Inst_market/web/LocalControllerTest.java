@@ -2,8 +2,8 @@ package com.example.Used_Inst_market.web;
 
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalInsertDTO;
-import com.example.Used_Inst_market.web.dto.local.upper.UpperLocalUpdateDTO;
+import com.example.Used_Inst_market.model.dto.local.upper.UpperLocalInsertDTO;
+import com.example.Used_Inst_market.model.dto.local.upper.UpperLocalUpdateDTO;
 import com.example.Used_Inst_market.model.vo.local.UpperLocalVO;
 import org.junit.After;
 import org.junit.Test;

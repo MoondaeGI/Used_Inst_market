@@ -16,7 +16,7 @@ import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepositor
 import com.example.Used_Inst_market.model.domain.user.Role;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
-import com.example.Used_Inst_market.web.dto.board.post.PostInsertDTO;
+import com.example.Used_Inst_market.model.dto.board.post.PostInsertDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;

@@ -1,20 +1,25 @@
 package com.example.Used_Inst_market.service.category;
 
+import com.example.Used_Inst_market.model.domain.board.post.Post;
+import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
 import com.example.Used_Inst_market.model.domain.category.brand.Brand;
 import com.example.Used_Inst_market.model.domain.category.brand.BrandRepository;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategoryRepository;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategoryRepository;
+import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelectRepository;
+import com.example.Used_Inst_market.model.dto.category.brand.*;
+import com.example.Used_Inst_market.model.dto.category.lower.*;
 import com.example.Used_Inst_market.model.vo.category.BrandVO;
+import com.example.Used_Inst_market.model.vo.category.CategorySelectVO;
 import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
 import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
-import com.example.Used_Inst_market.web.dto.category.brand.*;
-import com.example.Used_Inst_market.web.dto.category.lower.*;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryDeleteDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryInsertDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategorySelectDTO;
-import com.example.Used_Inst_market.web.dto.category.upper.UpperCategoryUpdateDTO;
+import com.example.Used_Inst_market.model.dto.category.select.CategorySelectFromPostDTO;
+import com.example.Used_Inst_market.model.dto.category.upper.UpperCategoryDeleteDTO;
+import com.example.Used_Inst_market.model.dto.category.upper.UpperCategoryInsertDTO;
+import com.example.Used_Inst_market.model.dto.category.upper.UpperCategorySelectDTO;
+import com.example.Used_Inst_market.model.dto.category.upper.UpperCategoryUpdateDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +30,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class CategoryService {
+    private final PostRepository postRepository;
+    private final CategorySelectRepository categorySelectRepository;
     private final UpperCategoryRepository upperCategoryRepository;
     private final LowerCategoryRepository lowerCategoryRepository;
     private final BrandRepository brandRepository;
+
+    @Transactional(readOnly = true)
+    public CategorySelectVO selectFromPost(
+            final CategorySelectFromPostDTO categorySelectFromPostDTO) {
+        final Post post = postRepository.findById(categorySelectFromPostDTO.getPostNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
+
+        return CategorySelectVO.from(categorySelectRepository.findByPost(post));
+    }
 
     @Transactional(readOnly = true)
     public UpperCategoryVO upperCategorySelect(

@@ -2,6 +2,15 @@
 <body>
 <h1>게시글</h1>
 <div class="col-md-12">
+    <div class="row">
+        {{#user}}
+            Logged in as: <span id="user">{{name}}</span>
+            <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+        {{/user}}
+        {{^user}}
+            <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+        {{/user}}
+    </div>
     <form>
         {{#post}}
             <div class="form-control">
@@ -22,8 +31,8 @@
             </div>
         {{/post}}
     </form>
-    <button type="button" class="btn btn-secondary" id="btn-update">수정</button>
-    <button type="button" class="btn btn-secondary" id="btn-delete">삭제</button>
-    <a href="/" role="button" class="btn btn-primary">뒤로가기</a>
+    <div class="form-control" id="btn-selector">
+        <a href="/" role="button" class="btn btn-primary">뒤로가기</a>
+    </div>
 </div>
 {{>layout/footer}}

@@ -11,11 +11,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class BrandVO {
-    @ApiParam(name = "브랜드 번호", required = true,
-            value = "brandNo", example = "1")
+    @ApiParam(name = "브랜드 번호", required = true, value = "brandNo", example = "1")
     private Long brandNo;
-    @ApiParam(name = "브랜드 이름", required = true,
-            value = "name", example = "example")
+    @ApiParam(name = "브랜드 이름", required = true, value = "name", example = "example")
     private String name;
 
     public BrandVO(Brand brand) {

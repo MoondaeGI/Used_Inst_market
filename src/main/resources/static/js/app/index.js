@@ -6,6 +6,10 @@ const main = {
             _this.save();
         });
 
+        $('#post-select').click(function() {
+            _this.userCheck();
+        });
+
         $('#btn-update').on('click', function () {
             _this.update();
         });
@@ -85,6 +89,18 @@ const main = {
         });
     },
 
+    userCheck : function () {
+        const btnSelector = $('#btn-selector');
+
+        const loginUserName = $('#user').text();
+        const postUserName = $('#postUserName').val();
+
+        if(loginUserName === postUserName) {
+            btnSelector.append(`<button type="button" class="btn btn-secondary" id="btn-update">수정</button>`);
+            btnSelector.append(`<button type="button" class="btn btn-secondary" id="btn-delete">삭제</button>`);
+        }
+    },
+
     search : function () {
         const dto = {
             upperCategoryNo: $('#upper-category option:selected').val(),
@@ -110,12 +126,11 @@ const main = {
                 url = `/local/lower/info/upper`;
                 break;
         }
-        url += `?no=${index}`;
 
         $.ajax({
             type: 'GET',
             datatype: 'json',
-            url: url,
+            url: url + `?no=${index}`,
             contentType: 'application/json; charset=UTF-8'
         }).done(function (result) {
             let option;
