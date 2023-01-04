@@ -1,5 +1,6 @@
 {{>layout/header}}
-<body>
+<body onload="userCheck()">
+<script src="/js/app/post.js"></script>
 <h1>게시글</h1>
 <div class="col-md-12">
     <div class="row">
@@ -13,25 +14,34 @@
     </div>
     <form>
         {{#post}}
-            <div class="form-control">
-                <h2>{{title}}</h2>
-            </div>
-            <div class="form-control">
-                <label for="postNo">게시글 번호: {{postNo}}</label>
-                <label for="user">작성자: {{userName}}</label>
-                <label for="regDt">등록 일자: {{regDt}}</label>
-            </div>
-            <div class="form-control">
-                <label for="price">{{price}}</label>
-                <label for="soldYN">{{soldYN}}</label>
-            </div>
-            <div class="form-control">
-                <label for="content">내용</label>
-                <p>{{content}}</p>
-            </div>
+            <table class="table table-horizontal table-bordered">
+                <tbody class="thead-strong">
+                    <tr>
+                        <th scope="row">글 번호</th>
+                        <td id="postNo">{{postNo}}</td>
+                        <th scope="row">판매 여부</th>
+                        <td id="soldYN">{{soldYN}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">작성자</th>
+                        <td id="postUserName">{{userName}}</td>
+                        <th scope="row">작성일</th>
+                        <td>{{regDt}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">제목</th>
+                        <td colspan="6">{{title}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="view_text">
+                            <div><p>{{content}}</p></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         {{/post}}
     </form>
-    <div class="form-control" id="btn-selector">
+    <div id="btn-selector">
         <a href="/" role="button" class="btn btn-primary">뒤로가기</a>
     </div>
 </div>

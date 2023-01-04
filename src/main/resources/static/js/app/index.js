@@ -6,21 +6,9 @@ const main = {
             _this.save();
         });
 
-        $('#post-select').click(function() {
-            _this.userCheck();
-        });
-
-        $('#btn-update').on('click', function () {
-            _this.update();
-        });
-
-        $('#btn-delete').on('click', function () {
-            _this.delete();
-        })
-
         $('#btn-search').on('click', function () {
             _this.search();
-        })
+        });
 
         $('#upper-category').on('change', function() {
             _this.categorySelect('upper-category', 'lower-category');
@@ -69,36 +57,6 @@ const main = {
         }).fail(function (error) {
             alert(JSON.stringify(error))
         });
-    },
-
-    update : function () {},
-
-    delete : function () {
-        const postNo = $('#postNo').val();
-
-        $.ajax({
-            type: 'DELETE',
-            url: '/post/delete?no=' + postNo,
-            dataType: 'json',
-            contentType: 'application/json; charset=UTF-8'
-        }).done(function() {
-            alert('글이 삭제되었습니다.');
-            window.location.href = '/';
-        }).fail(function (error) {
-            alert(JSON.stringify(error))
-        });
-    },
-
-    userCheck : function () {
-        const btnSelector = $('#btn-selector');
-
-        const loginUserName = $('#user').text();
-        const postUserName = $('#postUserName').val();
-
-        if(loginUserName === postUserName) {
-            btnSelector.append(`<button type="button" class="btn btn-secondary" id="btn-update">수정</button>`);
-            btnSelector.append(`<button type="button" class="btn btn-secondary" id="btn-delete">삭제</button>`);
-        }
     },
 
     search : function () {

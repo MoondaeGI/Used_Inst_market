@@ -78,9 +78,12 @@ public class PostController {
 
     @ApiOperation(value = "게시글 판매 여부 수정 API")
     @PreAuthorize("hasRole('USER')")
-    @PatchMapping("/soldYN/change")
-    public Long updateSoldYN(
-            @RequestParam @Valid PostUpdateSoldYNDTO postUpdateSoldYNDTO) {
+    @GetMapping("/update/soldYN/info")
+    public Long updateSoldYN(@RequestParam("no") Long postNo) {
+        PostUpdateSoldYNDTO postUpdateSoldYNDTO = PostUpdateSoldYNDTO.builder()
+                .postNo(postNo)
+                .build();
+
         return postService.updateSoldYN(postUpdateSoldYNDTO);
     }
 

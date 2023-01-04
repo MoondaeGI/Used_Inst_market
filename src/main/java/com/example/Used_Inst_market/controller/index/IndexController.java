@@ -1,5 +1,6 @@
 package com.example.Used_Inst_market.controller.index;
 
+import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.model.vo.user.UserVO;
 import com.example.Used_Inst_market.service.board.BoardService;
 import com.example.Used_Inst_market.service.board.PictureService;
@@ -60,12 +61,16 @@ public class IndexController {
         PostSelectDTO postSelectDTO = PostSelectDTO.builder()
                 .postNo(postNo)
                 .build();
-        model.addAttribute("post", postService.select(postSelectDTO));
+        PostVO post = postService.select(postSelectDTO);
+        model.addAttribute("post", post);
+        model.addAttribute("soldYN", post.getSoldYN());
 
         PictureSelectByPostDTO pictureSelectByPostDTO = PictureSelectByPostDTO.builder()
                 .postNo(postNo)
                 .build();
-        model.addAttribute("images", pictureService.selectByPost(pictureSelectByPostDTO));
+        if(!pictureService.selectByPost(pictureSelectByPostDTO).isEmpty()) {
+            model.addAttribute("images", pictureService.selectByPost(pictureSelectByPostDTO));
+        }
 
         CategorySelectFromPostDTO categorySelectFromPostDTO = CategorySelectFromPostDTO.builder()
                 .postNo(postNo)
@@ -97,7 +102,35 @@ public class IndexController {
     @ApiOperation(value = "게시글 수정 페이지 조회 API")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/post/update")
-    public String postUpdate(@RequestParam("no") Long postNo, @Valid Model model) { return "post-update"; }
+    public String postUpdate(@RequestParam("no") Long postNo, @Valid Model model) throws IOException {
+        UserVO user = (UserVO) httpSession.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);
+        }
+        PostSelectDTO postSelectDTO = PostSelectDTO.builder()
+                .postNo(postNo)
+                .build();
+        model.addAttribute("post", postService.select(postSelectDTO));
+
+        PictureSelectByPostDTO pictureSelectByPostDTO = PictureSelectByPostDTO.builder()
+                .postNo(postNo)
+                .build();
+        if(!pictureService.selectByPost(pictureSelectByPostDTO).isEmpty()) {
+            model.addAttribute("images", pictureService.selectByPost(pictureSelectByPostDTO));
+        }
+
+        CategorySelectFromPostDTO categorySelectFromPostDTO = CategorySelectFromPostDTO.builder()
+                .postNo(postNo)
+                .build();
+        model.addAttribute("category-select", boardService.categorySelectFromPost(categorySelectFromPostDTO));
+
+        LocalSelectFromPostDTO localSelectFromPostDTO = LocalSelectFromPostDTO.builder()
+                .postNo(postNo)
+                .build();
+        model.addAttribute("local-select", boardService.localSelectFromPost(localSelectFromPostDTO));
+
+        return "post-update";
+    }
 
     @ApiOperation(value = "검색 결과 페이지 조회 API")
     @PreAuthorize("hasRole('USER')")

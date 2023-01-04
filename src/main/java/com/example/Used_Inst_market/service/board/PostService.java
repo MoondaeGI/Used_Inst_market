@@ -138,7 +138,7 @@ public class PostService {
         final Post post = postRepository.findById(postUpdateSoldYNDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
-        if(postUpdateSoldYNDTO.getSoldYN() == SoldYN.SALE) {
+        if(post.getSoldYN() == SoldYN.SALE) {
             post.updateSoldYN(SoldYN.SOLD_OUT);
         } else {
             post.updateSoldYN(SoldYN.SALE);

@@ -1,2 +1,54 @@
 {{>layout/header}}
+<body>
+<h1>게시글 수정</h1>
+<div class="col-md-12">
+    {{#post}}
+        <form>
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" class="form-control" id="title" value="{{title}}">
+            </div>
+            <div class="form-group">
+                <label for="category">카테고리</label>
+                <div>
+                    <select id="upper-category">
+                        {{#upper-category}}
+                            <option value={{upperCategoryNo}}>{{name}}</option>
+                        {{/upper-category}}
+                    </select>
+                    <select id="lower-category"></select>
+                    <select id="brand"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="local">지역</label>
+                <div>
+                    <select id="upper-local">
+                        {{#upper-local}}
+                            <option value="{{upperLocalNo}}">{{name}}</option>
+                        {{/upper-local}}
+                    </select>
+                    <select id="lower-local"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="user">작성자</label>
+                    <input type="text" class="form-control" id="user" value="{{userName}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="price">가격</label>
+                <input type="number" class="form-control" id="price" value="{{price}}">
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea type="text" class="form-control" id="content">{{content}}</textarea>
+            </div>
+            <div class="form-group">
+                <input type="file" id="images"/>
+            </div>
+        </form>
+        <a href="/post?no={{postNo}}" role="button" class="btn btn-secondary">취소</a>
+        <button type="button" class="btn btn-primary" id="btn-update">수정</button>
+    {{/post}}
+</div>
 {{>layout/footer}}
