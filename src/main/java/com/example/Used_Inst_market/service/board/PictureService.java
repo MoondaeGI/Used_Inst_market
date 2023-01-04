@@ -35,8 +35,7 @@ public class PictureService {
     }
 
     @Transactional(readOnly = true)
-    public List<PictureVO> selectByPost(final PictureSelectByPostDTO pictureSelectByPostDTO)
-            throws IOException {
+    public List<PictureVO> selectByPost(final PictureSelectByPostDTO pictureSelectByPostDTO) throws IOException {
         List<PictureVO> selectResult = new ArrayList<>();
 
         final Post post = postRepository.findById(pictureSelectByPostDTO.getPostNo())

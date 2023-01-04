@@ -8,8 +8,8 @@ import com.example.Used_Inst_market.service.category.CategoryService;
 import com.example.Used_Inst_market.service.local.LocalService;
 import com.example.Used_Inst_market.model.dto.board.picture.PictureSelectByPostDTO;
 import com.example.Used_Inst_market.model.dto.board.post.PostSelectDTO;
-import com.example.Used_Inst_market.model.dto.category.select.CategorySelectFromPostDTO;
-import com.example.Used_Inst_market.model.dto.local.select.LocalSelectFromPostDTO;
+import com.example.Used_Inst_market.model.dto.board.select.categoryselect.CategorySelectFromPostDTO;
+import com.example.Used_Inst_market.model.dto.board.select.localselect.LocalSelectFromPostDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -60,23 +60,22 @@ public class IndexController {
         PostSelectDTO postSelectDTO = PostSelectDTO.builder()
                 .postNo(postNo)
                 .build();
+        model.addAttribute("post", postService.select(postSelectDTO));
 
         PictureSelectByPostDTO pictureSelectByPostDTO = PictureSelectByPostDTO.builder()
                 .postNo(postNo)
                 .build();
+        model.addAttribute("images", pictureService.selectByPost(pictureSelectByPostDTO));
 
         CategorySelectFromPostDTO categorySelectFromPostDTO = CategorySelectFromPostDTO.builder()
                 .postNo(postNo)
                 .build();
+        model.addAttribute("category-select", boardService.categorySelectFromPost(categorySelectFromPostDTO));
 
         LocalSelectFromPostDTO localSelectFromPostDTO = LocalSelectFromPostDTO.builder()
                 .postNo(postNo)
                 .build();
-
-        model.addAttribute("post", postService.select(postSelectDTO));
-        model.addAttribute("images", pictureService.selectByPost(pictureSelectByPostDTO));
-        model.addAttribute("category-select", categoryService.selectFromPost(categorySelectFromPostDTO));
-        model.addAttribute("local-select", localService.selectFromPost(localSelectFromPostDTO));
+        model.addAttribute("local-select", boardService.localSelectFromPost(localSelectFromPostDTO));
 
         return "post";
     }
@@ -98,7 +97,7 @@ public class IndexController {
     @ApiOperation(value = "게시글 수정 페이지 조회 API")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/post/update")
-    public String postUpdate() { return "post-update"; }
+    public String postUpdate(@RequestParam("no") Long postNo, @Valid Model model) { return "post-update"; }
 
     @ApiOperation(value = "검색 결과 페이지 조회 API")
     @PreAuthorize("hasRole('USER')")

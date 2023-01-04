@@ -41,8 +41,7 @@ public class PostService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public PostVO select(
-            final PostSelectDTO postSelectDTO) throws IOException {
+    public PostVO select(final PostSelectDTO postSelectDTO) throws IOException {
         final Post post = postRepository.findById(postSelectDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 

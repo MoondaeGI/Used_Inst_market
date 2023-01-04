@@ -1,15 +1,10 @@
 package com.example.Used_Inst_market.service.local;
 
-import com.example.Used_Inst_market.model.domain.board.post.Post;
-import com.example.Used_Inst_market.model.domain.board.post.PostRepository;
 import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
 import com.example.Used_Inst_market.model.domain.local.lower.LowerLocalRepository;
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocal;
 import com.example.Used_Inst_market.model.domain.local.upper.UpperLocalRepository;
-import com.example.Used_Inst_market.model.domain.select.localselect.LocalSelectRepository;
 import com.example.Used_Inst_market.model.dto.local.lower.*;
-import com.example.Used_Inst_market.model.vo.local.LocalSelectVO;
-import com.example.Used_Inst_market.model.dto.local.select.LocalSelectFromPostDTO;
 import com.example.Used_Inst_market.model.dto.local.upper.UpperLocalDeleteDTO;
 import com.example.Used_Inst_market.model.dto.local.upper.UpperLocalInsertDTO;
 import com.example.Used_Inst_market.model.dto.local.upper.UpperLocalSelectDTO;
@@ -26,22 +21,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class LocalService {
-    private final PostRepository postRepository;
-    private final LocalSelectRepository localSelectRepository;
     private final UpperLocalRepository upperLocalRepository;
     private final LowerLocalRepository lowerLocalRepository;
 
     @Transactional(readOnly = true)
-    public LocalSelectVO selectFromPost(final LocalSelectFromPostDTO localSelectFromPostDTO) {
-        final Post post = postRepository.findById(localSelectFromPostDTO.getPostNo())
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
-
-        return LocalSelectVO.from(localSelectRepository.findByPost(post));
-    }
-
-    @Transactional(readOnly = true)
-    public UpperLocalVO upperLocalSelect(
-            final UpperLocalSelectDTO upperLocalSelectDTO) {
+    public UpperLocalVO upperLocalSelect(final UpperLocalSelectDTO upperLocalSelectDTO) {
         final UpperLocal upperLocal = upperLocalRepository
                 .findById(upperLocalSelectDTO.getUpperLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
@@ -57,15 +41,13 @@ public class LocalService {
     }
 
     @Transactional
-    public Long upperLocalInsert(
-            final UpperLocalInsertDTO upperLocalInsertDTO) {
+    public Long upperLocalInsert(final UpperLocalInsertDTO upperLocalInsertDTO) {
         return upperLocalRepository
                 .save(upperLocalInsertDTO.toEntity()).getUpperLocalNo();
     }
 
     @Transactional
-    public Long upperLocalUpdate(
-            final UpperLocalUpdateDTO upperLocalUpdateDTO) {
+    public Long upperLocalUpdate(final UpperLocalUpdateDTO upperLocalUpdateDTO) {
         final UpperLocal upperLocal = upperLocalRepository
                 .findById(upperLocalUpdateDTO.getUpperLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
@@ -76,8 +58,7 @@ public class LocalService {
     }
 
     @Transactional
-    public void upperLocalDelete(
-            final UpperLocalDeleteDTO upperLocalDeleteDTO) {
+    public void upperLocalDelete(final UpperLocalDeleteDTO upperLocalDeleteDTO) {
         final UpperLocal upperLocal = upperLocalRepository
                 .findById(upperLocalDeleteDTO.getUpperLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));
@@ -86,8 +67,7 @@ public class LocalService {
     }
 
     @Transactional(readOnly = true)
-    public LowerLocalVO lowerLocalSelect(
-            final LowerLocalSelectDTO lowerLocalSelectDTO) {
+    public LowerLocalVO lowerLocalSelect(final LowerLocalSelectDTO lowerLocalSelectDTO) {
         final LowerLocal lowerLocal = lowerLocalRepository
                 .findById(lowerLocalSelectDTO.getLowerLocalNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다"));

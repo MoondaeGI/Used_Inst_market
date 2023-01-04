@@ -2,7 +2,6 @@ package com.example.Used_Inst_market.model.vo.category;
 
 import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelect;
 import io.swagger.annotations.ApiParam;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

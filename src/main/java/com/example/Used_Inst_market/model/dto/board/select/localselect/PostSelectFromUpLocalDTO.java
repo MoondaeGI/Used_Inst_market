@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SelectFromUpLocalDTO {
+public class PostSelectFromUpLocalDTO {
     @ApiParam(name = "상위 지역 번호", required = true,
             value = "upperLocalNo", example = "1")
     Long upperLocalNo;
 
     @Builder
-    public SelectFromUpLocalDTO(Long upperLocalNo) {
+    public PostSelectFromUpLocalDTO(Long upperLocalNo) {
         this.upperLocalNo = upperLocalNo;
     }
 }

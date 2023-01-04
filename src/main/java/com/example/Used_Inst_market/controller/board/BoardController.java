@@ -10,7 +10,7 @@ import com.example.Used_Inst_market.model.dto.board.select.categoryselect.PostSe
 import com.example.Used_Inst_market.model.dto.board.select.categoryselect.PostSelectFromLoCategoryDTO;
 import com.example.Used_Inst_market.model.dto.board.select.categoryselect.PostSelectFromUpCategoryDTO;
 import com.example.Used_Inst_market.model.dto.board.select.localselect.PostSelectFromLoLocalDTO;
-import com.example.Used_Inst_market.model.dto.board.select.localselect.SelectFromUpLocalDTO;
+import com.example.Used_Inst_market.model.dto.board.select.localselect.PostSelectFromUpLocalDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -122,11 +122,11 @@ public class BoardController {
     @GetMapping("/local/upper")
     public List<PostVO> upperLocalSelect(
             @RequestParam("no") Long upperLocalNo) {
-        SelectFromUpLocalDTO selectFromUpLocalDTO = SelectFromUpLocalDTO.builder()
+        PostSelectFromUpLocalDTO postSelectFromUpLocalDTO = PostSelectFromUpLocalDTO.builder()
                 .upperLocalNo(upperLocalNo)
                 .build();
 
-        return boardService.upperLocalSelect(selectFromUpLocalDTO);
+        return boardService.upperLocalSelect(postSelectFromUpLocalDTO);
     }
 
     @ApiOperation(value = "하위 지역으로 게시글 리스트 정보 조회 API")

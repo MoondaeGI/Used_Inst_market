@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.model.dto.category.select;
+package com.example.Used_Inst_market.model.dto.board.select.categoryselect;
 
 import io.swagger.annotations.ApiParam;
 import lombok.Builder;
