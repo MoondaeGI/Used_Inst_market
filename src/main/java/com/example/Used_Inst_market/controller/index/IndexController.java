@@ -109,6 +109,7 @@ public class IndexController {
                 .postNo(postNo)
                 .build();
         model.addAttribute("post", postService.select(postSelectDTO));
+
         setup(postNo, model);
 
         return "post-update";
@@ -121,7 +122,7 @@ public class IndexController {
         return "search";
     }
 
-    private Model setup(Long postNo, Model model) throws IOException {
+    private void setup(Long postNo, Model model) throws IOException {
         PictureSelectByPostDTO pictureSelectByPostDTO = PictureSelectByPostDTO.builder()
                 .postNo(postNo)
                 .build();
@@ -138,7 +139,5 @@ public class IndexController {
                 .postNo(postNo)
                 .build();
         model.addAttribute("local-select", boardService.localSelectFromPost(localSelectFromPostDTO));
-
-        return model;
     }
 }

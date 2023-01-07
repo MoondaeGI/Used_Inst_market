@@ -94,7 +94,7 @@ public class FileHandler {
     public void deleteImageFile(List<Picture> pictures) throws IOException {
         for (Picture picture : pictures) {
             String imagePath = picture.getPath();
-            Path filePath = Paths.get("images/" + imagePath);
+            Path filePath = Paths.get(imagePath);
 
             if(!Files.exists(filePath)) {
                 Files.delete(filePath);

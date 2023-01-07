@@ -41,9 +41,7 @@ const main = {
         };
         const jsonDTO = JSON.stringify(dto);
         const blob = new Blob([jsonDTO], {type: "application/json"});
-
         const images = $('#images').get(0).files[0];
-        console.log(images);
 
         const formData = new FormData();
         formData.append("dto", blob);
@@ -80,11 +78,7 @@ const main = {
         };
         const jsonDTO = JSON.stringify(dto);
         const blob = new Blob([jsonDTO], {type: "application/json"});
-
-        const images = $('#images').files;
-
-        console.log(dto);
-        console.log(images);
+        const images = $('#images').get(0).files[0];
 
         const formData = new FormData();
         formData.append("dto", blob);
