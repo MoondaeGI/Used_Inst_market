@@ -13,33 +13,40 @@
         {{/user}}
     </div>
     <form>
-        {{#post}}
             <table class="table table-horizontal table-bordered">
                 <tbody class="thead-strong">
-                    <tr>
-                        <th scope="row">글 번호</th>
-                        <td id="postNo">{{postNo}}</td>
-                        <th scope="row">판매 여부</th>
-                        <td id="soldYN">{{soldYN}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">작성자</th>
-                        <td id="postUserName">{{userName}}</td>
-                        <th scope="row">작성일</th>
-                        <td>{{regDt}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">제목</th>
-                        <td colspan="6">{{title}}</td>
-                    </tr>
+                    {{#post}}
+                        <tr>
+                            <th scope="row">글 번호</th>
+                            <td id="postNo">{{postNo}}</td>
+                            <th scope="row">판매 여부</th>
+                            <td id="soldYN">{{soldYN}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">작성자</th>
+                            <td id="postUserName">{{userName}}</td>
+                            <th scope="row">작성일</th>
+                            <td>{{regDt}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">제목</th>
+                            <td colspan="6">{{title}}</td>
+                        </tr>
+                    {{/post}}
                     <tr>
                         <td colspan="6" class="view_text">
-                            <div><p>{{content}}</p></div>
+                            <div>
+                                {{#images}}
+                                    <img src="/upload/{{path}}">
+                                {{/images}}
+                                {{#post}}
+                                    <p>{{content}}</p>
+                                {{/post}}
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        {{/post}}
     </form>
     <div id="btn-selector">
         <a href="/" role="button" class="btn btn-primary">뒤로가기</a>

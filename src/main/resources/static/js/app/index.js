@@ -6,6 +6,10 @@ const main = {
             _this.save();
         });
 
+        $('#btn-update').on('click', function() {
+            _this.update();
+        });
+
         $('#btn-search').on('click', function () {
             _this.search();
         });
@@ -38,7 +42,8 @@ const main = {
         const jsonDTO = JSON.stringify(dto);
         const blob = new Blob([jsonDTO], {type: "application/json"});
 
-        const images = $('#images');
+        const images = $('#images').get(0).files[0];
+        console.log(images);
 
         const formData = new FormData();
         formData.append("dto", blob);
@@ -53,9 +58,51 @@ const main = {
             data: formData
         }).done(function () {
             alert('글이 등록되었습니다.');
-            window.location.href = '/';
         }).fail(function (error) {
             alert(JSON.stringify(error))
+        }).always(function () {
+            window.location.href = '/';
+        });
+    },
+
+    update : function () {
+        const dto = {
+            postNo : parseInt($('#postNo').val()),
+            userNo : parseInt($('#user').attr("name")),
+            title : $('#title').val(),
+            content : $('#content').val(),
+            price : parseInt($('#price').val()),
+            upperCategoryNo : parseInt($('#upper-category option:selected').val()),
+            lowerCategoryNo : parseInt($('#lower-category option:selected').val()),
+            brandNo : parseInt($('#brand option:selected').val()),
+            upperLocalNo : parseInt($('#upper-local option:selected').val()),
+            lowerLocalNo : parseInt($('#lower-local option:selected').val())
+        };
+        const jsonDTO = JSON.stringify(dto);
+        const blob = new Blob([jsonDTO], {type: "application/json"});
+
+        const images = $('#images').files;
+
+        console.log(dto);
+        console.log(images);
+
+        const formData = new FormData();
+        formData.append("dto", blob);
+        formData.append("images", images);
+
+        $.ajax({
+            type: 'PUT',
+            url: '/post/update/info',
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            data: formData
+        }).done(function () {
+            alert('글이 수정되었습니다.');
+        }).fail(function (error) {
+            alert(JSON.stringify(error))
+        }).always(function () {
+            window.location.href = '/';
         });
     },
 

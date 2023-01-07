@@ -31,13 +31,14 @@ function deletePost() {
 
     $.ajax({
         type: 'DELETE',
-        url: `/post/delete?no=${postNo}`,
+        url: `/post/delete/info?no=${postNo}`,
         dataType: 'json',
         contentType: 'application/json; charset=UTF-8'
     }).done(function() {
         alert('글이 삭제되었습니다.');
-        window.location.href = '/';
     }).fail(function (error) {
         alert(JSON.stringify(error))
+    }).always(function () {
+        window.location.href = '/';
     });
 }

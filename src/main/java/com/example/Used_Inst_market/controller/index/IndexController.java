@@ -1,5 +1,10 @@
 package com.example.Used_Inst_market.controller.index;
 
+import com.example.Used_Inst_market.model.dto.board.picture.PictureSelectByPostDTO;
+import com.example.Used_Inst_market.model.dto.board.post.PostSelectDTO;
+import com.example.Used_Inst_market.model.dto.board.select.categoryselect.CategorySelectFromPostDTO;
+import com.example.Used_Inst_market.model.dto.board.select.localselect.LocalSelectFromPostDTO;
+import com.example.Used_Inst_market.model.vo.board.PictureVO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.model.vo.user.UserVO;
 import com.example.Used_Inst_market.service.board.BoardService;
@@ -7,10 +12,6 @@ import com.example.Used_Inst_market.service.board.PictureService;
 import com.example.Used_Inst_market.service.board.PostService;
 import com.example.Used_Inst_market.service.category.CategoryService;
 import com.example.Used_Inst_market.service.local.LocalService;
-import com.example.Used_Inst_market.model.dto.board.picture.PictureSelectByPostDTO;
-import com.example.Used_Inst_market.model.dto.board.post.PostSelectDTO;
-import com.example.Used_Inst_market.model.dto.board.select.categoryselect.CategorySelectFromPostDTO;
-import com.example.Used_Inst_market.model.dto.board.select.localselect.LocalSelectFromPostDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @Api(tags = {"페이지 API"})
 @RequiredArgsConstructor
@@ -68,19 +70,12 @@ public class IndexController {
         PictureSelectByPostDTO pictureSelectByPostDTO = PictureSelectByPostDTO.builder()
                 .postNo(postNo)
                 .build();
-        if(!pictureService.selectByPost(pictureSelectByPostDTO).isEmpty()) {
-            model.addAttribute("images", pictureService.selectByPost(pictureSelectByPostDTO));
+        List<PictureVO> images = pictureService.selectByPost(pictureSelectByPostDTO);
+        if (!images.isEmpty()) {
+            model.addAttribute("images", images);
         }
 
-        CategorySelectFromPostDTO categorySelectFromPostDTO = CategorySelectFromPostDTO.builder()
-                .postNo(postNo)
-                .build();
-        model.addAttribute("category-select", boardService.categorySelectFromPost(categorySelectFromPostDTO));
-
-        LocalSelectFromPostDTO localSelectFromPostDTO = LocalSelectFromPostDTO.builder()
-                .postNo(postNo)
-                .build();
-        model.addAttribute("local-select", boardService.localSelectFromPost(localSelectFromPostDTO));
+        setup(postNo, model);
 
         return "post";
     }
@@ -107,11 +102,26 @@ public class IndexController {
         if (user != null) {
             model.addAttribute("user", user);
         }
+        model.addAttribute("upper-category", categoryService.upperCategorySelectAll());
+        model.addAttribute("upper-local", localService.upperLocalSelectAll());
+
         PostSelectDTO postSelectDTO = PostSelectDTO.builder()
                 .postNo(postNo)
                 .build();
         model.addAttribute("post", postService.select(postSelectDTO));
+        setup(postNo, model);
 
+        return "post-update";
+    }
+
+    @ApiOperation(value = "검색 결과 페이지 조회 API")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/search")
+    public String search() {
+        return "search";
+    }
+
+    private Model setup(Long postNo, Model model) throws IOException {
         PictureSelectByPostDTO pictureSelectByPostDTO = PictureSelectByPostDTO.builder()
                 .postNo(postNo)
                 .build();
@@ -129,13 +139,6 @@ public class IndexController {
                 .build();
         model.addAttribute("local-select", boardService.localSelectFromPost(localSelectFromPostDTO));
 
-        return "post-update";
-    }
-
-    @ApiOperation(value = "검색 결과 페이지 조회 API")
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/search")
-    public String search() {
-        return "search";
+        return model;
     }
 }

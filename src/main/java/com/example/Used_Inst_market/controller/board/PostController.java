@@ -38,44 +38,6 @@ public class PostController {
         return postService.select(postSelectDTO);
     }
 
-    @ApiOperation(value = "게시글 정보 삽입 API")
-    @PreAuthorize("hasRole('USER')")
-    @PostMapping("/save/info")
-    public Long insert(
-            @RequestPart(value = "images", required = false) List<MultipartFile> multipartFiles,
-            @RequestPart(value = "dto") @Valid PostInsertDTO postInsertDTO)
-            throws IOException {
-        Long postNo = postService.insert(postInsertDTO);
-
-        if(!multipartFiles.isEmpty()) {
-            PictureInsertDTO pictureInsertDTO = PictureInsertDTO.builder()
-                    .postNo(postNo)
-                    .multipartFiles(multipartFiles)
-                    .build();
-            pictureService.insert(pictureInsertDTO);
-        }
-
-        return postNo;
-    }
-
-    @ApiOperation(value = "게시글 정보 수정 API")
-    @PreAuthorize("hasRole('USER')")
-    @PutMapping("/update/info")
-    public Long update(
-            @RequestPart(value = "images", required = false)
-            List<MultipartFile> multipartFiles,
-            @RequestPart(value = "dto") @Valid PostUpdateDTO postUpdateDTO) throws IOException {
-        if(!multipartFiles.isEmpty()) {
-            PictureUpdateDTO pictureUpdateDTO = PictureUpdateDTO.builder()
-                    .postNO(postUpdateDTO.getPostNo())
-                    .multipartFiles(multipartFiles)
-                    .build();
-            pictureService.update(pictureUpdateDTO);
-        }
-
-        return postService.update(postUpdateDTO);
-    }
-
     @ApiOperation(value = "게시글 판매 여부 수정 API")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/update/soldYN/info")
@@ -85,6 +47,41 @@ public class PostController {
                 .build();
 
         return postService.updateSoldYN(postUpdateSoldYNDTO);
+    }
+
+    @ApiOperation(value = "게시글 정보 삽입 API")
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/save/info")
+    public Long insert(
+            @RequestPart(value = "images", required = false) List<MultipartFile> multipartFiles,
+            @RequestPart(value = "dto") @Valid PostInsertDTO postInsertDTO)
+            throws IOException {
+        Long postNo = postService.insert(postInsertDTO);
+
+        PictureInsertDTO pictureInsertDTO = PictureInsertDTO.builder()
+                .postNo(postNo)
+                .multipartFiles(multipartFiles)
+                .build();
+        pictureService.insert(pictureInsertDTO);
+
+
+        return postNo;
+    }
+
+    @ApiOperation(value = "게시글 정보 수정 API")
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("/update/info")
+    public Long update(
+            @RequestPart(value = "images", required = false) List<MultipartFile> multipartFiles,
+            @RequestPart(value = "dto") @Valid PostUpdateDTO postUpdateDTO) throws IOException {
+
+        PictureUpdateDTO pictureUpdateDTO = PictureUpdateDTO.builder()
+                .postNO(postUpdateDTO.getPostNo())
+                .multipartFiles(multipartFiles)
+                .build();
+        pictureService.update(pictureUpdateDTO);
+
+        return postService.update(postUpdateDTO);
     }
 
     @ApiOperation(value = "게시글 정보 삭제 API")
