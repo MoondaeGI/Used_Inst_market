@@ -1,17 +1,18 @@
 package com.example.Used_Inst_market.controller.category;
 
-import com.example.Used_Inst_market.model.dto.category.brand.*;
-import com.example.Used_Inst_market.model.dto.category.lower.*;
-import com.example.Used_Inst_market.service.category.CategoryService;
-import com.example.Used_Inst_market.model.dto.category.upper.UpperCategoryDeleteDTO;
+import com.example.Used_Inst_market.model.dto.category.brand.BrandInsertDTO;
+import com.example.Used_Inst_market.model.dto.category.brand.BrandUpdateDTO;
+import com.example.Used_Inst_market.model.dto.category.lower.LowerCategoryInsertDTO;
+import com.example.Used_Inst_market.model.dto.category.lower.LowerCategoryUpdateDTO;
 import com.example.Used_Inst_market.model.dto.category.upper.UpperCategoryInsertDTO;
-import com.example.Used_Inst_market.model.dto.category.upper.UpperCategorySelectDTO;
 import com.example.Used_Inst_market.model.dto.category.upper.UpperCategoryUpdateDTO;
 import com.example.Used_Inst_market.model.vo.category.BrandVO;
 import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
 import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
+import com.example.Used_Inst_market.service.category.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +31,9 @@ public class CategoryController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/upper/info")
     public UpperCategoryVO upperCategorySelect(
+            @ApiParam(name = "상위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
             @RequestParam(name = "no") @Valid Long upperCategoryNo) {
-        UpperCategorySelectDTO upperCategorySelectDTO = UpperCategorySelectDTO.builder()
-                .upperCategoryNo(upperCategoryNo)
-                .build();
-
-        return categoryService.upperCategorySelect(upperCategorySelectDTO);
+        return categoryService.upperCategorySelect(upperCategoryNo);
     }
 
     @ApiOperation(value = "상위 카테고리 리스트 정보 조회 API")
@@ -65,38 +63,27 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/upper/info")
     public void upperCategoryDelete(
+            @ApiParam(name = "상위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
             @RequestParam(name = "no") @Valid Long upperCategoryNo) {
-        UpperCategoryDeleteDTO upperCategoryDeleteDTO = UpperCategoryDeleteDTO.builder()
-                .upperCategoryNo(upperCategoryNo)
-                .build();
-
-        categoryService.upperCategoryDelete(upperCategoryDeleteDTO);
+        categoryService.upperCategoryDelete(upperCategoryNo);
     }
 
     @ApiOperation(value = "하위 카테고리 정보 조회 API")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/lower/info")
     public LowerCategoryVO lowerCategorySelect(
+            @ApiParam(name = "하위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
             @RequestParam(name = "no") @Valid Long lowerCategoryNo) {
-        LowerCategorySelectDTO lowerCategorySelectDTO = LowerCategorySelectDTO.builder()
-                .lowerCategoryNo(lowerCategoryNo)
-                .build();
-
-        return categoryService.lowerCategorySelect(lowerCategorySelectDTO);
+        return categoryService.lowerCategorySelect(lowerCategoryNo);
     }
 
     @ApiOperation(value = "상위 카테고리로 하위 카테고리 리스트 정보 조회 API")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/lower/info/upper")
     public List<LowerCategoryVO> lowerCategorySelectFromUpperCategory(
+            @ApiParam(name = "상위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
             @RequestParam(name = "no") @Valid Long upperCategoryNo) {
-        LowerCategorySelectFromUpperDTO lowerCategorySelectFromUpperDTO =
-                LowerCategorySelectFromUpperDTO.builder()
-                        .upperCategoryNo(upperCategoryNo)
-                        .build();
-
-        return categoryService
-                .lowerCategorySelectFromUpperCategory(lowerCategorySelectFromUpperDTO);
+        return categoryService.lowerCategorySelectFromUpperCategory(upperCategoryNo);
     }
 
     @ApiOperation(value = "하위 카테고리 리스트 정보 조회 API")
@@ -126,36 +113,27 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/lower/info")
     public void lowerCategoryDelete(
+            @ApiParam(name = "하위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
             @RequestParam(name = "no") @Valid Long lowerCategoryNo) {
-        LowerCategoryDeleteDTO lowerCategoryDeleteDTO = LowerCategoryDeleteDTO.builder()
-                .lowerCategoryNo(lowerCategoryNo)
-                .build();
-
-        categoryService.lowerCategoryDelete(lowerCategoryDeleteDTO);
+        categoryService.lowerCategoryDelete(lowerCategoryNo);
     }
 
     @ApiOperation(value = "브랜드 정보 조회 API")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/brand/info")
-    public BrandVO brandSelect(@RequestParam(name = "no") @Valid Long brandNo) {
-        BrandSelectDTO brandSelectDTO = BrandSelectDTO.builder()
-                .brandNo(brandNo)
-                .build();
-
-        return categoryService.brandSelect(brandSelectDTO);
+    public BrandVO brandSelect(
+            @ApiParam(name = "브랜드 번호", required = true, value = "brandNo", example = "1")
+            @RequestParam(name = "no") @Valid Long brandNo) {
+        return categoryService.brandSelect(brandNo);
     }
 
     @ApiOperation(value = "하위 카테고리로 브랜드 리스트 정보 조회 API")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/brand/info/lower")
     public List<BrandVO> brandSelectFromLowerCategory(
+            @ApiParam(name = "하위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
             @RequestParam(value = "no") @Valid Long lowerCategoryNo) {
-        BrandSelectFromLowerDTO brandSelectFromLowerDTO =
-                BrandSelectFromLowerDTO.builder()
-                        .lowerCategoryNo(lowerCategoryNo)
-                        .build();
-
-        return categoryService.brandSelectFromLowerCategory(brandSelectFromLowerDTO);
+        return categoryService.brandSelectFromLowerCategory(lowerCategoryNo);
     }
 
     @ApiOperation(value = "브랜드 리스트 정보 조회 API")
@@ -182,11 +160,9 @@ public class CategoryController {
     @ApiOperation(value = "브랜드 정보 삭제 API")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/brand/info")
-    public void delete(@RequestParam(name = "no") @Valid Long brandNo) {
-        BrandDeleteDTO brandDeleteDTO = BrandDeleteDTO.builder()
-                .brandNo(brandNo)
-                .build();
-
-        categoryService.brandDelete(brandDeleteDTO);
+    public void delete(
+            @ApiParam(name = "브랜드 번호", required = true, value = "brandNo", example = "1")
+            @RequestParam(name = "no") @Valid Long brandNo) {
+        categoryService.brandDelete(brandNo);
     }
 }

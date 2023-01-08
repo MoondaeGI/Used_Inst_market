@@ -25,9 +25,8 @@ public class PictureService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public PictureVO select(final PictureSelectDTO pictureSelectDTO) throws IOException {
-        final Picture picture = pictureRepository
-                .findById(pictureSelectDTO.getPictureNo())
+    public PictureVO select(Long pictureNo) throws IOException {
+        final Picture picture = pictureRepository.findById(pictureNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
         final byte[] imageByteArrays = fileHandler.imageToByteArray(picture);
 
@@ -35,10 +34,10 @@ public class PictureService {
     }
 
     @Transactional(readOnly = true)
-    public List<PictureVO> selectByPost(final PictureSelectByPostDTO pictureSelectByPostDTO) throws IOException {
+    public List<PictureVO> selectByPost(Long postNo) throws IOException {
         List<PictureVO> selectResult = new ArrayList<>();
 
-        final Post post = postRepository.findById(pictureSelectByPostDTO.getPostNo())
+        final Post post = postRepository.findById(postNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
         List<Picture> pictures = pictureRepository.findByPost(post);
 
@@ -51,7 +50,7 @@ public class PictureService {
     }
 
     @Transactional
-    public Long insert(final PictureInsertDTO pictureInsertDTO) throws IOException {
+    public Long insert(PictureInsertDTO pictureInsertDTO) throws IOException {
         final Post post = postRepository.findById(pictureInsertDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
         List<MultipartFile> multipartFiles = pictureInsertDTO.getMultipartFiles();
@@ -66,7 +65,7 @@ public class PictureService {
     }
 
     @Transactional
-    public void update(final PictureUpdateDTO pictureUpdateDTO) throws IOException {
+    public void update(PictureUpdateDTO pictureUpdateDTO) throws IOException {
         List<MultipartFile> multipartFiles = pictureUpdateDTO.getMultipartFiles();
         List<String> multipartFileNames = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
@@ -111,8 +110,8 @@ public class PictureService {
     }
 
     @Transactional
-    public void delete(final PictureDeleteDTO pictureDeleteDTO) throws IOException {
-        final Post post = postRepository.findById(pictureDeleteDTO.getPostNo())
+    public void delete(Long postNo) throws IOException {
+        final Post post = postRepository.findById(postNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         List<Picture> pictures = pictureRepository.findByPost(post);

@@ -1,9 +1,5 @@
 package com.example.Used_Inst_market.controller.index;
 
-import com.example.Used_Inst_market.model.dto.board.picture.PictureSelectByPostDTO;
-import com.example.Used_Inst_market.model.dto.board.post.PostSelectDTO;
-import com.example.Used_Inst_market.model.dto.board.select.categoryselect.CategorySelectFromPostDTO;
-import com.example.Used_Inst_market.model.dto.board.select.localselect.LocalSelectFromPostDTO;
 import com.example.Used_Inst_market.model.vo.board.PictureVO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.model.vo.user.UserVO;
@@ -60,20 +56,9 @@ public class IndexController {
         if (user != null) {
             model.addAttribute("user", user);
         }
-        PostSelectDTO postSelectDTO = PostSelectDTO.builder()
-                .postNo(postNo)
-                .build();
-        PostVO post = postService.select(postSelectDTO);
+        PostVO post = postService.select(postNo);
         model.addAttribute("post", post);
         model.addAttribute("soldYN", post.getSoldYN());
-
-        PictureSelectByPostDTO pictureSelectByPostDTO = PictureSelectByPostDTO.builder()
-                .postNo(postNo)
-                .build();
-        List<PictureVO> images = pictureService.selectByPost(pictureSelectByPostDTO);
-        if (!images.isEmpty()) {
-            model.addAttribute("images", images);
-        }
 
         setup(postNo, model);
 
@@ -104,11 +89,7 @@ public class IndexController {
         }
         model.addAttribute("upper-category", categoryService.upperCategorySelectAll());
         model.addAttribute("upper-local", localService.upperLocalSelectAll());
-
-        PostSelectDTO postSelectDTO = PostSelectDTO.builder()
-                .postNo(postNo)
-                .build();
-        model.addAttribute("post", postService.select(postSelectDTO));
+        model.addAttribute("post", postService.select(postNo));
 
         setup(postNo, model);
 
@@ -123,21 +104,12 @@ public class IndexController {
     }
 
     private void setup(Long postNo, Model model) throws IOException {
-        PictureSelectByPostDTO pictureSelectByPostDTO = PictureSelectByPostDTO.builder()
-                .postNo(postNo)
-                .build();
-        if(!pictureService.selectByPost(pictureSelectByPostDTO).isEmpty()) {
-            model.addAttribute("images", pictureService.selectByPost(pictureSelectByPostDTO));
+        List<PictureVO> posts = pictureService.selectByPost(postNo);
+        if(!posts.isEmpty()) {
+            model.addAttribute("images", posts);
         }
 
-        CategorySelectFromPostDTO categorySelectFromPostDTO = CategorySelectFromPostDTO.builder()
-                .postNo(postNo)
-                .build();
-        model.addAttribute("category-select", boardService.categorySelectFromPost(categorySelectFromPostDTO));
-
-        LocalSelectFromPostDTO localSelectFromPostDTO = LocalSelectFromPostDTO.builder()
-                .postNo(postNo)
-                .build();
-        model.addAttribute("local-select", boardService.localSelectFromPost(localSelectFromPostDTO));
+        model.addAttribute("category-select", boardService.categorySelectFromPost(postNo));
+        model.addAttribute("local-select", boardService.localSelectFromPost(postNo));
     }
 }

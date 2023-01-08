@@ -41,15 +41,15 @@ public class PostService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public PostVO select(final PostSelectDTO postSelectDTO) throws IOException {
-        final Post post = postRepository.findById(postSelectDTO.getPostNo())
+    public PostVO select(Long postNo) throws IOException {
+        final Post post = postRepository.findById(postNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         return PostVO.from(post);
     }
 
     @Transactional
-    public Long insert(final PostInsertDTO postInsertDTO) {
+    public Long insert(PostInsertDTO postInsertDTO) {
         final User user = userRepository.findById(postInsertDTO.getUserNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."));
 
@@ -99,7 +99,7 @@ public class PostService {
     }
 
     @Transactional
-    public Long update(final PostUpdateDTO postUpdateDTO) {
+    public Long update(PostUpdateDTO postUpdateDTO) {
         final Post post = postRepository.findById(postUpdateDTO.getPostNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
@@ -134,8 +134,8 @@ public class PostService {
     }
 
     @Transactional
-    public Long updateSoldYN(final PostUpdateSoldYNDTO postUpdateSoldYNDTO) {
-        final Post post = postRepository.findById(postUpdateSoldYNDTO.getPostNo())
+    public Long updateSoldYN(Long postNo) {
+        final Post post = postRepository.findById(postNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         if(post.getSoldYN() == SoldYN.SALE) {
@@ -144,12 +144,12 @@ public class PostService {
             post.updateSoldYN(SoldYN.SALE);
         }
 
-        return postUpdateSoldYNDTO.getPostNo();
+        return postNo;
     }
 
     @Transactional
-    public void delete(final PostDeleteDTO postDeleteDTO) {
-        final Post post = postRepository.findById(postDeleteDTO.getPostNo())
+    public void delete(Long postNo) {
+        final Post post = postRepository.findById(postNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         postRepository.delete(post);

@@ -6,11 +6,11 @@ import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategoryRepository;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategory;
 import com.example.Used_Inst_market.model.domain.category.upper.UpperCategoryRepository;
-import com.example.Used_Inst_market.model.dto.category.brand.*;
-import com.example.Used_Inst_market.model.dto.category.lower.*;
-import com.example.Used_Inst_market.model.dto.category.upper.UpperCategoryDeleteDTO;
+import com.example.Used_Inst_market.model.dto.category.brand.BrandInsertDTO;
+import com.example.Used_Inst_market.model.dto.category.brand.BrandUpdateDTO;
+import com.example.Used_Inst_market.model.dto.category.lower.LowerCategoryInsertDTO;
+import com.example.Used_Inst_market.model.dto.category.lower.LowerCategoryUpdateDTO;
 import com.example.Used_Inst_market.model.dto.category.upper.UpperCategoryInsertDTO;
-import com.example.Used_Inst_market.model.dto.category.upper.UpperCategorySelectDTO;
 import com.example.Used_Inst_market.model.dto.category.upper.UpperCategoryUpdateDTO;
 import com.example.Used_Inst_market.model.vo.category.BrandVO;
 import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
@@ -30,9 +30,8 @@ public class CategoryService {
     private final BrandRepository brandRepository;
 
     @Transactional(readOnly = true)
-    public UpperCategoryVO upperCategorySelect(final UpperCategorySelectDTO upperCategorySelectDTO) {
-        final UpperCategory upperCategory = upperCategoryRepository
-                .findById(upperCategorySelectDTO.getUpperCategoryNo())
+    public UpperCategoryVO upperCategorySelect(Long upperCategoryNo) {
+        final UpperCategory upperCategory = upperCategoryRepository.findById(upperCategoryNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
         return UpperCategoryVO.from(upperCategory);
@@ -46,14 +45,14 @@ public class CategoryService {
     }
 
     @Transactional
-    public Long upperCategoryInsert(final UpperCategoryInsertDTO upperCategoryInsertDTO) {
+    public Long upperCategoryInsert(UpperCategoryInsertDTO upperCategoryInsertDTO) {
         return upperCategoryRepository
                 .save(upperCategoryInsertDTO.toEntity())
                 .getUpperCategoryNo();
     }
 
     @Transactional
-    public Long upperCategoryUpdate(final UpperCategoryUpdateDTO upperCategoryUpdateDTO) {
+    public Long upperCategoryUpdate(UpperCategoryUpdateDTO upperCategoryUpdateDTO) {
         final UpperCategory upperCategory = upperCategoryRepository
                 .findById(upperCategoryUpdateDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
@@ -64,28 +63,25 @@ public class CategoryService {
     }
 
     @Transactional
-    public void upperCategoryDelete(final UpperCategoryDeleteDTO upperCategoryDeleteDTO) {
-        final UpperCategory upperCategory = upperCategoryRepository
-                .findById(upperCategoryDeleteDTO.getUpperCategoryNo())
+    public void upperCategoryDelete(Long upperCategoryNo) {
+        final UpperCategory upperCategory = upperCategoryRepository.findById(upperCategoryNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
         upperCategoryRepository.delete(upperCategory);
     }
 
     @Transactional(readOnly = true)
-    public LowerCategoryVO lowerCategorySelect(final LowerCategorySelectDTO lowerCategorySelectDTO) {
-        final LowerCategory lowerCategory = lowerCategoryRepository
-                .findById(lowerCategorySelectDTO.getLowerCategoryNo())
+    public LowerCategoryVO lowerCategorySelect(Long lowerCategoryNo) {
+        final LowerCategory lowerCategory = lowerCategoryRepository.findById(lowerCategoryNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
         return LowerCategoryVO.from(lowerCategory);
     }
 
     @Transactional(readOnly = true)
-    public List<LowerCategoryVO> lowerCategorySelectFromUpperCategory(
-            final LowerCategorySelectFromUpperDTO lowerCategorySelectFromUpperDTO) {
+    public List<LowerCategoryVO> lowerCategorySelectFromUpperCategory(Long upperCategoryNo) {
         final UpperCategory upperCategory = upperCategoryRepository
-                .findById(lowerCategorySelectFromUpperDTO.getUpperCategoryNo())
+                .findById(upperCategoryNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
         return lowerCategoryRepository.findByUpperCategory(upperCategory).stream()
@@ -101,7 +97,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public Long lowerCategoryInsert(final LowerCategoryInsertDTO lowerCategoryInsertDTO) {
+    public Long lowerCategoryInsert(LowerCategoryInsertDTO lowerCategoryInsertDTO) {
         final UpperCategory upperCategory = upperCategoryRepository
                 .findById(lowerCategoryInsertDTO.getUpperCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
@@ -115,38 +111,38 @@ public class CategoryService {
     }
 
     @Transactional
-    public Long lowerCategoryUpdate(final LowerCategoryUpdateDTO lowerCategoryUpdateDTO) {
+    public Long lowerCategoryUpdate(LowerCategoryUpdateDTO lowerCategoryUpdateDTO) {
         final LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(lowerCategoryUpdateDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
-        lowerCategory.update(lowerCategoryUpdateDTO.getUpperCategory(),
-                lowerCategoryUpdateDTO.getName());
+        final UpperCategory upperCategory = upperCategoryRepository
+                .findById(lowerCategoryUpdateDTO.getUpperCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
+        lowerCategory.update(upperCategory, lowerCategoryUpdateDTO.getName());
         return lowerCategoryUpdateDTO.getLowerCategoryNo();
     }
 
     @Transactional
-    public void lowerCategoryDelete(final LowerCategoryDeleteDTO lowerCategoryDeleteDTO) {
-        final LowerCategory lowerCategory = lowerCategoryRepository
-                .findById(lowerCategoryDeleteDTO.getLowerCategoryNo())
+    public void lowerCategoryDelete(Long lowerCategoryNo) {
+        final LowerCategory lowerCategory = lowerCategoryRepository.findById(lowerCategoryNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
 
         lowerCategoryRepository.delete(lowerCategory);
     }
 
     @Transactional(readOnly = true)
-    public BrandVO brandSelect(final BrandSelectDTO brandSelectDTO) {
-        final Brand brand = brandRepository.findById(brandSelectDTO.getBrandNo())
+    public BrandVO brandSelect(Long brandNo) {
+        final Brand brand = brandRepository.findById(brandNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
 
         return BrandVO.from(brand);
     }
 
     @Transactional(readOnly = true)
-    public List<BrandVO> brandSelectFromLowerCategory(final BrandSelectFromLowerDTO brandSelectFromLowerDTO) {
-        final LowerCategory lowerCategory = lowerCategoryRepository
-                .findById(brandSelectFromLowerDTO.getLowerCategoryNo())
+    public List<BrandVO> brandSelectFromLowerCategory(Long lowerCategoryNo) {
+        final LowerCategory lowerCategory = lowerCategoryRepository.findById(lowerCategoryNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
 
         return brandRepository.findByLowerCategory(lowerCategory).stream()
@@ -162,7 +158,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public Long brandInsert(final BrandInsertDTO brandInsertDTO) {
+    public Long brandInsert(BrandInsertDTO brandInsertDTO) {
         final LowerCategory lowerCategory = lowerCategoryRepository
                 .findById(brandInsertDTO.getLowerCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
@@ -176,18 +172,21 @@ public class CategoryService {
     }
 
     @Transactional
-    public Long brandUpdate(final BrandUpdateDTO brandUpdateDTO) {
+    public Long brandUpdate(BrandUpdateDTO brandUpdateDTO) {
         final Brand brand = brandRepository.findById(brandUpdateDTO.getBrandNo())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
 
-        brand.update(brandUpdateDTO.getLowerCategory(), brandUpdateDTO.getName());
+        final LowerCategory lowerCategory = lowerCategoryRepository.findById(brandUpdateDTO.getLowerCategoryNo())
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
+
+        brand.update(lowerCategory, brandUpdateDTO.getName());
 
         return brand.getBrandNo();
     }
 
     @Transactional
-    public void brandDelete(final BrandDeleteDTO brandDeleteDTO) {
-        final Brand brand = brandRepository.findById(brandDeleteDTO.getBrandNo())
+    public void brandDelete(Long brandNo) {
+        final Brand brand = brandRepository.findById(brandNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 브렌드가 없습니다."));
 
         brandRepository.delete(brand);

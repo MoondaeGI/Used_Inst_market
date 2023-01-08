@@ -2,10 +2,9 @@ package com.example.Used_Inst_market.controller.board;
 
 import com.example.Used_Inst_market.model.vo.board.PictureVO;
 import com.example.Used_Inst_market.service.board.PictureService;
-import com.example.Used_Inst_market.model.dto.board.picture.PictureSelectByPostDTO;
-import com.example.Used_Inst_market.model.dto.board.picture.PictureSelectDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +24,9 @@ public class PictureController {
     @CrossOrigin
     @GetMapping("/info")
     public PictureVO select(
+            @ApiParam(name = "이미지 번호", required = true, value = "pictureNo", example = "1")
             @RequestParam("no") Long pictureNo) throws IOException {
-        PictureSelectDTO pictureSelectDTO = PictureSelectDTO.builder()
-                .pictureNo(pictureNo)
-                .build();
-
-        return pictureService.select(pictureSelectDTO);
+        return pictureService.select(pictureNo);
     }
 
     @ApiOperation(value = "게시글의 모든 이미지 정보 조회 API")
@@ -38,11 +34,8 @@ public class PictureController {
     @CrossOrigin
     @GetMapping("info/post")
     public List<PictureVO> selectByPost(
+            @ApiParam(name = "게시글 번호", required = true, value = "postNo", example = "1")
             @RequestParam("no") Long postNo) throws IOException {
-        PictureSelectByPostDTO pictureSelectByPostDTO = PictureSelectByPostDTO.builder()
-                .postNo(postNo)
-                .build();
-
-        return pictureService.selectByPost(pictureSelectByPostDTO);
+        return pictureService.selectByPost(postNo);
     }
 }

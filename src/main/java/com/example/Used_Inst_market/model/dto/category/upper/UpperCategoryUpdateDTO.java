@@ -8,11 +8,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class UpperCategoryUpdateDTO {
-    @ApiParam(name = "상위 카테고리 번호", required = true,
-            value = "upperCategoryNo", example = "1")
+    @ApiParam(name = "상위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
     private Long upperCategoryNo;
-    @ApiParam(name = "상위 카테고리 이름", required = true,
-            value = "name", example = "example")
+    @ApiParam(name = "상위 카테고리 이름", required = true, value = "name", example = "example")
     private String name;
 
     @Builder
