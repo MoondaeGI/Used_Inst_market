@@ -1,5 +1,6 @@
 package com.example.Used_Inst_market.model.domain.board.post;
 
+import com.example.Used_Inst_market.model.domain.board.comment.Comment;
 import com.example.Used_Inst_market.model.domain.board.picture.Picture;
 import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelect;
 import com.example.Used_Inst_market.model.domain.select.localselect.LocalSelect;
@@ -58,6 +59,9 @@ public class Post extends BaseTimeStamp {
 
     @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<Picture> pictures = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToOne(mappedBy = "post", orphanRemoval = true)
     private CategorySelect categorySelect;

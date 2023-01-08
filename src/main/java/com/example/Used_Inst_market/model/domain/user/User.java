@@ -1,5 +1,6 @@
 package com.example.Used_Inst_market.model.domain.user;
 
+import com.example.Used_Inst_market.model.domain.board.comment.Comment;
 import com.example.Used_Inst_market.model.domain.board.post.Post;
 import com.example.Used_Inst_market.model.domain.util.BaseTimeStamp;
 import lombok.Builder;
@@ -48,9 +49,11 @@ public class User extends BaseTimeStamp {
         this.role = role;
     }
 
-    @OneToMany(mappedBy = "user",
-            fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Post> posts = new ArrayList<Post>();
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     public User update(String name, String picture) {
         this.name = name;

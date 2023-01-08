@@ -108,6 +108,8 @@ const main = {
             upperLocalNo: $('#upper-local option:selected').val(),
             lowerLocalNo: $('#lower-local option:selected').val()
         }
+
+
     },
 
     categorySelect : function (mainBoxId, subBoxId) {

@@ -125,8 +125,8 @@ public class PostService {
         final CategorySelect categorySelect = categorySelectRepository.findByPost(post);
         final LocalSelect localSelect = localSelectRepository.findByPost(post);
 
-        post.update(postUpdateDTO.getTitle(), postUpdateDTO.getContent(),
-                postUpdateDTO.getPrice(), postUpdateDTO.getSoldYN());
+        post.update(
+                postUpdateDTO.getTitle(), postUpdateDTO.getContent(), postUpdateDTO.getPrice(), postUpdateDTO.getSoldYN());
         categorySelect.update(upperCategory, lowerCategory, brand);
         localSelect.update(upperLocal, lowerLocal);
 
