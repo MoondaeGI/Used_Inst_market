@@ -1,10 +1,10 @@
 package com.example.Used_Inst_market.model.dto.category.lower;
 
 import io.swagger.annotations.ApiParam;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Builder
+@NoArgsConstructor
 @Getter
 public class LowerCategoryInsertDTO {
     @ApiParam(name = "상위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")

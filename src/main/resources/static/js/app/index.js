@@ -2,6 +2,10 @@ const main = {
     init : function () {
         const _this = this;
 
+        $('#btn-comment').on('click', function () {
+            _this.commentSave();
+        })
+
         $('#btn-save').on('click', function() {
             _this.save();
         });
@@ -24,6 +28,28 @@ const main = {
 
         $('#upper-local').on('change', function () {
             _this.categorySelect('upper-local', 'lower-local');
+        });
+    },
+
+    commentSave : function () {
+        const dto = {
+            content: $('#comment').val(),
+            postNo: parseInt($('#postNo').text()),
+            userNo: parseInt($('#user').text().split(" ")[0])
+        };
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(dto),
+            dataType: 'json',
+            url: '/comment/save/info',
+            contentType: 'application/json; charset=UTF-8;'
+        }).done(function () {
+            alert("댓글이 등록되었습니다.");
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        }).always(function () {
+            window.location.reload();
         });
     },
 

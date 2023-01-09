@@ -2,10 +2,10 @@ package com.example.Used_Inst_market.model.dto.board.post;
 
 import com.example.Used_Inst_market.model.domain.board.post.SoldYN;
 import io.swagger.annotations.ApiParam;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Builder
+@NoArgsConstructor
 @Getter
 public class PostUpdateDTO {
     @ApiParam(name = "게시글 번호", required = true, value = "postNo", example = "1")

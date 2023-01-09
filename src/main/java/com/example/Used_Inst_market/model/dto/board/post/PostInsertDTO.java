@@ -1,10 +1,10 @@
 package com.example.Used_Inst_market.model.dto.board.post;
 
 import io.swagger.annotations.ApiParam;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Builder
+@NoArgsConstructor
 @Getter
 public class PostInsertDTO {
     @ApiParam()

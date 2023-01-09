@@ -4,12 +4,14 @@ import com.example.Used_Inst_market.model.vo.board.PictureVO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.model.vo.user.UserVO;
 import com.example.Used_Inst_market.service.board.BoardService;
+import com.example.Used_Inst_market.service.board.CommentService;
 import com.example.Used_Inst_market.service.board.PictureService;
 import com.example.Used_Inst_market.service.board.PostService;
 import com.example.Used_Inst_market.service.category.CategoryService;
 import com.example.Used_Inst_market.service.local.LocalService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,7 @@ public class IndexController {
     private final BoardService boardService;
     private final PostService postService;
     private final PictureService pictureService;
+    private final CommentService commentService;
     private final CategoryService categoryService;
     private final LocalService localService;
     private final HttpSession httpSession;
@@ -51,7 +54,10 @@ public class IndexController {
     @ApiOperation(value = "게시글 페이지 조회 API")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/post")
-    public String post(@RequestParam("no") Long postNo, @Valid Model model) throws IOException {
+    public String post(
+            @ApiParam(name = "게시글 번호", required = true, value = "postNo", example = "1")
+            @RequestParam("no") Long postNo,
+            @Valid Model model) throws IOException {
         UserVO user = (UserVO) httpSession.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user);
@@ -60,6 +66,7 @@ public class IndexController {
         model.addAttribute("post", post);
         model.addAttribute("soldYN", post.getSoldYN());
 
+        model.addAttribute("comments", commentService.selectFromPost(postNo));
         setup(postNo, model);
 
         return "post";
@@ -82,7 +89,10 @@ public class IndexController {
     @ApiOperation(value = "게시글 수정 페이지 조회 API")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/post/update")
-    public String postUpdate(@RequestParam("no") Long postNo, @Valid Model model) throws IOException {
+    public String postUpdate(
+            @ApiParam(name = "게시글 번호", required = true, value = "postNo", example = "1")
+            @RequestParam("no") Long postNo,
+            @Valid Model model) throws IOException {
         UserVO user = (UserVO) httpSession.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user);

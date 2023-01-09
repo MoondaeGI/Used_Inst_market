@@ -14,6 +14,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class Post extends BaseTimeStamp {
     @Column(name = "CONTENT", nullable = false)
     private String content;
 
-    @Min(0)
+    @PositiveOrZero
     @Column(name = "PRICE", nullable = false)
     private Integer price;
 

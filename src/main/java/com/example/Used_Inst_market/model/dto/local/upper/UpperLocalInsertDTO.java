@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
 @NoArgsConstructor
+@Getter
 public class UpperLocalInsertDTO {
     @ApiParam(name = "상위 지역 이름", required = true,
             value = "name", example = "example")

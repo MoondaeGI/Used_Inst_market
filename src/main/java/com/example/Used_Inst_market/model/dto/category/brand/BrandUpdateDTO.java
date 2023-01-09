@@ -1,10 +1,10 @@
 package com.example.Used_Inst_market.model.dto.category.brand;
 
 import io.swagger.annotations.ApiParam;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Builder
+@NoArgsConstructor
 @Getter
 public class BrandUpdateDTO {
     @ApiParam(name = "브랜드 번호", required = true, value = "brandNo", example = "1")

@@ -1,10 +1,10 @@
 package com.example.Used_Inst_market.model.dto.board.comment;
 
 import io.swagger.annotations.ApiParam;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Builder
+@NoArgsConstructor
 @Getter
 public class CommentInsertDTO {
     @ApiParam(name = "댓글 내용", required = true, value = "content", example = "example")
