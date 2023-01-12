@@ -1,0 +1,64 @@
+{{>layout/header}}
+<body>
+<h1>중고 악기 판매 사이트</h1>
+<div class="col-md-12">
+    <div class="row">
+        {{#user}}
+            Logged in as: <span id="user">{{name}}</span>
+            <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+        {{/user}}
+        {{^user}}
+            <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+        {{/user}}
+    </div>
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong">
+        <tr>
+            <th>게시글번호</th>
+            <th>제목</th>
+            <th>가격</th>
+            <th>작성자</th>
+            <th>판매 여부</th>
+            <th>등록 일자</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#posts}}
+            <tr>
+                <td>{{postNo}}</td>
+                <td><a href="/post?no={{postNo}}" id="post-select">{{title}}</a></td>
+                <td>{{price}}만원</td>
+                <td>{{userName}}</td>
+                <td>{{soldYN}}</td>
+                <td>{{regDt}}</td>
+            </tr>
+        {{/posts}}
+        </tbody>
+    </table>
+    <a href="/post/save" role="button" class="btn btn-primary">글 등록</a>
+    <div class="form-group">
+        <label for="category">카테고리</label>
+        <div>
+            <select id="upper-category">
+                {{#upper-category}}
+                    <option value={{upperCategoryNo}}>{{name}}</option>
+                {{/upper-category}}
+            </select>
+            <select id="lower-category"></select>
+            <select id="brand"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="local">지역</label>
+        <div>
+            <select id="upper-local">
+                {{#upper-local}}
+                    <option value="{{upperLocalNo}}">{{name}}</option>
+                {{/upper-local}}
+            </select>
+            <select id="lower-local"></select>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" id="btn-search">검색</button>
+</div>
+{{>layout/footer}}

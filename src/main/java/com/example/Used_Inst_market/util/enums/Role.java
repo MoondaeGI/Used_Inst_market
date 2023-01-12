@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.model.domain.user;
+package com.example.Used_Inst_market.util.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

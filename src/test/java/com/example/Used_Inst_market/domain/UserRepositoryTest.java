@@ -1,6 +1,6 @@
 package com.example.Used_Inst_market.domain;
 
-import com.example.Used_Inst_market.model.domain.user.Role;
+import com.example.Used_Inst_market.util.enums.Role;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import org.junit.After;

@@ -1,6 +1,7 @@
 package com.example.Used_Inst_market.model.domain.local.upper;
 
 import com.example.Used_Inst_market.model.domain.local.lower.LowerLocal;
+import com.example.Used_Inst_market.model.domain.search.Search;
 import com.example.Used_Inst_market.model.domain.util.BaseTimeStamp;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,7 +30,10 @@ public class UpperLocal extends BaseTimeStamp {
     public UpperLocal(String name) { this.name = name; }
 
     @OneToMany(mappedBy = "upperLocal", orphanRemoval = true)
-    private List<LowerLocal> lowerLocals = new ArrayList<LowerLocal>();
+    private List<LowerLocal> lowerLocals = new ArrayList<>();
+
+    @OneToMany(mappedBy = "upperLocal", orphanRemoval = true)
+    private List<Search> searches = new ArrayList<>();
 
     public void update(String name) { this.name = name; }
 }

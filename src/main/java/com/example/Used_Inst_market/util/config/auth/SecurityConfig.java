@@ -1,6 +1,6 @@
 package com.example.Used_Inst_market.util.config.auth;
 
-import com.example.Used_Inst_market.model.domain.user.Role;
+import com.example.Used_Inst_market.util.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

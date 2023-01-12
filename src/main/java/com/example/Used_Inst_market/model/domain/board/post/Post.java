@@ -2,16 +2,15 @@ package com.example.Used_Inst_market.model.domain.board.post;
 
 import com.example.Used_Inst_market.model.domain.board.comment.Comment;
 import com.example.Used_Inst_market.model.domain.board.picture.Picture;
-import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelect;
-import com.example.Used_Inst_market.model.domain.select.localselect.LocalSelect;
+import com.example.Used_Inst_market.model.domain.search.Search;
 import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.util.BaseTimeStamp;
+import com.example.Used_Inst_market.util.enums.SoldYN;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -65,10 +64,7 @@ public class Post extends BaseTimeStamp {
     private List<Comment> comments = new ArrayList<>();
 
     @OneToOne(mappedBy = "post", orphanRemoval = true)
-    private CategorySelect categorySelect;
-
-    @OneToOne(mappedBy = "post", orphanRemoval = true)
-    private LocalSelect localSelect;
+    private Search search;
 
     public void update(String title, String content, Integer price, SoldYN soldYN) {
         this.title = title;

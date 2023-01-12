@@ -3,6 +3,7 @@ package com.example.Used_Inst_market.model.domain.user;
 import com.example.Used_Inst_market.model.domain.board.comment.Comment;
 import com.example.Used_Inst_market.model.domain.board.post.Post;
 import com.example.Used_Inst_market.model.domain.util.BaseTimeStamp;
+import com.example.Used_Inst_market.util.enums.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

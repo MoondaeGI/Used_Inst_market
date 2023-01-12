@@ -4,7 +4,13 @@ import com.example.Used_Inst_market.model.dto.board.picture.PictureInsertDTO;
 import com.example.Used_Inst_market.model.dto.board.picture.PictureUpdateDTO;
 import com.example.Used_Inst_market.model.dto.board.post.PostInsertDTO;
 import com.example.Used_Inst_market.model.dto.board.post.PostUpdateDTO;
+import com.example.Used_Inst_market.model.dto.board.searching.PostSearchSelectDTO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
+import com.example.Used_Inst_market.model.vo.category.BrandVO;
+import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
+import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
+import com.example.Used_Inst_market.model.vo.local.LowerLocalVO;
+import com.example.Used_Inst_market.model.vo.local.UpperLocalVO;
 import com.example.Used_Inst_market.service.board.PictureService;
 import com.example.Used_Inst_market.service.board.PostService;
 import io.swagger.annotations.Api;
@@ -60,7 +66,6 @@ public class PostController {
                 .build();
         pictureService.insert(pictureInsertDTO);
 
-
         return postNo;
     }
 
@@ -89,5 +94,58 @@ public class PostController {
             pictureService.delete(postNo);
         }
         postService.delete(postNo);
+    }
+
+    @ApiOperation(value = "게시글 검색 결과 리스트 조회 API")
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/search")
+    public List<PostVO> postSelectSearchingResult(
+            @RequestBody PostSearchSelectDTO postSearchSelectDTO) {
+        return postService.postSelectFromSearchingKey(postSearchSelectDTO);
+    }
+
+    @ApiOperation(value = "게시글의 상위 카테고리 조회 API")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/category/upper")
+    public UpperCategoryVO upperCategorySelectFromPost(
+            @ApiParam(name = "게시글 번호", readOnly = true, value = "postNo", example = "1")
+            @RequestParam("no") Long postNo) {
+        return postService.upperCategorySelectFromPost(postNo);
+    }
+
+    @ApiOperation(value = "게시글의 하위 카테고리 조회 API")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/category/lower")
+    public LowerCategoryVO lowerCategorySelectFromPost(
+            @ApiParam(name = "게시글 번호", readOnly = true, value = "postNo", example = "1")
+            @RequestParam("no") Long postNo) {
+        return postService.lowerCategorySelectFromPost(postNo);
+    }
+
+    @ApiOperation(value = "게시글의 브랜드 조회 API")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/category/brand")
+    public BrandVO brandSelectFromPost(
+            @ApiParam(name = "게시글 번호", readOnly = true, value = "postNo", example = "1")
+            @RequestParam("no") Long postNo) {
+        return postService.brandSelectFromPost(postNo);
+    }
+
+    @ApiOperation(value = "게시글의 상위 지역 조회 API")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/local/upper")
+    public UpperLocalVO upperLocalSelectFromPost(
+            @ApiParam(name = "게시글 번호", readOnly = true, value = "postNo", example = "1")
+            @RequestParam("no") Long postNo) {
+        return postService.upperLocalSelectFromPost(postNo);
+    }
+
+    @ApiOperation(value = "게시글의 하위 지역 조회 API")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/local/lower")
+    public LowerLocalVO lowerLocalSelectFromPost(
+            @ApiParam(name = "게시글 번호", readOnly = true, value = "postNo", example = "1")
+            @RequestParam("no") Long postNo) {
+        return postService.lowerLocalSelectFromPost(postNo);
     }
 }

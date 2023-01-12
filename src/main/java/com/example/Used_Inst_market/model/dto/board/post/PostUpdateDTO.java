@@ -1,6 +1,6 @@
 package com.example.Used_Inst_market.model.dto.board.post;
 
-import com.example.Used_Inst_market.model.domain.board.post.SoldYN;
+import com.example.Used_Inst_market.util.enums.SoldYN;
 import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

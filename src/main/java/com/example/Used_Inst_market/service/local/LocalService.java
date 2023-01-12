@@ -40,7 +40,9 @@ public class LocalService {
 
     @Transactional
     public Long upperLocalInsert(final UpperLocalInsertDTO upperLocalInsertDTO) {
-        return upperLocalRepository.save(upperLocalInsertDTO.toEntity())
+        return upperLocalRepository.save(UpperLocal.builder()
+                        .name(upperLocalInsertDTO.getName())
+                        .build())
                 .getUpperLocalNo();
     }
 

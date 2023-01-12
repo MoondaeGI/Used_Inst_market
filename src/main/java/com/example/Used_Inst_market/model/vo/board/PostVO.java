@@ -1,7 +1,7 @@
 package com.example.Used_Inst_market.model.vo.board;
 
 import com.example.Used_Inst_market.model.domain.board.post.Post;
-import com.example.Used_Inst_market.model.domain.board.post.SoldYN;
+import com.example.Used_Inst_market.util.enums.SoldYN;
 import com.example.Used_Inst_market.model.vo.user.UserVO;
 import io.swagger.annotations.ApiParam;
 import lombok.EqualsAndHashCode;

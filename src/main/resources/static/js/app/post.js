@@ -2,7 +2,7 @@ function userCheck() {
     const postNo = $('#postNo').text();
     const btnSelector = $('#btn-selector');
 
-    const loginUserName = $('#user').text();
+    const loginUserName = $('#user').text().split(" ")[1];
     const postUserName = $('#postUserName').text();
 
     if(loginUserName === postUserName) {

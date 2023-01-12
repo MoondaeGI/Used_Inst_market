@@ -1,6 +1,6 @@
 package com.example.Used_Inst_market.util.config.auth;
 
-import com.example.Used_Inst_market.model.domain.user.Role;
+import com.example.Used_Inst_market.util.enums.Role;
 import com.example.Used_Inst_market.model.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,9 +1,8 @@
 package com.example.Used_Inst_market.model.domain.category.brand;
 
 import com.example.Used_Inst_market.model.domain.category.lower.LowerCategory;
-import com.example.Used_Inst_market.model.domain.select.categoryselect.CategorySelect;
+import com.example.Used_Inst_market.model.domain.search.Search;
 import com.example.Used_Inst_market.model.domain.util.BaseTimeStamp;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,9 +38,8 @@ public class Brand extends BaseTimeStamp {
         this.name = name;
     }
 
-    @Getter(AccessLevel.NONE)
     @OneToMany(mappedBy = "brand", orphanRemoval = true)
-    private List<CategorySelect> categorySelects = new ArrayList<CategorySelect>();
+    private List<Search> searches = new ArrayList<>();
 
     public void update(LowerCategory lowerCategory, String name) {
         this.lowerCategory = lowerCategory;

@@ -47,7 +47,9 @@ public class CategoryService {
     @Transactional
     public Long upperCategoryInsert(UpperCategoryInsertDTO upperCategoryInsertDTO) {
         return upperCategoryRepository
-                .save(upperCategoryInsertDTO.toEntity())
+                .save(UpperCategory.builder()
+                        .name(upperCategoryInsertDTO.getName())
+                        .build())
                 .getUpperCategoryNo();
     }
 

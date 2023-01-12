@@ -3,7 +3,6 @@ package com.example.Used_Inst_market.controller.index;
 import com.example.Used_Inst_market.model.vo.board.PictureVO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.model.vo.user.UserVO;
-import com.example.Used_Inst_market.service.board.BoardService;
 import com.example.Used_Inst_market.service.board.CommentService;
 import com.example.Used_Inst_market.service.board.PictureService;
 import com.example.Used_Inst_market.service.board.PostService;
@@ -28,7 +27,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
-    private final BoardService boardService;
     private final PostService postService;
     private final PictureService pictureService;
     private final CommentService commentService;
@@ -44,7 +42,7 @@ public class IndexController {
         if (user != null) {
             model.addAttribute("user", user);
         }
-        model.addAttribute("posts", boardService.selectAll());
+        model.addAttribute("posts", postService.selectAll());
         model.addAttribute("upper-category", categoryService.upperCategorySelectAll());
         model.addAttribute("upper-local", localService.upperLocalSelectAll());
 
@@ -118,8 +116,5 @@ public class IndexController {
         if(!posts.isEmpty()) {
             model.addAttribute("images", posts);
         }
-
-        model.addAttribute("category-select", boardService.categorySelectFromPost(postNo));
-        model.addAttribute("local-select", boardService.localSelectFromPost(postNo));
     }
 }
