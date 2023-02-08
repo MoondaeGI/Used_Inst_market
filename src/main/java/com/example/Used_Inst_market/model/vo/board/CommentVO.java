@@ -28,7 +28,7 @@ public class CommentVO {
 
     private CommentVO(Comment comment) {
         this.commentNo = comment.getCommentNo();
-        this.user = UserVO.from(comment.getUser());
+        this.user = new UserVO(comment.getUser());
         this.userName = this.user.getName();
         this.post = PostVO.from(comment.getPost());
         this.content = comment.getContent();

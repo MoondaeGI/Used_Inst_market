@@ -114,18 +114,4 @@ public class PostRepositoryTest {
                         .user(userRepository.findAll().get(0))
                         .build());
     }
-
-    @Test
-    public void findByTitleOrContent_검증() {
-        postRepository.save(
-                Post.builder()
-                        .title("test")
-                        .content("test")
-                        .price(1)
-                        .user(userRepository.findAll().get(0))
-                        .build());
-
-        assertThat(postRepository.findByTitleContaining("test").get(0).getTitle())
-                .isEqualTo("test");
-    }
 }

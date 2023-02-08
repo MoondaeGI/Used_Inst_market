@@ -42,7 +42,7 @@ const main = {
             type: 'POST',
             data: JSON.stringify(dto),
             dataType: 'json',
-            url: '/comment/save/info',
+            url: '/comment/info/save',
             contentType: 'application/json; charset=UTF-8;'
         }).done(function () {
             alert("댓글이 등록되었습니다.");
@@ -75,7 +75,7 @@ const main = {
 
         $.ajax({
             type: 'POST',
-            url: '/post/save/info',
+            url: '/post/info/save',
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
@@ -112,7 +112,7 @@ const main = {
 
         $.ajax({
             type: 'PUT',
-            url: '/post/update/info',
+            url: '/post/info/update',
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
@@ -127,29 +127,21 @@ const main = {
     },
 
     search : function () {
-        const upperCategory = $('#upper-category option:selected').val();
-        const upperLocal = $('#upper-local option:selected').val();
-        const lowerCategory = $('#lower-category option:selected').val();
-        const brand = $('#brand option:selected').val();
-        const lowerLocal = $('#lower-local option:selected').val();
-        const selectSearchType = $('#keyword-select option:selected').val();
-
-        let url;
-        if (upperCategory !== "전체" && upperLocal === "전체") {
-            if (brand !== "전체") {
-                url = `/board/category/lower?no=${brand}`;
-            } else if (lowerCategory !== "전체") {
-                url = `/board/category/lower?no=${lowerCategory}`;
-            } else {
-                url = `/board/category/lower?no=${upperCategory}`;
-            }
-        } else if (upperCategory === "전체" && upperLocal !== "전체") {
-            if (lowerLocal !== "전체") {
-                url = `/board/local/lower?no=${lowerLocal}`;
-            } else {
-                url = `/board/category/lower?no=${upperLocal}`;
-            }
+        const dto = {
+            upperCategory : $('#upper-category option:selected').val(),
+            upperLocal : $('#upper-local option:selected').val(),
+            lowerCategory : $('#lower-category option:selected').val(),
+            brand : $('#brand option:selected').val(),
+            lowerLocal : $('#lower-local option:selected').val(),
+            selectSearchType : $('#keyword-select option:selected').val()
         }
+
+        $.ajax({
+            type: 'POST',
+            url: '/post/search',
+            dataType: 'json',
+            data: JSON.stringify(dto)
+        })
     },
 
     categorySelect : function (mainBoxId, subBoxId) {

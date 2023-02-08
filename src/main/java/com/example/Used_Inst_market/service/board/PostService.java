@@ -34,7 +34,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -166,53 +168,53 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostVO> postSelectFromSearchingKey(PostSearchSelectDTO postSearchSelectDTO) {
-        Specification<Post> postSpecification= PostSpecification.postFindAll();
+    public List<PostVO> selectFromSearchingKey(PostSearchSelectDTO postSearchSelectDTO) {
+        Map<String, Object> searchKey = new HashMap<>();
 
         if (postSearchSelectDTO.getUpperCategoryNo() != null) {
             final UpperCategory upperCategory = upperCategoryRepository.findById(postSearchSelectDTO.getUpperCategoryNo())
                     .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
-            postSpecification.and(PostSpecification.matchUpperCategory(upperCategory));
+            searchKey.put("upperCategory", upperCategory);
         }
         if (postSearchSelectDTO.getLowerCategoryNo() != null) {
             final LowerCategory lowerCategory = lowerCategoryRepository.findById(postSearchSelectDTO.getLowerCategoryNo())
                     .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
-            postSpecification.and(PostSpecification.matchLowerCategory(lowerCategory));
+            searchKey.put("lowerCategory", lowerCategory);
         }
         if (postSearchSelectDTO.getBrandNo() != null) {
             final Brand brand = brandRepository.findById(postSearchSelectDTO.getBrandNo())
                     .orElseThrow(() -> new IllegalArgumentException("해당 브랜드가 없습니다."));
-            postSpecification.and(PostSpecification.matchBrand(brand));
+            searchKey.put("brand", brand);
         }
         if (postSearchSelectDTO.getUpperLocalNo() != null) {
             final UpperLocal upperLocal = upperLocalRepository.findById(postSearchSelectDTO.getUpperLocalNo())
                     .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
-            postSpecification.and(PostSpecification.matchUpperLocal(upperLocal));
+            searchKey.put("upperLocal", upperLocal);
         }
         if (postSearchSelectDTO.getLowerLocalNo() != null) {
             final LowerLocal lowerLocal = lowerLocalRepository.findById(postSearchSelectDTO.getLowerLocalNo())
                     .orElseThrow(() -> new IllegalArgumentException("해당 지역이 없습니다."));
-            postSpecification.and(PostSpecification.matchLowerLocal(lowerLocal));
+            searchKey.put("lowerLocal", lowerLocal);
         }
         if (postSearchSelectDTO.getMinPrice() != null) {
-            postSpecification.and(PostSpecification.greaterThanMinPrice(postSearchSelectDTO.getMinPrice()));
+            searchKey.put("minPrice", postSearchSelectDTO.getMinPrice());
         }
         if (postSearchSelectDTO.getMaxPrice() != null) {
-            postSpecification.and(PostSpecification.lessThanMaxPrice(postSearchSelectDTO.getMaxPrice()));
+            searchKey.put("maxPrice", postSearchSelectDTO.getMaxPrice());
         }
         if (postSearchSelectDTO.getKeywordType() != null) {
             KeywordType keywordType = postSearchSelectDTO.getKeywordType();
 
             if (keywordType == KeywordType.TITLE || keywordType == KeywordType.TITLE_AND_CONTENT) {
-                postSpecification.and(PostSpecification.likeTitle(postSearchSelectDTO.getKeyword()));
+                searchKey.put("title", postSearchSelectDTO.getKeyword());
             }
             if (keywordType == KeywordType.CONTENT || keywordType == KeywordType.TITLE_AND_CONTENT) {
-                postSpecification.and(PostSpecification.likeContent(postSearchSelectDTO.getKeyword()));
+                searchKey.put("title", postSearchSelectDTO.getKeyword());
             }
         }
 
-        return postRepository.findAll(postSpecification).stream()
-                .map(PostVO::from)
+        return postRepository.findAll(PostSpecification.postSearch(searchKey))
+                .stream().map(PostVO::new)
                 .collect(Collectors.toList());
     }
 
@@ -220,7 +222,7 @@ public class PostService {
     public UpperCategoryVO upperCategorySelectFromPost(Long postNo) {
         final UpperCategory upperCategory = searchSelectFromPost(postNo).getUpperCategory();
 
-        return UpperCategoryVO.from(upperCategory);
+        return new UpperCategoryVO(upperCategory);
     }
 
     @Transactional(readOnly = true)

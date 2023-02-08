@@ -14,7 +14,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,7 +27,6 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @ApiOperation(value = "상위 카테고리 게시글 조회 API")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/upper/info")
     public UpperCategoryVO upperCategorySelect(
             @ApiParam(name = "상위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
@@ -37,31 +35,27 @@ public class CategoryController {
     }
 
     @ApiOperation(value = "상위 카테고리 리스트 정보 조회 API")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/upper/info/list")
     public List<UpperCategoryVO> upperCategorySelectAll() {
         return categoryService.upperCategorySelectAll();
     }
 
     @ApiOperation(value = "상위 카테고리 정보 삽입 API")
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/upper/info")
+    @PostMapping("/upper/save")
     public Long upperCategoryInsert(
             @RequestBody @Valid UpperCategoryInsertDTO upperCategoryInsertDTO) {
         return categoryService.upperCategoryInsert(upperCategoryInsertDTO);
     }
 
     @ApiOperation(value = "상위 카테고리 정보 수정 API")
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/upper/info")
+    @PutMapping("/upper/update")
     public Long upperCategoryUpdate(
             @RequestBody @Valid UpperCategoryUpdateDTO upperCategoryUpdateDTO) {
         return categoryService.upperCategoryUpdate(upperCategoryUpdateDTO);
     }
 
     @ApiOperation(value = "상위 카테고리 정보 삭제 API")
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/upper/info")
+    @DeleteMapping("/upper/delete")
     public void upperCategoryDelete(
             @ApiParam(name = "상위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
             @RequestParam(name = "no") @Valid Long upperCategoryNo) {
@@ -69,7 +63,6 @@ public class CategoryController {
     }
 
     @ApiOperation(value = "하위 카테고리 정보 조회 API")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/lower/info")
     public LowerCategoryVO lowerCategorySelect(
             @ApiParam(name = "하위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
@@ -78,7 +71,6 @@ public class CategoryController {
     }
 
     @ApiOperation(value = "상위 카테고리로 하위 카테고리 리스트 정보 조회 API")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/lower/info/upper")
     public List<LowerCategoryVO> lowerCategorySelectFromUpperCategory(
             @ApiParam(name = "상위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
@@ -87,31 +79,27 @@ public class CategoryController {
     }
 
     @ApiOperation(value = "하위 카테고리 리스트 정보 조회 API")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/lower/info/list")
     public List<LowerCategoryVO> lowerCategorySelectAll() {
         return categoryService.lowerCategorySelectAll();
     }
 
     @ApiOperation(value = "하위 카테고리 정보 삽입 API")
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/lower/info")
+    @PostMapping("/lower/save")
     public Long lowerCategoryInsert(
             @RequestBody @Valid LowerCategoryInsertDTO lowerCategoryInsertDTO) {
         return categoryService.lowerCategoryInsert(lowerCategoryInsertDTO);
     }
 
     @ApiOperation(value = "하위 카테고리 정보 수정 API")
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/lower/info")
+    @PutMapping("/lower/update")
     public Long lowerCategoryUpdate(
             @RequestBody @Valid LowerCategoryUpdateDTO lowerCategoryUpdateDTO) {
         return categoryService.lowerCategoryUpdate(lowerCategoryUpdateDTO);
     }
 
     @ApiOperation(value = "하위 카테고리 정보 삭제 API")
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/lower/info")
+    @DeleteMapping("/lower/delete")
     public void lowerCategoryDelete(
             @ApiParam(name = "하위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
             @RequestParam(name = "no") @Valid Long lowerCategoryNo) {
@@ -119,7 +107,6 @@ public class CategoryController {
     }
 
     @ApiOperation(value = "브랜드 정보 조회 API")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/brand/info")
     public BrandVO brandSelect(
             @ApiParam(name = "브랜드 번호", required = true, value = "brandNo", example = "1")
@@ -128,7 +115,6 @@ public class CategoryController {
     }
 
     @ApiOperation(value = "하위 카테고리로 브랜드 리스트 정보 조회 API")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/brand/info/lower")
     public List<BrandVO> brandSelectFromLowerCategory(
             @ApiParam(name = "하위 카테고리 번호", required = true, value = "upperCategoryNo", example = "1")
@@ -137,29 +123,25 @@ public class CategoryController {
     }
 
     @ApiOperation(value = "브랜드 리스트 정보 조회 API")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/brand/info/list")
     public List<BrandVO> brandSelectAll() {
         return categoryService.brandSelectAll();
     }
 
     @ApiOperation(value = "브랜드 정보 삽입 API")
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/brand/info")
+    @PostMapping("/brand/save")
     public Long insert(@RequestBody @Valid BrandInsertDTO brandInsertDTO) {
         return categoryService.brandInsert(brandInsertDTO);
     }
 
     @ApiOperation(value = "브랜드 정보 수정 API")
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/brand/info")
+    @PutMapping("/brand/update")
     public Long brandUpdate(@RequestBody @Valid BrandUpdateDTO brandUpdateDTO) {
         return categoryService.brandUpdate(brandUpdateDTO);
     }
 
     @ApiOperation(value = "브랜드 정보 삭제 API")
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/brand/info")
+    @DeleteMapping("/brand/delete")
     public void delete(
             @ApiParam(name = "브랜드 번호", required = true, value = "brandNo", example = "1")
             @RequestParam(name = "no") @Valid Long brandNo) {

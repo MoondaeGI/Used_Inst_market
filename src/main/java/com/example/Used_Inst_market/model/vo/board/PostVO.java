@@ -18,10 +18,8 @@ public class PostVO {
     private Long postNo;
     @ApiParam(name = "유저", required = true, value = "user")
     private UserVO user;
-
     @ApiParam(name = "유저 이름", required = true, value = "userName", example = "example")
     private String userName;
-
     @ApiParam(name = "게시글 제목", required = true, value = "title", example = "example")
     private String title;
     @ApiParam(name = "게시글 내용", required = true, value = "content", example = "example")
@@ -35,7 +33,7 @@ public class PostVO {
 
     public PostVO(Post post) {
         this.postNo = post.getPostNo();
-        this.user = UserVO.from(post.getUser());
+        this.user = new UserVO(post.getUser());
         this.userName = this.user.getName();
         this.title = post.getTitle();
         this.content = post.getContent();

@@ -34,7 +34,6 @@ public class PostController {
     private final PictureService pictureService;
 
     @ApiOperation(value = "게시글 정보 조회 API")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/info")
     public PostVO select(
             @ApiParam(name = "게시글 번호", required = true, value = "postNo", example = "1")
@@ -43,8 +42,7 @@ public class PostController {
     }
 
     @ApiOperation(value = "게시글 판매 여부 수정 API")
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/update/soldYN/info")
+    @GetMapping("/info/soldYN")
     public Long updateSoldYN(
             @ApiParam(name = "게시글 번호", required = true, value = "postNo", example = "1")
             @RequestParam("no") Long postNo) {
@@ -52,8 +50,7 @@ public class PostController {
     }
 
     @ApiOperation(value = "게시글 정보 삽입 API")
-    @PreAuthorize("hasRole('USER')")
-    @PostMapping("/save/info")
+    @PostMapping("/save")
     public Long insert(
             @RequestPart(value = "images", required = false) List<MultipartFile> multipartFiles,
             @RequestPart(value = "dto") @Valid PostInsertDTO postInsertDTO)
@@ -70,8 +67,7 @@ public class PostController {
     }
 
     @ApiOperation(value = "게시글 정보 수정 API")
-    @PreAuthorize("hasRole('USER')")
-    @PutMapping("/update/info")
+    @PutMapping("/update")
     public Long update(
             @RequestPart(value = "images", required = false) List<MultipartFile> multipartFiles,
             @RequestPart(value = "dto") @Valid PostUpdateDTO postUpdateDTO) throws IOException {
@@ -85,8 +81,7 @@ public class PostController {
     }
 
     @ApiOperation(value = "게시글 정보 삭제 API")
-    @PreAuthorize("hasRole('USER')")
-    @DeleteMapping("/delete/info")
+    @DeleteMapping("/delete")
     public void delete(
             @ApiParam(name = "게시글 번호", readOnly = true, value = "postNo", example = "1")
             @RequestParam(name = "no") Long postNo) throws IOException {
@@ -97,16 +92,14 @@ public class PostController {
     }
 
     @ApiOperation(value = "게시글 검색 결과 리스트 조회 API")
-    @PreAuthorize("hasRole('USER')")
     @PostMapping("/search")
     public List<PostVO> postSelectSearchingResult(
             @RequestBody PostSearchSelectDTO postSearchSelectDTO) {
-        return postService.postSelectFromSearchingKey(postSearchSelectDTO);
+        return postService.selectFromSearchingKey(postSearchSelectDTO);
     }
 
     @ApiOperation(value = "게시글의 상위 카테고리 조회 API")
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/category/upper")
+    @GetMapping("/info/category/upper")
     public UpperCategoryVO upperCategorySelectFromPost(
             @ApiParam(name = "게시글 번호", readOnly = true, value = "postNo", example = "1")
             @RequestParam("no") Long postNo) {
@@ -114,8 +107,7 @@ public class PostController {
     }
 
     @ApiOperation(value = "게시글의 하위 카테고리 조회 API")
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/category/lower")
+    @GetMapping("/info/category/lower")
     public LowerCategoryVO lowerCategorySelectFromPost(
             @ApiParam(name = "게시글 번호", readOnly = true, value = "postNo", example = "1")
             @RequestParam("no") Long postNo) {
@@ -123,8 +115,7 @@ public class PostController {
     }
 
     @ApiOperation(value = "게시글의 브랜드 조회 API")
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/category/brand")
+    @GetMapping("/info/category/brand")
     public BrandVO brandSelectFromPost(
             @ApiParam(name = "게시글 번호", readOnly = true, value = "postNo", example = "1")
             @RequestParam("no") Long postNo) {
@@ -132,8 +123,7 @@ public class PostController {
     }
 
     @ApiOperation(value = "게시글의 상위 지역 조회 API")
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/local/upper")
+    @GetMapping("/info/local/upper")
     public UpperLocalVO upperLocalSelectFromPost(
             @ApiParam(name = "게시글 번호", readOnly = true, value = "postNo", example = "1")
             @RequestParam("no") Long postNo) {
@@ -141,8 +131,7 @@ public class PostController {
     }
 
     @ApiOperation(value = "게시글의 하위 지역 조회 API")
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/local/lower")
+    @GetMapping("/info/local/lower")
     public LowerLocalVO lowerLocalSelectFromPost(
             @ApiParam(name = "게시글 번호", readOnly = true, value = "postNo", example = "1")
             @RequestParam("no") Long postNo) {

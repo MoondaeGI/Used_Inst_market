@@ -22,43 +22,21 @@
             <th>등록 일자</th>
         </tr>
         </thead>
-        <tbody id="tbody">
         {{#posts}}
-            <tr>
-                <td>{{postNo}}</td>
-                <td><a href="/post?no={{postNo}}" id="post-select">{{title}}</a></td>
-                <td>{{price}}만원</td>
-                <td>{{userName}}</td>
-                <td>{{soldYN}}</td>
-                <td>{{regDt}}</td>
-            </tr>
+            <tbody id="tbody">
+                <tr>
+                    <td>{{postNo}}</td>
+                    <td><a href="/post?no={{postNo}}" id="post-select">{{title}}</a></td>
+                    <td>{{price}}만원</td>
+                    <td>{{userName}}</td>
+                    <td>{{soldYN}}</td>
+                    <td>{{regDt}}</td>
+                </tr>
+            </tbody>
         {{/posts}}
-        </tbody>
+        {{^posts}}
+            <p>해당 게시글이 없습니다</p>
+        {{/posts}}
     </table>
-    <a href="/post/save" role="button" class="btn btn-primary">글 등록</a>
-    <div class="form-group">
-        <label for="category">카테고리</label>
-        <div>
-            <select id="upper-category">
-                {{#upper-category}}
-                    <option value={{upperCategoryNo}}>{{name}}</option>
-                {{/upper-category}}
-            </select>
-            <select id="lower-category"></select>
-            <select id="brand"></select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="local">지역</label>
-        <div>
-            <select id="upper-local">
-                {{#upper-local}}
-                    <option value="{{upperLocalNo}}">{{name}}</option>
-                {{/upper-local}}
-            </select>
-            <select id="lower-local"></select>
-        </div>
-    </div>
-    <button type="button" class="btn btn-primary" id="btn-search">검색</button>
 </div>
 {{>layout/footer}}
