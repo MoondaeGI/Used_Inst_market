@@ -9,6 +9,7 @@ import com.example.Used_Inst_market.util.enums.SoldYN;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,6 +21,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "TB_POST")
 public class Post extends BaseTimeStamp {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

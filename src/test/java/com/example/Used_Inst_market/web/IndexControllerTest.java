@@ -1,10 +1,13 @@
 package com.example.Used_Inst_market.web;
 
+import com.example.Used_Inst_market.model.dto.board.search.PostSearchSelectDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -13,6 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,6 +50,22 @@ public class IndexControllerTest {
     @Test
     public void postSave_검증() throws Exception {
         mockMvc.perform(get(PAGE_URL + "post/save"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn();
+    }
+
+    @WithMockUser(roles = "USER")
+    @Test
+    public void search_검증() throws Exception {
+        PostSearchSelectDTO postSearchSelectDTO =
+                PostSearchSelectDTO.builder()
+                        .upperCategoryNo(1L)
+                .build();
+
+        mockMvc.perform(post(PAGE_URL + "search/page")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(postSearchSelectDTO)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();

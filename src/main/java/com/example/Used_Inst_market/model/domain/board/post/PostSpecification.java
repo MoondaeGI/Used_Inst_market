@@ -3,17 +3,15 @@ package com.example.Used_Inst_market.model.domain.board.post;
 import com.example.Used_Inst_market.model.domain.search.Search;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class PostSpecification {
     public static Specification<Post> postSearch(Map<String, Object> searchKey) {
-        return (root, query, criteriaBuilder) -> {
-            Join<Post, Search> postSearchJoin = root.join("post", JoinType.INNER);
+        return (Root<Post> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
+            Join<Post, Search> postSearchJoin = root.join("search", JoinType.INNER);
 
             List<Predicate> predicates = new ArrayList<>();
             for (String key : searchKey.keySet()) {

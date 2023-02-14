@@ -127,21 +127,35 @@ const main = {
     },
 
     search : function () {
-        const dto = {
-            upperCategory : $('#upper-category option:selected').val(),
-            upperLocal : $('#upper-local option:selected').val(),
-            lowerCategory : $('#lower-category option:selected').val(),
-            brand : $('#brand option:selected').val(),
-            lowerLocal : $('#lower-local option:selected').val(),
-            selectSearchType : $('#keyword-select option:selected').val()
+        function selectResult(select) {
+            return select === "전체" ? null : select;
         }
+
+        const dto = {
+            upperCategory : selectResult($('#upper-category option:selected').val()),
+            lowerCategory : selectResult($('#lower-category option:selected').val()),
+            brand : selectResult($('#brand option:selected').val()),
+            upperLocal : selectResult($('#upper-local option:selected').val()),
+            lowerLocal : selectResult($('#lower-local option:selected').val()),
+            keyword : $('#keyword').val(),
+            minPrice : $('#minPrice').val(),
+            maxPrice : $('#maxPrice').val(),
+            keywordType : $('#keyword-select option:selected').val()
+        }
+
+        console.log(dto);
 
         $.ajax({
             type: 'POST',
-            url: '/post/search',
+            url: '/search/page',
             dataType: 'json',
-            data: JSON.stringify(dto)
-        })
+            data: JSON.stringify(dto),
+            contentType: 'application/json; charset=UTF-8'
+        }).fail(function (error) {
+            alert(JSON.stringify(error))
+        }).always(function () {
+            window.location.href = '/';
+        });
     },
 
     categorySelect : function (mainBoxId, subBoxId) {
@@ -155,6 +169,7 @@ const main = {
             switch (mainBoxId) {
                 case 'upper-category':
                     $('#lower-category option:eq(0)').prop("selected", true);
+                    break;
                 case 'lower-category':
                     $('#brand option:eq(0)').prop("selected", true);
                     break;
@@ -181,8 +196,12 @@ const main = {
                 type: 'GET',
                 datatype: 'json',
                 url: url + `?no=${index}`,
-                contentType: 'application/json; charset=UTF-8'
+                contentType: 'application/json; charset=UTF-8',
+                success: function(data) {
+                    console.log(data.result)
+            }
             }).done(function (result) {
+                console.log(result);
                 const subBoxSelect = $(`#${subBoxId}`);
                 subBoxSelect.children().remove();
                 subBoxSelect.append(`<option>전체</option>`);

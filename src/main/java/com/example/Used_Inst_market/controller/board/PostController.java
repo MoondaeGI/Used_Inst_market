@@ -4,7 +4,7 @@ import com.example.Used_Inst_market.model.dto.board.picture.PictureInsertDTO;
 import com.example.Used_Inst_market.model.dto.board.picture.PictureUpdateDTO;
 import com.example.Used_Inst_market.model.dto.board.post.PostInsertDTO;
 import com.example.Used_Inst_market.model.dto.board.post.PostUpdateDTO;
-import com.example.Used_Inst_market.model.dto.board.searching.PostSearchSelectDTO;
+import com.example.Used_Inst_market.model.dto.board.search.PostSearchSelectDTO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.model.vo.category.BrandVO;
 import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
@@ -17,7 +17,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

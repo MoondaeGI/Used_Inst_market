@@ -1,10 +1,8 @@
 package com.example.Used_Inst_market.controller.index;
 
-import com.example.Used_Inst_market.model.domain.user.User;
-import com.example.Used_Inst_market.model.dto.board.searching.PostSearchSelectDTO;
+import com.example.Used_Inst_market.model.dto.board.search.PostSearchSelectDTO;
 import com.example.Used_Inst_market.model.vo.board.PictureVO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
-import com.example.Used_Inst_market.model.vo.user.UserVO;
 import com.example.Used_Inst_market.service.board.CommentService;
 import com.example.Used_Inst_market.service.board.PictureService;
 import com.example.Used_Inst_market.service.board.PostService;
@@ -106,7 +104,8 @@ public class IndexController {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if (user != null) model.addAttribute("user", user);
 
-        model.addAttribute("posts", postService.selectFromSearchingKey(postSearchSelectDTO));
+        List<PostVO> posts = postService.selectFromSearchingKey(postSearchSelectDTO);
+        if (posts != null) model.addAttribute("posts", posts);
 
         return "search";
     }

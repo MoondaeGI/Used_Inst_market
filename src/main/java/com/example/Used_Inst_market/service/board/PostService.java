@@ -19,7 +19,7 @@ import com.example.Used_Inst_market.model.domain.user.User;
 import com.example.Used_Inst_market.model.domain.user.UserRepository;
 import com.example.Used_Inst_market.model.dto.board.post.PostInsertDTO;
 import com.example.Used_Inst_market.model.dto.board.post.PostUpdateDTO;
-import com.example.Used_Inst_market.model.dto.board.searching.PostSearchSelectDTO;
+import com.example.Used_Inst_market.model.dto.board.search.PostSearchSelectDTO;
 import com.example.Used_Inst_market.model.vo.board.PostVO;
 import com.example.Used_Inst_market.model.vo.category.BrandVO;
 import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
@@ -29,7 +29,6 @@ import com.example.Used_Inst_market.model.vo.local.UpperLocalVO;
 import com.example.Used_Inst_market.util.enums.KeywordType;
 import com.example.Used_Inst_market.util.enums.SoldYN;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

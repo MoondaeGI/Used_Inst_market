@@ -1,4 +1,4 @@
-package com.example.Used_Inst_market.model.dto.board.searching;
+package com.example.Used_Inst_market.model.dto.board.search;
 
 import com.example.Used_Inst_market.util.enums.KeywordType;
 import io.swagger.annotations.ApiParam;
