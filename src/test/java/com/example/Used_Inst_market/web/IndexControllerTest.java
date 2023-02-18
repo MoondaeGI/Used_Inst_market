@@ -1,6 +1,7 @@
 package com.example.Used_Inst_market.web;
 
 import com.example.Used_Inst_market.model.dto.board.search.PostSearchSelectDTO;
+import com.example.Used_Inst_market.util.enums.KeywordType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,6 +62,9 @@ public class IndexControllerTest {
         PostSearchSelectDTO postSearchSelectDTO =
                 PostSearchSelectDTO.builder()
                         .upperCategoryNo(1L)
+                        .lowerCategoryNo(1L)
+                        .keyword("example")
+                        .keywordType(KeywordType.TITLE)
                 .build();
 
         mockMvc.perform(post(PAGE_URL + "search/page")

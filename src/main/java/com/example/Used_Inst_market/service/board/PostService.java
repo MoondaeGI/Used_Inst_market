@@ -203,13 +203,9 @@ public class PostService {
         }
         if (postSearchSelectDTO.getKeywordType() != null) {
             KeywordType keywordType = postSearchSelectDTO.getKeywordType();
+            String keywordTypeString = keywordType == KeywordType.TITLE ? "title" : "content";
 
-            if (keywordType == KeywordType.TITLE || keywordType == KeywordType.TITLE_AND_CONTENT) {
-                searchKey.put("title", postSearchSelectDTO.getKeyword());
-            }
-            if (keywordType == KeywordType.CONTENT || keywordType == KeywordType.TITLE_AND_CONTENT) {
-                searchKey.put("title", postSearchSelectDTO.getKeyword());
-            }
+            searchKey.put(keywordTypeString, postSearchSelectDTO.getKeyword());
         }
 
         return postRepository.findAll(PostSpecification.postSearch(searchKey))
