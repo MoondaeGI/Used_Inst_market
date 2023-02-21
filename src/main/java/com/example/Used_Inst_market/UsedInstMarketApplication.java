@@ -15,9 +15,6 @@ public class UsedInstMarketApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(UsedInstMarketApplication.class, args);
 
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("used_inst_market");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-
 		System.out.println("------------------------");
 		System.out.println("중고 악기 판매 거래 사이트");
 	}

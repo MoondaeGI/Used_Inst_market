@@ -131,6 +131,10 @@ const main = {
             return select === "전체" ? null : select;
         }
 
+        function priceResult(price) {
+            return price === "" ? null : price;
+        }
+
         const dto = {
             upperCategory : selectResult($('#upper-category option:selected').val()),
             lowerCategory : selectResult($('#lower-category option:selected').val()),
@@ -138,8 +142,8 @@ const main = {
             upperLocal : selectResult($('#upper-local option:selected').val()),
             lowerLocal : selectResult($('#lower-local option:selected').val()),
             keyword : $('#keyword').val(),
-            minPrice : $('#minPrice').val(),
-            maxPrice : $('#maxPrice').val(),
+            minPrice : parseInt(priceResult($('#minPrice').val())),
+            maxPrice : parseInt(priceResult($('#maxPrice').val())),
             keywordType : $('#keyword-select option:selected').val()
         }
 
@@ -148,13 +152,13 @@ const main = {
         $.ajax({
             type: 'POST',
             url: '/search/page',
-            dataType: 'json',
             data: JSON.stringify(dto),
+            dataType: 'html',
             contentType: 'application/json; charset=UTF-8'
+        }).done(function (result) {
+            console.log(result);
         }).fail(function (error) {
             alert(JSON.stringify(error))
-        }).always(function () {
-            window.location.href = '/';
         });
     },
 
@@ -196,10 +200,7 @@ const main = {
                 type: 'GET',
                 datatype: 'json',
                 url: url + `?no=${index}`,
-                contentType: 'application/json; charset=UTF-8',
-                success: function(data) {
-                    console.log(data.result)
-            }
+                contentType: 'application/json; charset=UTF-8'
             }).done(function (result) {
                 console.log(result);
                 const subBoxSelect = $(`#${subBoxId}`);

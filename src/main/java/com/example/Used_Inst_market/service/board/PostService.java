@@ -26,7 +26,6 @@ import com.example.Used_Inst_market.model.vo.category.LowerCategoryVO;
 import com.example.Used_Inst_market.model.vo.category.UpperCategoryVO;
 import com.example.Used_Inst_market.model.vo.local.LowerLocalVO;
 import com.example.Used_Inst_market.model.vo.local.UpperLocalVO;
-import com.example.Used_Inst_market.util.enums.KeywordType;
 import com.example.Used_Inst_market.util.enums.SoldYN;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -201,11 +200,8 @@ public class PostService {
         if (postSearchSelectDTO.getMaxPrice() != null) {
             searchKey.put("maxPrice", postSearchSelectDTO.getMaxPrice());
         }
-        if (postSearchSelectDTO.getKeywordType() != null) {
-            KeywordType keywordType = postSearchSelectDTO.getKeywordType();
-            String keywordTypeString = keywordType == KeywordType.TITLE ? "title" : "content";
-
-            searchKey.put(keywordTypeString, postSearchSelectDTO.getKeyword());
+        if (postSearchSelectDTO.getKeyword() != null) {
+            searchKey.put(postSearchSelectDTO.getKeywordType(), postSearchSelectDTO.getKeyword());
         }
 
         return postRepository.findAll(PostSpecification.postSearch(searchKey))

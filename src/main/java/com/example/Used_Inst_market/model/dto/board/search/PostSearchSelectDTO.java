@@ -1,6 +1,5 @@
 package com.example.Used_Inst_market.model.dto.board.search;
 
-import com.example.Used_Inst_market.util.enums.KeywordType;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +27,6 @@ public class PostSearchSelectDTO {
     private Integer minPrice;
     @ApiParam(name = "최대 가격", value = "maxPrice", example = "1")
     private Integer maxPrice;
-    @ApiParam(name = "검색어 타입", value = "keywordType", example = "TITLE")
-    private KeywordType keywordType;
+    @ApiParam(name = "검색어 타입", value = "keywordType", example = "title")
+    private String keywordType;
 }
