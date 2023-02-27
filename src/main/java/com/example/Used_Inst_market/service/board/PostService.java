@@ -169,6 +169,8 @@ public class PostService {
     public List<PostVO> selectFromSearchingKey(PostSearchSelectDTO postSearchSelectDTO) {
         Map<String, Object> searchKey = new HashMap<>();
 
+        if (postSearchSelectDTO == null) return null;
+
         if (postSearchSelectDTO.getUpperCategoryNo() != null) {
             final UpperCategory upperCategory = upperCategoryRepository.findById(postSearchSelectDTO.getUpperCategoryNo())
                     .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));

@@ -1,15 +1,11 @@
 package com.example.Used_Inst_market.model.dto.board.search;
 
 import io.swagger.annotations.ApiParam;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
+@Setter
 public class PostSearchSelectDTO {
     @ApiParam(name = "상위 카테고리 번호", value = "upperCategoryNo", example = "1")
     private Long upperCategoryNo;

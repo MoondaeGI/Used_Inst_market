@@ -13,6 +13,10 @@
     </div>
     <table class="table table-horizontal table-bordered">
         <thead class="thead-strong">
+        {{^posts}}
+            <p>해당 게시글이 없습니다</p>
+        {{/posts}}
+        {{#posts}}
         <tr>
             <th>게시글번호</th>
             <th>제목</th>
@@ -22,7 +26,6 @@
             <th>등록 일자</th>
         </tr>
         </thead>
-        {{#posts}}
             <tbody id="tbody">
                 <tr>
                     <td>{{postNo}}</td>
@@ -33,9 +36,6 @@
                     <td>{{regDt}}</td>
                 </tr>
             </tbody>
-        {{/posts}}
-        {{^posts}}
-            <p>해당 게시글이 없습니다</p>
         {{/posts}}
     </table>
 </div>

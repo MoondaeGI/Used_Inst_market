@@ -7,7 +7,7 @@ function userCheck() {
 
     if(loginUserName === postUserName) {
         btnSelector.append(`<button type="button" class="btn btn-secondary" id="btn-soldYN" onclick="soldYNChange()">판매 완료</button>`);
-        btnSelector.append(`<a href="/post/update?no=${postNo}" role="button" class="btn btn-secondary">수정</a>`);
+        btnSelector.append(`<a href="/post/update/page?no=${postNo}" role="button" class="btn btn-secondary">수정</a>`);
         btnSelector.append(`<button type="button" class="btn btn-secondary" id="btn-delete" onclick="deletePost()">삭제</button>`);
     }
 }

@@ -75,7 +75,7 @@ const main = {
 
         $.ajax({
             type: 'POST',
-            url: '/post/info/save',
+            url: '/post/save',
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
@@ -112,7 +112,7 @@ const main = {
 
         $.ajax({
             type: 'PUT',
-            url: '/post/info/update',
+            url: '/post/update',
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
@@ -131,32 +131,41 @@ const main = {
             return select === "전체" ? null : select;
         }
 
-        function priceResult(price) {
-            return price === "" ? null : price;
+        function textResult(text) {
+            return text === "" ? null : text;
         }
 
         const dto = {
-            upperCategory : selectResult($('#upper-category option:selected').val()),
-            lowerCategory : selectResult($('#lower-category option:selected').val()),
-            brand : selectResult($('#brand option:selected').val()),
-            upperLocal : selectResult($('#upper-local option:selected').val()),
-            lowerLocal : selectResult($('#lower-local option:selected').val()),
-            keyword : $('#keyword').val(),
-            minPrice : parseInt(priceResult($('#minPrice').val())),
-            maxPrice : parseInt(priceResult($('#maxPrice').val())),
+            upperCategoryNo : selectResult($('#upper-category option:selected').val()),
+            lowerCategoryNo : selectResult($('#lower-category option:selected').val()),
+            brandNo : selectResult($('#brand option:selected').val()),
+            upperLocalNo : selectResult($('#upper-local option:selected').val()),
+            lowerLocalNo : selectResult($('#lower-local option:selected').val()),
+            keyword : textResult($('#keyword').val()),
+            minPrice : textResult($('#minPrice').val()),
+            maxPrice : textResult($('#maxPrice').val()),
             keywordType : $('#keyword-select option:selected').val()
         }
 
+        let searchKey = {};
+        for (let element in dto) {
+            if (dto[element] !== null) searchKey[element] = dto[element];
+        }
+
+        let url = 'search/page?';
+        const searchUrl = new URLSearchParams(searchKey);
+        url += searchUrl;
+
+        console.log(url);
         console.log(dto);
 
         $.ajax({
-            type: 'POST',
-            url: '/search/page',
-            data: JSON.stringify(dto),
-            dataType: 'html',
+            type: 'GET',
+            url: url,
             contentType: 'application/json; charset=UTF-8'
         }).done(function (result) {
             console.log(result);
+            window.location.href = url;
         }).fail(function (error) {
             alert(JSON.stringify(error))
         });

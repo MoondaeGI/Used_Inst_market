@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = {"페이지 API"})
 @RequiredArgsConstructor
@@ -99,8 +100,8 @@ public class IndexController {
     }
 
     @ApiOperation(value = "검색 결과 페이지 조회 API")
-    @PostMapping("/search/page")
-    public String search(@RequestBody PostSearchSelectDTO postSearchSelectDTO, @Valid Model model) {
+    @GetMapping("/search/page")
+    public String search(PostSearchSelectDTO postSearchSelectDTO, @Valid Model model) {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if (user != null) model.addAttribute("user", user);
 
